@@ -464,7 +464,7 @@
     if (location.pathname.indexOf("/dashboard") !== -1) return;
     window.__rkDashRoot = ROOT;
     var s = document.createElement("script");
-    s.src = ROOT + "rk/dash.js?v=1";
+    s.src = ROOT + "rk/dash.js?v=2";
     document.head.appendChild(s);
   }
 

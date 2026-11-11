@@ -215,34 +215,69 @@
   }
 
   /* ═════════ The eagle ═════════
-     A black eagle circling slowly on a thermal above the ridges. It keeps to
-     daylight, banks as it turns, and shows its full span only when it is
-     flying toward or away from the viewer. */
+     A black eagle, seen from below, that now and then glides across the sky:
+     it comes in from one side, sometimes turns a slow circle on a thermal,
+     and leaves by the other. Then the sky is empty again for a while. The
+     times, heights and sides are random, and it keeps to daylight. */
   (function eagle() {
-    var el = $("#skyEagle"); if (!el || !skyOK) return;
-    var t0 = performance.now(), raf = 0;
-    function frame(now) {
-      raf = 0;
-      var st = Sky.state();
-      if (!st.active) { raf = requestAnimationFrame(frame); return; }
-      var t = RM ? 1.1 : (now - t0) / 1000;
-      var W = window.innerWidth, H = window.innerHeight, small = W < 820;
-      var a = t * 0.165;                                   // one circle ≈ 38 s
-      var drift = Math.sin(t * 0.021) * (small ? 0.05 : 0.09);
-      var cx = (small ? 0.64 : 0.70) + drift, cy = (small ? 0.20 : 0.25) + Math.sin(t * 0.033) * 0.03;
-      var x = cx * W + Math.cos(a) * W * (small ? 0.2 : 0.13);
-      var y = cy * H + Math.sin(a) * H * 0.055 - st.scroll * H * 0.16;
-      var side = Math.abs(Math.sin(a));                    // 1 = crossing sideways
-      var near = 0.5 + 0.5 * Math.sin(a);                  // lower on the circle = nearer
-      var sc = 0.78 + near * 0.42;
-      var night = Sky.sample(st.hour).night;
-      el.style.opacity = (0.9 * (1 - night)).toFixed(3);
-      el.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0) translate(-50%,-50%) rotate(" +
-        (Math.sin(a) * -16 + Math.sin(t * 0.7) * 2).toFixed(2) + "deg) scale(" + (sc * (1 - side * 0.42)).toFixed(3) + "," + sc.toFixed(3) + ")";
-      if (!RM) raf = requestAnimationFrame(frame);
+    var el = $("#skyEagle"); if (!el || !skyOK || RM) return;
+    var rnd = function (a, b) { return a + Math.random() * (b - a); };
+    var pass = null, nextAt = performance.now() + rnd(5000, 11000), px = 0, py = 0, head = 0, bank = 0;
+
+    function plan(now) {
+      var small = window.innerWidth < 820;
+      var dir = Math.random() < 0.5 ? 1 : -1;
+      return {
+        t0: now, dur: rnd(30, 44) * 1000, dir: dir,
+        y0: rnd(small ? 0.12 : 0.13, small ? 0.26 : 0.34), y1: rnd(small ? 0.10 : 0.12, small ? 0.28 : 0.36),
+        arc: rnd(-0.07, 0.07),                       // the bow of its course
+        loop: Math.random() < 0.55 ? rnd(0.05, 0.085) : 0,   // radius of the circle, if it turns one
+        loopAt: rnd(0.34, 0.5), loopDir: Math.random() < 0.5 ? 1 : -1,
+        size: rnd(0.8, 1.15), first: true
+      };
     }
-    raf = requestAnimationFrame(frame);
-    if (RM) window.addEventListener("resize", function () { if (!raf) raf = requestAnimationFrame(frame); });
+    // where the bird is at share u (0‥1) of its pass, in screen fractions
+    function at(p, u) {
+      var x = p.dir > 0 ? -0.12 + u * 1.24 : 1.12 - u * 1.24;
+      var y = p.y0 + (p.y1 - p.y0) * u + Math.sin(u * Math.PI) * p.arc + Math.sin(u * 9) * 0.006;
+      if (p.loop) {
+        var k = (u - p.loopAt) / 0.3;                // the circle fills 30% of the pass
+        if (k > 0 && k < 1) {
+          var e = k * k * (3 - 2 * k), ang = e * Math.PI * 2 * p.loopDir;
+          var asp = window.innerHeight / window.innerWidth;
+          x += (Math.sin(ang) * p.loop - (e - k) * 0) * (p.dir > 0 ? 1 : -1) * Math.min(1, asp * 1.6 + 0.4);
+          y += (1 - Math.cos(ang)) * p.loop * 0.9 * (p.loopDir > 0 ? 1 : -1) * 0.8;
+        }
+      }
+      return [x, y];
+    }
+    function frame(now) {
+      requestAnimationFrame(frame);
+      var st = Sky.state();
+      if (!st.active) return;
+      if (!pass) {
+        if (now < nextAt) return;
+        if (Sky.sample(st.hour).night > 0.45) { nextAt = now + 20000; return; }   // not after dark
+        pass = plan(now);
+      }
+      var u = (now - pass.t0) / pass.dur;
+      if (u >= 1) { pass = null; el.style.opacity = 0; nextAt = now + rnd(22000, 75000); return; }
+      var W = window.innerWidth, H = window.innerHeight;
+      var a = at(pass, u), b = at(pass, Math.min(1, u + 0.004));
+      var x = a[0] * W, y = a[1] * H - st.scroll * H * 0.16;
+      var h = Math.atan2((b[1] - a[1]) * H, (b[0] - a[0]) * W) * 180 / Math.PI + 90;   // nose along its course
+      if (pass.first) { head = h; pass.first = false; }
+      var dh = ((h - head + 540) % 360) - 180;       // shortest way round
+      head += dh * 0.12;
+      bank += (Math.max(-1, Math.min(1, dh / 2.2)) - bank) * 0.05;   // leans into a turn
+      px = x; py = y;
+      var night = Sky.sample(st.hour).night;
+      var edge = Math.min(1, u / 0.05, (1 - u) / 0.05);
+      el.style.opacity = (0.88 * (1 - night) * edge).toFixed(3);
+      el.style.transform = "translate3d(" + px.toFixed(1) + "px," + py.toFixed(1) + "px,0) translate(-50%,-50%) rotate(" + head.toFixed(2) +
+        "deg) scale(" + (pass.size * (1 - Math.abs(bank) * 0.34)).toFixed(3) + "," + pass.size.toFixed(3) + ")";
+    }
+    requestAnimationFrame(frame);
   })();
 
   /* ═════════ Kiosk idle return (ported from eco-nav.js) ═════════

@@ -36,7 +36,7 @@ var PRECACHE = [
   "./rk/vendor/ScrollTrigger.min.js",
   "./rk/vendor/SplitText.min.js",
   "./rk/vendor/lenis.min.js",
-  "./eco-nav.js?v=41",
+  "./eco-nav.js?v=42",
   "./eco-nav.css?v=21",
   "./styles.css?v=15",
   "./analytics.js?v=1",

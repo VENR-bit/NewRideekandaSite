@@ -31,6 +31,7 @@
       "font:500 11px/1 'Hanken Grotesk','Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.16em;text-transform:uppercase;" +
       "opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.1,1),background-color .35s ease,color .35s ease,border-color .35s ease}" +
     ".rk-dash.is-in{opacity:1;transform:none}" +
+    ".rk-dash.has-toggle{right:calc(18px + env(safe-area-inset-right,0px) + 42px + 8px)}" +
     ".rk-dash i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#e39a48;color:#1a1208;transition:background-color .35s ease,transform .6s cubic-bezier(.2,.7,.1,1)}" +
     ".rk-dash svg{width:14px;height:14px;display:block}" +
     ".rk-dash span{display:inline-block;max-width:9em;padding:0 12px 0 10px;overflow:hidden;transition:max-width .5s cubic-bezier(.2,.7,.1,1),padding .5s cubic-bezier(.2,.7,.1,1),opacity .3s ease}" +
@@ -54,20 +55,14 @@
     a.innerHTML = '<i aria-hidden="true"><svg viewBox="0 0 16 16" fill="currentColor"><rect x="1.5" y="1.5" width="5.4" height="5.4" rx="1.4"/><rect x="9.1" y="1.5" width="5.4" height="5.4" rx="1.4"/><rect x="1.5" y="9.1" width="5.4" height="5.4" rx="1.4"/><rect x="9.1" y="9.1" width="5.4" height="5.4" rx="1.4"/></svg></i><span>Dashboard</span>';
     document.body.appendChild(a);
 
-    // Stand beside the day / night button rather than on it.
-    function place() {
-      var t = document.querySelector(".eco-theme-toggle");
-      if (!t) return false;
-      var r = t.getBoundingClientRect();
-      if (!r.width) return false;
-      a.style.right = Math.round(document.documentElement.clientWidth - r.left + 8) + "px";
-      a.style.bottom = Math.round(document.documentElement.clientHeight - r.bottom) + "px";
-      a.style.height = Math.round(r.height) + "px";
-      return true;
-    }
+    // Stand beside the day / night button rather than on it. Both sit on the
+    // same CSS baseline (18px + safe area, 42px tall), so nothing is measured:
+    // a measured offset went stale when a phone's toolbar slid away on scroll,
+    // and the pill dropped out of line with the button.
+    function place() { a.classList.toggle("has-toggle", !!document.querySelector(".eco-theme-toggle")); }
+    place();
     var tries = 0;
-    (function wait() { if (!place() && ++tries < 40) setTimeout(wait, 60); })();
-    window.addEventListener("resize", place);
+    (function wait() { place(); if (!a.classList.contains("has-toggle") && ++tries < 40) setTimeout(wait, 80); })();
 
     var small = window.matchMedia ? window.matchMedia("(max-width: 700px)") : { matches: false };
     var last = window.scrollY, ticking = false;
