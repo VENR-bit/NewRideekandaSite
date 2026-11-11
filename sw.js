@@ -29,7 +29,7 @@ var PRECACHE = [
   "./rk/inner.css?v=3",
   "./rk/page.css?v=5",
   "./rk/page.js?v=2",
-  "./rk/rk.css?v=11",
+  "./rk/rk.css?v=13",
   "./rk/rk.js?v=7",
   "./rk/sky.js?v=7",
   "./rk/vendor/gsap.min.js",

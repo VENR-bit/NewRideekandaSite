@@ -214,6 +214,37 @@
     }, { passive: true });
   }
 
+  /* ═════════ The eagle ═════════
+     A black eagle circling slowly on a thermal above the ridges. It keeps to
+     daylight, banks as it turns, and shows its full span only when it is
+     flying toward or away from the viewer. */
+  (function eagle() {
+    var el = $("#skyEagle"); if (!el || !skyOK) return;
+    var t0 = performance.now(), raf = 0;
+    function frame(now) {
+      raf = 0;
+      var st = Sky.state();
+      if (!st.active) { raf = requestAnimationFrame(frame); return; }
+      var t = RM ? 1.1 : (now - t0) / 1000;
+      var W = window.innerWidth, H = window.innerHeight, small = W < 820;
+      var a = t * 0.165;                                   // one circle ≈ 38 s
+      var drift = Math.sin(t * 0.021) * (small ? 0.05 : 0.09);
+      var cx = (small ? 0.64 : 0.70) + drift, cy = (small ? 0.20 : 0.25) + Math.sin(t * 0.033) * 0.03;
+      var x = cx * W + Math.cos(a) * W * (small ? 0.2 : 0.13);
+      var y = cy * H + Math.sin(a) * H * 0.055 - st.scroll * H * 0.16;
+      var side = Math.abs(Math.sin(a));                    // 1 = crossing sideways
+      var near = 0.5 + 0.5 * Math.sin(a);                  // lower on the circle = nearer
+      var sc = 0.78 + near * 0.42;
+      var night = Sky.sample(st.hour).night;
+      el.style.opacity = (0.9 * (1 - night)).toFixed(3);
+      el.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px,0) translate(-50%,-50%) rotate(" +
+        (Math.sin(a) * -16 + Math.sin(t * 0.7) * 2).toFixed(2) + "deg) scale(" + (sc * (1 - side * 0.42)).toFixed(3) + "," + sc.toFixed(3) + ")";
+      if (!RM) raf = requestAnimationFrame(frame);
+    }
+    raf = requestAnimationFrame(frame);
+    if (RM) window.addEventListener("resize", function () { if (!raf) raf = requestAnimationFrame(frame); });
+  })();
+
   /* ═════════ Kiosk idle return (ported from eco-nav.js) ═════════
      In the installed kiosk app, an idle page returns to the dashboard so the
      next visitor starts fresh. Normal browser visitors are never redirected. */

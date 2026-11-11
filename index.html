@@ -34,7 +34,7 @@
     } catch (e) { r.setAttribute('data-theme', 'dark'); }
   })();
 </script>
-<link rel="stylesheet" href="rk/rk.css?v=11" />
+<link rel="stylesheet" href="rk/rk.css?v=13" />
 <script src="/analytics.js?v=1"></script>
 </head>
 <body>
@@ -51,7 +51,9 @@
 
 <!-- The living sky (WebGL). Fixed behind the page; the hero and the
      "day on the hill" chapter are windows onto it. -->
-<div class="sky" aria-hidden="true"><canvas id="sky"></canvas><div class="sky-fallback"></div></div>
+<div class="sky" aria-hidden="true"><canvas id="sky"></canvas><div class="sky-fallback"></div>
+  <!-- A black eagle soaring on the thermals over the hills (flown by rk.js). -->
+  <svg class="sky-eagle" id="skyEagle" viewBox="0 0 200 84" focusable="false"><path d="M100 35C103.2 35 105 38 105 41.5C117 38 133 31 150 24.5C161 20.5 173 16 185 10.5L177 19.5L191.5 16L180 24L195 23.5L181 29L194 31.5L179.5 34L189 39.5L175.5 38.5L180 46C166 52.5 146 56.5 128 56C118 55.7 110 52.5 106.2 50C106.6 56 109 65 113.5 73.5C109 74.6 104 74.2 100 72.2C96 74.2 91 74.6 86.5 73.5C91 65 93.4 56 93.8 50C90 52.5 82 55.7 72 56C54 56.5 34 52.5 20 46L24.5 38.5L11 39.5L20.5 34L6 31.5L19 29L5 23.5L20 24L8.5 16L23 19.5L15 10.5C27 16 39 20.5 50 24.5C67 31 83 38 95 41.5C95 38 96.8 35 100 35z"/></svg></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" id="cursor" aria-hidden="true"><i></i><span></span></div>
 <div class="veil" id="veil" aria-hidden="true"></div>
@@ -356,19 +358,18 @@
       <h2 class="h1 split">Find your way<br /><em>around Rideekanda</em></h2>
     </div>
     <ul class="x-list" id="xList">
-      <li><a href="monastery/" data-img="rk/img/x-monastery.webp"><i>01</i><h3>The Monastery</h3><span lang="si">ආරණ්‍ය සේනාසනය</span><p>About the monastery, its teachers, and the forest tradition it keeps.</p><b class="arr"></b></a></li>
-      <li><a href="retreat-center/" data-img="rk/img/x-retreat.webp"><i>02</i><h3>Retreat Program</h3><span lang="si">භාවනා වැඩසටහන</span><p>Residential meditation retreats — concentration and Vipassanā in the forest.</p><b class="arr"></b></a></li>
-      <li><a href="book-your-stay/" data-img="rk/img/x-booking.webp"><i>03</i><h3>Book Your Stay</h3><span lang="si">වෙන් කරවා ගැනීම</span><p>Reserve a place for an upcoming retreat.</p><b class="arr"></b></a></li>
-      <li><a href="gallery/" data-img="rk/img/x-gallery.webp"><i>04</i><h3>Gallery</h3><span lang="si">ඡායාරූප</span><p>Scenes of the hillside, shrine, and daily life.</p><b class="arr"></b></a></li>
-      <li><a href="videos/" data-img="rk/img/x-videos.webp"><i>05</i><h3>Video Gallery</h3><span lang="si">වීඩියෝ</span><p>Dhamma talks and films — watch on-site.</p><b class="arr"></b></a></li>
-      <li><a href="dhamma-talks/" data-img="rk/img/x-talks.webp"><i>06</i><h3>Dhamma Talks</h3><span lang="si">ධර්ම දේශනා</span><p>A recorded 7-day Vipassanā retreat — watch, listen &amp; download.</p><b class="arr"></b></a></li>
-      <li><a href="ebooks/" data-img="rk/img/x-library.webp"><i>07</i><h3>E-Book Library</h3><span lang="si">ඊ-පොත් පුස්තකාලය</span><p>Free Dhamma &amp; meditation books — read online or download.</p><b class="arr"></b></a></li>
-      <li><a href="reviews/" data-img="rk/img/x-reviews.webp"><i>08</i><h3>Reviews</h3><span lang="si">ඇගයීම්</span><p>Experiences shared by visiting practitioners.</p><b class="arr"></b></a></li>
-      <li><a href="projects/" data-img="rk/img/x-projects.webp"><i>09</i><h3>Projects</h3><span lang="si">ව්‍යාපෘති</span><p>Ongoing building &amp; design initiatives.</p><b class="arr"></b></a></li>
-      <li><a href="contact/" data-img="rk/img/x-contact.webp"><i>10</i><h3>Contact</h3><span lang="si">සම්බන්ධ වන්න</span><p>Reach us by phone, email, or WhatsApp.</p><b class="arr"></b></a></li>
+      <li><a href="monastery/"><i>01</i><h3>The Monastery</h3><span lang="si">ආරණ්‍ය සේනාසනය</span><p>About the monastery, its teachers, and the forest tradition it keeps.</p><b class="arr"></b></a></li>
+      <li><a href="retreat-center/"><i>02</i><h3>Retreat Program</h3><span lang="si">භාවනා වැඩසටහන</span><p>Residential meditation retreats — concentration and Vipassanā in the forest.</p><b class="arr"></b></a></li>
+      <li><a href="book-your-stay/"><i>03</i><h3>Book Your Stay</h3><span lang="si">වෙන් කරවා ගැනීම</span><p>Reserve a place for an upcoming retreat.</p><b class="arr"></b></a></li>
+      <li><a href="gallery/"><i>04</i><h3>Gallery</h3><span lang="si">ඡායාරූප</span><p>Scenes of the hillside, shrine, and daily life.</p><b class="arr"></b></a></li>
+      <li><a href="videos/"><i>05</i><h3>Video Gallery</h3><span lang="si">වීඩියෝ</span><p>Dhamma talks and films — watch on-site.</p><b class="arr"></b></a></li>
+      <li><a href="dhamma-talks/"><i>06</i><h3>Dhamma Talks</h3><span lang="si">ධර්ම දේශනා</span><p>A recorded 7-day Vipassanā retreat — watch, listen &amp; download.</p><b class="arr"></b></a></li>
+      <li><a href="ebooks/"><i>07</i><h3>E-Book Library</h3><span lang="si">ඊ-පොත් පුස්තකාලය</span><p>Free Dhamma &amp; meditation books — read online or download.</p><b class="arr"></b></a></li>
+      <li><a href="reviews/"><i>08</i><h3>Reviews</h3><span lang="si">ඇගයීම්</span><p>Experiences shared by visiting practitioners.</p><b class="arr"></b></a></li>
+      <li><a href="projects/"><i>09</i><h3>Projects</h3><span lang="si">ව්‍යාපෘති</span><p>Ongoing building &amp; design initiatives.</p><b class="arr"></b></a></li>
+      <li><a href="contact/"><i>10</i><h3>Contact</h3><span lang="si">සම්බන්ධ වන්න</span><p>Reach us by phone, email, or WhatsApp.</p><b class="arr"></b></a></li>
     </ul>
   </div>
-  <div class="x-float" id="xFloat" aria-hidden="true"><div><img alt="" /></div></div>
 </section>
 
 <!-- ═════════ Gallery ribbon ═════════ -->
@@ -524,7 +525,7 @@
 <script src="rk/vendor/SplitText.min.js"></script>
 <script src="rk/vendor/lenis.min.js"></script>
 <script src="rk/sky.js?v=7"></script>
-<script src="rk/rk.js?v=8"></script>
+<script src="rk/rk.js?v=9"></script>
 <script src="rk/dash.js?v=1" data-root="" data-after="0.6" defer></script>
 <script>
   /* Installable app / kiosk: keep the service worker registered from the home
