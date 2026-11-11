@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-rk="road">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Road Construction Project — Rideekanda Forest Monastery</title>
+  <link rel="icon" href="../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="../../app/favicon-64.png?v=3" />
+  <link rel="apple-touch-icon" href="../../app/apple-touch-icon.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+Sinhala:wght@400;500;600;700&family=Noto+Sans+Sinhala:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=eco12" />
+  <!-- apply the saved language early so Sinhala fonts/lang are set before paint -->
+  <script>try{var l=localStorage.getItem("rk_lang");if(l==="si"||l==="en")document.documentElement.lang=l;}catch(e){}</script>
+  <!-- Google Analytics -->
+  <script src="/analytics.js?v=1"></script>
+  <!-- shared inner-page theme (rk/inner.css) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..600&display=swap" />
+  <link rel="stylesheet" href="../../rk/inner.css?v=3" />
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- React + Babel served same-origin so the page also renders inside the
+       Google Translate proxy (cross-origin CDN scripts don't load there). -->
+  <script src="vendor/react.production.min.js?v=1"></script>
+  <script src="vendor/react-dom.production.min.js?v=1"></script>
+  <script src="vendor/babel.min.js?v=1"></script>
+
+  <script type="text/babel" src="sections.jsx?v=eco13"></script>
+  <script type="text/babel" src="app.jsx?v=eco20"></script>
+<!-- eco-header -->
+  <link rel="stylesheet" href="../../eco-header.css?v=11">
+  <script id="eco-header" src="../../eco-header.js?v=10" data-root="../../" data-links='[{"label": "About", "href": "#about"}, {"label": "Engineering", "href": "#specs"}, {"label": "The Road", "href": "#road"}, {"label": "Budget", "href": "#budget"}, {"label": "සිංහල", "href": "#sinhala"}, {"label": "Support", "href": "../../donate/", "cta": true, "external": true}]' data-pad="true" defer></script>
+<!-- eco-nav -->
+  <link rel="stylesheet" href="../../eco-nav.css?v=21">
+  <script id="eco-nav" src="../../eco-nav.js?v=41" data-root="../../" data-current="road-project" defer></script>
+  <!-- eco-footer -->
+  <link rel="stylesheet" href="../../eco-footer.css?v=10">
+  <script id="eco-footer" src="../../eco-footer.js?v=10" data-root="../../" defer></script>
+
+  <!-- "සිංහල" / "English" menu link → toggle the page's built-in language -->
+  <script>
+    (function () {
+      document.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest('a[href$="#sinhala"]');
+        if (!a) return;
+        e.preventDefault();
+        if (typeof window.rkToggleLang === "function") window.rkToggleLang();
+      });
+    })();
+  </script>
+</body>
+</html>

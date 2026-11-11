@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" data-rk="std">
+<head>
+  <script>(function(){try{var m=localStorage.getItem("rk-theme"),u=+localStorage.getItem("rk-theme-until");if((m!=="light"&&m!=="dark")||!u||Date.now()>=u){m="auto";localStorage.removeItem("rk-theme");localStorage.removeItem("rk-theme-until");}var h=new Date().getHours();var day=(m==="auto")?(h>=6&&h<18):(m==="light");var t=day?"light":"dark";var r=document.documentElement;r.setAttribute("data-theme",t);r.setAttribute("data-theme-mode",m);}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Retreat Documents — Rideekanda Forest Monastery</title>
+  <meta name="description" content="Documents for the meditation retreat at Rideekanda Forest Monastery — route guidance, daily schedule, chanting texts, and the application form, in English and Sinhala.">
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="../app/favicon-64.png?v=3" />
+  <link rel="apple-touch-icon" href="../app/apple-touch-icon.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Sinhala:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=2">
+  <!-- Google Analytics -->
+  <script src="/analytics.js?v=1"></script>
+  <!-- shared inner-page theme (rk/inner.css) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..600&display=swap" />
+  <link rel="stylesheet" href="../rk/inner.css?v=3" />
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <img class="lotus" src="../assets/lotus-logo.png" alt="Rideekanda Forest Monastery" draggable="false">
+      <p class="place">Rideekanda&nbsp;·&nbsp;Forest Monastery</p>
+      <h1>Retreat Documents</h1>
+      <p class="hero__si">වැඩසටහන් ලේඛන</p>
+      <p class="hero__about">
+        Everything you need for a residential retreat — route guidance, the daily
+        schedule, chanting texts, and the application form. Read any document here
+        or download it to keep. May it be of benefit. 🙏
+      </p>
+      <div class="rule"></div>
+      <p class="hero__total" id="total"></p>
+    </section>
+
+    <section id="library"></section>
+  </main>
+
+  <!-- in-page PDF reader: a new tab is not a reliable way to *show* a PDF
+       (an installed app / kiosk browser downloads it instead), so we render
+       the pages here. Same reader as the ebooks library. -->
+  <div class="reader" id="reader" aria-hidden="true">
+    <div class="reader__bar">
+      <button class="rbtn rbtn--back" id="r-close" title="Back to documents"><span aria-hidden="true">←</span><span class="rbtn__lbl">&nbsp;Documents</span></button>
+      <div class="reader__meta"><b id="r-title"></b><span id="r-sub"></span></div>
+      <div class="reader__actions">
+        <button class="rbtn" id="r-zoomout" aria-label="Zoom out" title="Zoom out">A−</button>
+        <button class="rbtn" id="r-zoomin" aria-label="Zoom in" title="Zoom in">A+</button>
+        <button class="rbtn" id="r-night" aria-label="Toggle night mode" title="Day / night">🌙</button>
+        <a class="rbtn" id="r-open" href="#" target="_blank" rel="noopener" title="Open in a new tab">Open&nbsp;↗</a>
+        <a class="rbtn rbtn--cta" id="r-dl" href="#" download>Download</a>
+      </div>
+    </div>
+    <div class="reader__stage" id="r-stage"><div class="reader__pages" id="r-pages"></div></div>
+  </div>
+
+  <!-- QR modal (kiosk) -->
+  <div class="qrm" id="qrm" aria-hidden="true">
+    <div class="qrm__card">
+      <button class="qrm__x" id="qr-close" aria-label="Close">✕</button>
+      <div class="qrm__code" id="qr-code"></div>
+      <div class="qrm__title" id="qr-title"></div>
+      <div class="qrm__hint">Scan with your phone camera to open this document</div>
+    </div>
+  </div>
+
+  <script src="../ebooks/vendor/qrcode.js"></script>
+  <script src="../ebooks/vendor/pdf.min.js"></script>
+  <script src="docs-data.js?v=7"></script>
+  <script src="docs.js?v=2"></script>
+
+  <!-- eco-header -->
+  <link rel="stylesheet" href="../eco-header.css?v=11">
+  <script id="eco-header" src="../eco-header.js?v=10" data-root="../" data-links='[{"label": "Daily Routine", "href": "../daily-routine/"}]' data-pad="true" defer></script>
+  <!-- eco-nav -->
+  <link rel="stylesheet" href="../eco-nav.css?v=21">
+  <script id="eco-nav" src="../eco-nav.js?v=41" data-root="../" data-current="retreat-docs" defer></script>
+  <!-- eco-footer -->
+  <link rel="stylesheet" href="../eco-footer.css?v=10">
+  <script id="eco-footer" src="../eco-footer.js?v=10" data-root="../" defer></script>
+  <!-- eco-theme -->
+  <link rel="stylesheet" href="../eco-theme.css?v=11">
+  <script src="../eco-theme.js?v=4" defer></script>
+</body>
+</html>

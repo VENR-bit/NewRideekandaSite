@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="si" data-rk="green">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#f4ede0" />
+<title>ඖෂධ පැළ රෝපණ වැඩසටහන — රිදීකන්ද ආරණ්‍ය සේනාසනය</title>
+<meta name="description" content="රිදීකන්ද ආරණ්‍ය සේනාසනයේ ඖෂධීය පැළයක් රෝපණය කිරීමට වෙන් කර ගන්න. සිංහල, ඉංග්‍රීසි සහ විද්‍යාත්මක නම් සමඟ පැළ ලැයිස්තුව." />
+<link rel="icon" href="../../favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="64x64" href="../../app/favicon-64.png?v=3" />
+<link rel="apple-touch-icon" href="../../app/apple-touch-icon.png?v=2" />
+<link rel="alternate" hreflang="en" href="../../projects/herbal-plants/en/" />
+<link rel="alternate" hreflang="si" href="../../projects/herbal-plants/" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&family=Noto+Serif+Sinhala:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=10" />
+<style>
+  /* On the Sinhala page the body copy is Sinhala, so let the Sinhala face
+     carry the headings and prose rather than the Latin serif. */
+  body, .plant-name, .planted-name { font-family: var(--sinhala); }
+  .hero h1, .section-heading h2, .about-text h2, .modal-panel h3,
+  .stat-num, .closing-verse, .hero-kicker, .section-heading .kicker,
+  .books-note, .thanks-content h3 { font-family: var(--sinhala); font-style: normal; }
+  .hero h1 { font-size: clamp(30px, 5vw, 56px); line-height: 1.35; }
+  .section-heading h2, .about-text h2 { font-size: clamp(25px, 3.4vw, 40px); line-height: 1.4; }
+  .hero-kicker, .section-heading .kicker, .closing-verse { font-style: normal; line-height: 1.75; }
+  .plant-sci { font-family: var(--serif); font-style: italic; }   /* botanical names stay Latin */
+  /* Sinhala needs more leading than the shared rule gives it. */
+  .hero-body p { font-family: var(--sinhala); line-height: 1.95; }
+  @media (max-width: 560px) { .hero-body p { line-height: 1.9; } }
+  .lang-switch {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-top: 18px; padding: 8px 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--card);
+    font-family: var(--sans); font-size: 13px; font-weight: 600;
+    color: var(--ink-soft); text-decoration: none;
+  }
+  .lang-switch:hover { border-color: var(--accent-soft); color: var(--accent); }
+</style>
+<script src="/analytics.js?v=1"></script>
+  <!-- shared inner-page theme (rk/inner.css) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..600&display=swap" />
+  <link rel="stylesheet" href="../../rk/inner.css?v=3" />
+</head>
+<body>
+
+<!-- ══════════ මුල් පිටුව ══════════ -->
+<section class="hero" id="top">
+  <div class="reveal">
+    <img class="hero-lotus" src="../library-cafe/lotus.png" alt="" />
+  </div>
+  <div class="reveal" style="transition-delay:.1s">
+    <h1>වනයේ <em>ඖෂධ පැළයක්</em><br>රෝපණය කරන්න.</h1>
+  </div>
+  <div class="reveal hero-body" style="transition-delay:.24s">
+    <p>රිදීකන්ද ආරණ්‍ය සේනාසනය මගින් ක්‍රියාත්මක කෙරෙන ඖෂධ පැල රෝපණ වැඩසටහන තුලින් ශ්‍රී ලංකාවේ වැවෙන ඖෂධීය ගුණයෙන් යුක්ත වටිනා සහ දුර්ලභ ඖෂධ පැල සංරක්ෂණය කිරීමටත්, එමගින් වඳවී යන එම ශාක ආරක්ෂා කිරීමටත් මෙමගින් බලාපොරත්තු වේ. එලෙසෙම, පඬු චීවර සැකසීමේදී අවශ්‍ය වන ශාක සහ ඖෂධ පැල කිරීම තුලින් චීවර සැකසීමේ දී මෙය පහසුවෙන් ආරණ්‍ය තුලම සොයා ගත හැකිවේ.</p>
+    <p>අනාගත පරපුරට ඖෂධ පිළිබඳ දැනුවත් භාවයක් ලබා ගැනීමටත්, අවශ්‍ය වූ ඕනෑම වෙලාවක පහසුවෙන් සොයා ගැනීමත් මෙම ඖෂධ පැල රෝපණ වැඩසටහන වැදගත් වේ.</p>
+    <p class="hero-call">පහත ලැයුස්තුවේ ඇති ඖෂධ තෝරන්න, රැගෙනවිත් සිටවන්න.</p>
+  </div>
+  <div class="reveal hero-cta" style="transition-delay:.32s">
+    <a href="#lists" class="btn-primary">රැගෙන එන පැළය තෝරන්න
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a href="#how" class="btn-ghost">මෙය ක්‍රියාත්මක වන ආකාරය</a>
+  </div>
+  <div class="reveal" style="transition-delay:.4s">
+    <a class="lang-switch" href="en/">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+      Read this page in English
+    </a>
+  </div>
+</section>
+
+<!-- ══════════ ප්‍රගතිය ══════════ -->
+<section class="stats">
+  <div class="reveal stats-card">
+    <div class="stat"><div class="stat-num" id="st-species">–</div><div class="stat-label">ලැයිස්තුවල පැළ වර්ග</div></div>
+    <div class="stat"><div class="stat-num" id="st-pledged">–</div><div class="stat-label">වෙන් කර ඇති පැළ</div></div>
+    <div class="stat"><div class="stat-num" id="st-planted">–</div><div class="stat-label">රෝපණය කර ඡායාරූප ගත</div></div>
+    <div class="stat"><div class="stat-num" id="st-people">–</div><div class="stat-label">දායකයින්</div></div>
+    <div class="progress-track"><div class="progress-fill" id="st-bar" style="width:0%"></div></div>
+  </div>
+</section>
+
+<!-- ══════════ වැඩසටහන ══════════ -->
+<section class="about" id="how">
+  <div class="section-heading reveal" style="margin-bottom:34px">
+    <div class="eyebrow">වැඩසටහන</div>
+  </div>
+  <div class="about-grid">
+    <div class="steps">
+      <div class="reveal step"><div class="step-n">1</div><div><div class="step-t">ඔබේ පැළය තෝරන්න</div><div class="step-d">පහත රෝපණ ලැයිස්තුවෙන් — නැතහොත් ඉතිරි ඖෂධශාක ලැයිස්තුවෙන් තෝරන්න. සිංහල, ඉංග්‍රීසි හෝ විද්‍යාත්මක නමින් සොයන්න.</div></div></div>
+      <div class="reveal step" style="transition-delay:.08s"><div class="step-n">2</div><div><div class="step-t">ඔබේ නමින් වෙන් කරන්න</div><div class="step-d">පැළය එන බව අපි දැනගෙන, එකම පැළය දෙවරක් නොවන පරිදි ඔබේ නම සඳහන් කරන්න. පැළය ඔබේ නමින් වෙන් වේ.</div></div></div>
+      <div class="reveal step" style="transition-delay:.16s"><div class="step-n">3</div><div><div class="step-t">රැගෙන ඇවිත් රෝපණය කරන්න</div><div class="step-d">ආරණ්‍යයට පැමිණ, සංඝයා සමඟ ස්ථානය තෝරාගෙන, ඔබේම අතින් පොළොවේ රෝපණය කරන්න.</div></div></div>
+      <div class="reveal step" style="transition-delay:.24s"><div class="step-n">4</div><div><div class="step-t">ඡායාරූපය එවන්න</div><div class="step-d">මෙම පිටුවට නැවත පැමිණ, ලැයිස්තුවෙන් ඔබේ පැළය සොයාගෙන එහි ඇති <b>ඡායාරූපය උඩුගත කරන්න</b> බොත්තම ඔබන්න. ආරණ්‍යය එය අනුමත කළ පසු, එය පහත වාර්තාවට එකතු වේ — ඔබේ වෙන් කිරීම සම්පූර්ණයි.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ පැළ ලැයිස්තුව ══════════ -->
+<section class="plants" id="lists">
+  <div class="section-heading reveal">
+    <div class="eyebrow">පැළ</div>
+    <h2>රැගෙන එන්නේ <em>කුමක්ද</em>?</h2>
+    <p class="kicker">සෑම පැළයකම සිංහල නම, සිංහල අකුරු, ඉංග්‍රීසි නම සහ උද්භිද විද්‍යාත්මක නම ඇත — ඕනෑම පැළ තවානකින් නිවැරදිව ඉල්ලා ගත හැකි පරිදි.</p>
+  </div>
+
+  <div class="list-tabs reveal">
+    <button class="list-tab on" data-list="programme" type="button">මෙවර රෝපණ ලැයිස්තුව<small id="tab-count-programme">–</small></button>
+    <button class="list-tab" data-list="reference" type="button">ඉතිරි ඖෂධශාක ලැයිස්තුව<small id="tab-count-reference">–</small></button>
+  </div>
+
+  <div class="search-row reveal">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" id="plant-search" placeholder="සිංහල, ඉංග්‍රීසි හෝ විද්‍යාත්මක නමින් සොයන්න…" autocomplete="off" />
+    </div>
+    <select class="filter-select" id="plant-filter" aria-label="පැළ පෙරහන">
+      <option value="all">සියලුම පැළ</option>
+      <option value="open">වෙන් කිරීමට ඇති</option>
+      <option value="claimed">වෙන් කර ඇති</option>
+      <option value="planted">රෝපණය කර ඇති</option>
+    </select>
+      <div class="view-switch" role="group">
+        <button type="button" data-view="tiles" class="on" aria-pressed="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>
+        </button>
+        <button type="button" data-view="list" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>
+        </button>
+      </div>
+  </div>
+
+  <div class="plant-grid" id="plant-grid"></div>
+  <div class="list-empty" id="list-empty" hidden>එම සෙවීමට ගැළපෙන පැළයක් නොමැත.</div>
+  <div class="more-row"><button class="btn-ghost" id="load-more" type="button" hidden>තවත් පැළ පෙන්වන්න</button></div>
+</section>
+
+<!-- ══════════ රෝපණ වාර්තාව ══════════ -->
+<section class="planted" id="planted">
+  <div class="section-heading reveal">
+    <div class="eyebrow">පොළොවේ</div>
+    <h2>රෝපණය කර ඇති <em>පැළ</em>.</h2>
+    <p class="kicker">සෑම ඡායාරූපයක්ම එවා ඇත්තේ පැළය රැගෙන ඇවිත් පොළොවේ රෝපණය කළ තැනැත්තා විසිනි.</p>
+  </div>
+  <div class="planted-grid" id="planted-grid"></div>
+  <div class="list-empty" id="planted-empty">පළමු පැළ මාර්ගයේ ය. ඒවා පොළොවේ රෝපණය වන විට මෙම වාර්තාව පිරෙනු ඇත.</div>
+</section>
+
+<!-- ══════════ අවසන් ══════════ -->
+<section class="closing">
+  <div class="reveal closing-card">
+    <p class="closing-verse">“ආරාමයක් හෝ උයනක් රෝපණය කරන, පාලමක්, විවේකස්ථානයක්, ළිඳක් තනන අයට — දිවා රාත්‍රී දෙකෙහිම පින් වැඩේ.”</p>
+    <div class="closing-src">වනරෝප සූත්‍රය · සං.නි. 1.47</div>
+  </div>
+</section>
+
+<!-- ══════════ වෙන් කිරීමේ කවුළුව ══════════ -->
+<div class="modal" id="pledge-modal" aria-hidden="true">
+  <div class="modal-overlay" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="pledge-title">
+    <button class="modal-x" type="button" aria-label="වසන්න" data-close>&times;</button>
+    <div id="pledge-form-view">
+      <div class="eyebrow">පැළයක් වෙන් කරන්න</div>
+      <h3 id="pledge-title">මෙය රැගෙන එන්න</h3>
+      <p class="field-hint" style="margin:2px 0 0">එක් පැළයක් රැගෙන එන්නේ එක් අයෙකි. ඔබ එය වෙන් කළ පසු අන් අයට එය වෙන් කළ නොහැක.</p>
+      <div class="modal-plant" id="pledge-plant"></div>
+      <div class="form-err" id="pledge-err" hidden></div>
+      <div class="field">
+        <label for="pl-name">ඔබේ නම</label>
+        <input id="pl-name" type="text" maxlength="80" placeholder="සටහන් කිරීමට කැමති ආකාරයට" />
+      </div>
+      <div class="field">
+        <label for="pl-contact">ඊමේල් හෝ WhatsApp <span style="text-transform:none;letter-spacing:0">(අවශ්‍ය නැත)</span></label>
+        <input id="pl-contact" type="text" maxlength="120" placeholder="ඔබේ පැමිණීම ගැන සම්බන්ධ වීමට" />
+      </div>
+      <div class="field">
+        <label for="pl-note">සටහනක් <span style="text-transform:none;letter-spacing:0">(අවශ්‍ය නැත)</span></label>
+        <textarea id="pl-note" maxlength="300" placeholder="පින් අනුමෝදනාවක්, හෝ පැමිණීමට බලාපොරොත්තු වන දිනය."></textarea>
+      </div>
+      <button class="btn-primary" id="pl-submit" style="width:100%;justify-content:center">මෙම පැළය වෙන් කරන්න</button>
+      <p class="field-hint" style="margin-top:12px">ඔබේ නම සහ පැළය මෙම පිටුවේ ප්‍රසිද්ධියේ පෙන්වයි. සම්බන්ධතා තොරතුරු කිසිවිටෙක පෙන්වන්නේ නැත.</p>
+    </div>
+
+    <div id="pledge-done-view" hidden style="text-align:center">
+      <div class="ok-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+      <h3>වෙන් කරන ලදී. ස්තූතියි.</h3>
+      <p style="color:var(--ink-soft);margin-top:8px">ඊළඟ වතාවේ ආරණ්‍යයට එන විට පැළය රැගෙන එන්න. එය පොළොවේ රෝපණය කළ පසු, මෙම පිටුවට නැවත පැමිණ, ලැයිස්තුවෙන් ඔබේ පැළය සොයාගෙන, එහි ඇති <b>ඡායාරූපය උඩුගත කරන්න</b> බොත්තම ඔබන්න.</p>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ ඡායාරූප උඩුගත කිරීම ══════════ -->
+<div class="modal" id="claim-modal" aria-hidden="true">
+  <div class="modal-overlay" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="claim-title">
+    <button class="modal-x" type="button" aria-label="වසන්න" data-close>&times;</button>
+    <div class="eyebrow">වෙන් කිරීම සම්පූර්ණ කරන්න</div>
+    <h3 id="claim-title">ඡායාරූපය එවන්න</h3>
+    <p id="claim-intro" style="color:var(--ink-soft);margin:8px 0 4px">පොළොවේ රෝපණය කළ පැළයේ ඡායාරූපයක් උඩුගත කරන්න. ආරණ්‍යය එය පරීක්ෂා කර අනුමත කළ පසු, එය මෙම පිටුවේ රෝපණ වාර්තාවේ පෙන්වයි.</p>
+    <div class="form-err" id="claim-err" hidden></div>
+    <div class="field" style="margin-top:16px">
+      <label for="cl-file">ඡායාරූපය</label>
+      <input id="cl-file" type="file" accept="image/*" />
+      <p class="field-hint">ඕනෑම දුරකථනයකින් ගත් JPG හෝ PNG. විශාල ඡායාරූප ස්වයංක්‍රීයව කුඩා කරයි.</p>
+    </div>
+    <img id="cl-preview" alt="" style="display:none;width:100%;border-radius:12px;margin-bottom:14px" />
+    <button class="btn-primary" id="cl-submit" style="width:100%;justify-content:center" disabled>ඡායාරූපය යවන්න</button>
+  </div>
+</div>
+
+<!-- eco-header -->
+<link rel="stylesheet" href="../../eco-header.css?v=11">
+<script id="eco-header" src="../../eco-header.js?v=10" data-root="../../" data-links='[{"label": "ක්‍රියාත්මක වන ආකාරය", "href": "#how"}, {"label": "පැළ", "href": "#lists"}, {"label": "රෝපණය කළ", "href": "#planted"}, {"label": "ලැයිස්තුව (PDF)", "href": "rideekanda-herbal-plants.pdf", "external": true}, {"label": "English", "href": "en/"}, {"label": "පරිත්‍යාග", "href": "../../donate/", "cta": true, "external": true}]' data-pad="true" defer></script>
+
+<!-- Admin entry, on the same terms as the English page: always in the
+     installed app (it has no address bar), otherwise only once this device
+     has unlocked the admin page. -->
+<script>
+  (function () {
+    try {
+      var unlocked = localStorage.getItem("rk-plants-admin-device") === "1";
+      var mm = window.matchMedia;
+      var standalone = (mm && (mm("(display-mode: standalone)").matches ||
+                               mm("(display-mode: fullscreen)").matches ||
+                               mm("(display-mode: minimal-ui)").matches)) ||
+                       window.navigator.standalone === true;
+      var remembered = localStorage.getItem("rk-kiosk") === "1";
+      var kparam = new URLSearchParams(location.search).get("kiosk");
+      var isApp = kparam === "1" || (kparam !== "0" && (standalone || remembered));
+      if (!unlocked && !isApp) return;
+      var tag = document.getElementById("eco-header");
+      if (!tag) return;
+      var links = JSON.parse(tag.getAttribute("data-links") || "[]");
+      var at = links.length;
+      for (var i = 0; i < links.length; i++) if (links[i].cta) { at = i; break; }
+      links.splice(at, 0, { label: "පරිපාලනය", href: "admin.html" });
+      tag.setAttribute("data-links", JSON.stringify(links));
+    } catch (e) {}
+  })();
+</script>
+
+<!-- eco-nav -->
+<link rel="stylesheet" href="../../eco-nav.css?v=21">
+<script id="eco-nav" src="../../eco-nav.js?v=41" data-root="../../" data-current="herbal-plants" defer></script>
+<!-- eco-footer -->
+<link rel="stylesheet" href="../../eco-footer.css?v=10">
+<script id="eco-footer" src="../../eco-footer.js?v=10" data-root="../../" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="plants-data.js?v=2"></script>
+<script src="db.js?v=3"></script>
+<script src="app.js?v=9"></script>
+</body>
+</html>

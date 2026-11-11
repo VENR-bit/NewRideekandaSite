@@ -1,0 +1,12 @@
+.DS_Store
+*.pdf
+site 2/
+.claude/
+logo rideekanda.png
+Pics of ThreeStory Building/
+
+# Large media files (host separately or use Git LFS)
+Threestory building.glb
+building-compressed.glb
+shapr3d_export_*.glb
+*.mp4

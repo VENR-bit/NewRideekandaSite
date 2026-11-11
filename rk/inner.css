@@ -1,0 +1,109 @@
+/* ──────────────────────────────────────────────────────────────
+   Rideekanda — inner pages  ·  rk/inner.css
+   One stylesheet, linked from the <head> of every sub-page after
+   the page's own CSS. It does three things:
+     1. lifts the dark curtain the previous page raised (page enter);
+     2. re-points each page's own colour / font variables at the
+        paper · forest · saffron palette of the home page;
+     3. a few shared refinements (buttons, labels, headings).
+   Which rules apply is chosen by <html data-rk="…">:
+     std      content pages that share the bg / ink / accent variables
+     booking  donate  requirements  green  road  three   — the app pages,
+              each with its own variable names, mapped one by one.
+   Night colours for the common variables live in eco-theme.css.
+   ────────────────────────────────────────────────────────────── */
+
+/* 1 ── page enter ── */
+html[data-rk]::after {
+  content: ""; position: fixed; inset: 0; z-index: 99990; background: #0a100c; pointer-events: none;
+  animation: rkEnter .95s cubic-bezier(.76, 0, .24, 1) .06s both;
+}
+@keyframes rkEnter { from { transform: translateY(0); } to { transform: translateY(-101%); } }
+@media (prefers-reduced-motion: reduce) { html[data-rk]::after { display: none; } }
+@media print { html[data-rk]::after { display: none; } }
+
+html[data-rk] {
+  --rk-text: "Hanken Grotesk", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --rk-display: "Cormorant Garamond", "Cormorant", Georgia, serif;
+}
+html[data-rk] ::selection { background: #b4601a; color: #fff; }
+
+/* 2 ── palette: content pages ── */
+html[data-rk~="std"] {
+  --bg: #ece7da; --bg-2: #e3dccb; --card: #f4f0e6; --paper: #f4f0e6;
+  --ink: #17201a; --ink-soft: #48524a; --muted: #717a68; --line: rgba(23, 32, 26, .15);
+  --accent: #b4601a; --accent-soft: #d98a3a; --forest: #4f6a48;
+  --dark-bg: #0d1510; --dark-bg-2: #131e17; --dark-ink: #ebe6d6; --dark-muted: #a3a999;
+  --shadow: 0 14px 40px rgba(23, 32, 26, .14);
+  --font-body: var(--rk-text); --body: var(--rk-text);
+}
+html[data-rk~="std"][data-theme="dark"], html[data-rk~="std"][data-theme="night"] {
+  --bg: #0c120e; --bg-2: #111a14; --card: #151f18; --paper: #151f18;
+  --ink: #ebe6d6; --ink-soft: #bdbcaa; --muted: #8b9484; --line: rgba(235, 230, 214, .15);
+  --accent: #e39a48; --accent-soft: #f0b469; --forest: #9db58f;
+  --dark-bg: #070c09; --dark-bg-2: #0e1611; --dark-ink: #ebe6d6; --dark-muted: #a3a999;
+  --shadow: 0 16px 44px rgba(0, 0, 0, .5);
+}
+html[data-rk~="std"]:not([lang="si"]) body { font-family: var(--rk-text); }
+
+/* 3 ── shared refinements on the content pages ── */
+html[data-rk~="std"] h1, html[data-rk~="std"] h2 { letter-spacing: -.015em; }
+html[data-rk~="std"] .hero h1 { font-weight: 300; letter-spacing: -.025em; }
+html[data-rk~="std"] .section-title { font-weight: 300; letter-spacing: -.02em; }
+html[data-rk~="std"] .eyebrow { font-family: var(--rk-text); letter-spacing: .2em; font-weight: 500; }
+html[data-rk~="std"] .hero .tagline { font-family: var(--rk-text); letter-spacing: .26em; font-weight: 500; }
+html[data-rk~="std"] .btn {
+  font-family: var(--rk-text); font-weight: 500; letter-spacing: .08em; border-radius: 999px;
+}
+html[data-rk~="std"] .btn.primary { background: #e39a48; border-color: #e39a48; color: #1a1208; }
+html[data-rk~="std"] .btn.primary:hover { background: #f6ead4; border-color: #f6ead4; color: #1a1208; }
+html[data-rk~="std"] .section.dark { background: var(--dark-bg); }
+
+/* ── Book your stay ── */
+html[data-rk~="booking"] {
+  --bg: #ece7da; --bg-soft: #f4f0e6; --card: #f4f0e6; --ink: #17201a; --ink-2: #232d25;
+  --muted: #5f6a5d; --muted-2: #79816f; --accent: #b4601a; --accent-deep: #8f4a12; --sans: var(--rk-text);
+}
+html[data-rk~="booking"][data-theme="dark"] {
+  --bg: #0c120e; --bg-soft: #111a14; --card: #151f18; --ink: #ebe6d6; --ink-2: #dcd8c7;
+  --muted: #8b9484; --muted-2: #8b9484; --line: rgba(235, 230, 214, .13); --line-soft: rgba(235, 230, 214, .07);
+  --accent: #e39a48; --accent-deep: #d98a3a;
+}
+
+/* ── Dāna ── */
+html[data-rk~="donate"] {
+  --bg: #ece7da; --bg-2: #e3dccb; --bg-3: #d9d1bd; --card: #f4f0e6; --ink: #141a15; --ink-2: #232d25;
+  --muted: #5f6a5d; --accent: #b4601a; --accent-2: #8f4a12; --body-font: var(--rk-text);
+}
+
+html[data-rk~="donate"][data-theme="dark"] {
+  --bg: #0c120e; --bg-2: #111a14; --bg-3: #172219; --card: #151f18; --ink: #ebe6d6; --ink-2: #cfcbb9;
+  --muted: #8b9484; --line: rgba(235, 230, 214, .18); --line-soft: rgba(235, 230, 214, .09);
+  --accent: #e39a48; --accent-2: #d98a3a;
+}
+html[data-rk~="donate"][data-theme="dark"] .method.active,
+html[data-rk~="donate"][data-theme="dark"] .amount.selected,
+html[data-rk~="donate"][data-theme="dark"] .bank-tab.active { color: #1a1208; }
+
+/* ── Monastery requirements ── */
+html[data-rk~="requirements"] {
+  --bg: #ece7da; --paper: #f4f0e6; --paper-2: #efe9db; --ink: #17201a; --ink-soft: #48524a; --sans: var(--rk-text);
+}
+
+html[data-rk~="requirements"] h1 .hl-red::after { content: " "; }
+
+/* ── Projects index, herbal planting, library café, reviews ── */
+html[data-rk~="green"] {
+  --bg: #ece7da; --bg-deep: #e3dccb; --card: #f6f2e8; --ink: #17201a; --ink-soft: #48524a; --ink-dim: #48524a;
+  --muted: #717a68; --faint: #717a68; --line: #d9d2bf; --sans: var(--rk-text);
+}
+html[data-rk~="green"][data-theme="dark"] {
+  --bg: #0c120e; --bg-deep: #111a14; --card: #151f18; --ink: #ebe6d6; --ink-soft: #bdbcaa; --ink-dim: #bdbcaa;
+  --muted: #8b9484; --faint: #8b9484; --line: rgba(235, 230, 214, .15);
+}
+
+/* ── Road project ── */
+html[data-rk~="road"] { --paper: #ece7da; --paper-2: #e3dccb; --paper-3: #d9d1bd; --body: var(--rk-text); }
+
+/* ── ThreeStory building ── */
+html[data-rk~="three"] { --paper: #ece7da; --paper-2: #e3dccb; --sans: var(--rk-text); }

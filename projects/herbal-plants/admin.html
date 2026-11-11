@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Planting Programme — Admin</title>
+<link rel="icon" href="../../favicon.ico" sizes="any" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Manrope:wght@400;500;600;700&family=Noto+Serif+Sinhala:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=10" />
+<style>
+  .admin-shell { max-width: 1080px; margin: 0 auto; padding: 40px 28px 80px; }
+  .admin-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 26px; }
+  .admin-head h1 { font-family: var(--serif); font-weight: 500; font-size: 38px; }
+  .admin-sub { color: var(--muted); font-size: 13.5px; }
+  .admin-tabs { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+  .row {
+    display: grid; grid-template-columns: 120px 1fr auto; gap: 18px; align-items: center;
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px 16px; margin-bottom: 12px; box-shadow: var(--shadow-sm);
+  }
+  .row img { width: 120px; height: 90px; object-fit: cover; border-radius: 10px; background: var(--bg-deep); cursor: zoom-in; }
+  .row .noimg { width: 120px; height: 90px; border-radius: 10px; background: var(--bg-deep); display: grid; place-items: center; color: var(--muted); font-size: 11px; }
+  .row-name { font-family: var(--serif); font-size: 20px; }
+  .row-si { font-family: var(--sinhala); font-size: 14px; color: var(--ink-soft); }
+  .row-meta { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+  .row-acts { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .pill { font-size: 10px; letter-spacing: 1.6px; text-transform: uppercase; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+  .pill.pending  { background: #f6e6c8; color: #8a6414; }
+  .pill.approved { background: var(--accent-tint); color: var(--accent); }
+  .pill.rejected { background: #f2d9d4; color: #a8351a; }
+  .pill.none     { background: var(--bg-deep); color: var(--muted); }
+  .mini { padding: 8px 15px; border-radius: 999px; cursor: pointer; font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; border: 1px solid var(--line); background: transparent; color: var(--ink-soft); }
+  .mini.go { background: var(--accent); border-color: var(--accent); color: #fdfbf6; }
+  .mini.no:hover { border-color: #a8351a; color: #a8351a; }
+  /* `hidden` must win over the display rules below, or the gate never
+     goes away once unlocked. */
+  [hidden] { display: none !important; }
+  .gate { min-height: 100dvh; display: grid; place-items: center; padding: 30px; }
+  .gate-card { text-align: center; max-width: 340px; }
+  .gate-card input { width: 100%; text-align: center; font-size: 26px; letter-spacing: .5em; padding: 12px 0; font-family: ui-monospace, monospace; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--ink); }
+  .setup-note { background: #fdf3e0; border: 1px solid #edd9ae; border-radius: 14px; padding: 18px 20px; margin-bottom: 22px; color: #6b5216; font-size: 14px; line-height: 1.65; }
+  .setup-note code { background: rgba(0,0,0,.06); padding: 1px 6px; border-radius: 4px; font-size: 13px; }
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; }
+    .row img, .row .noimg { width: 100%; height: 180px; }
+    .row-acts { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <form class="gate-card" id="gate-form">
+    <img src="../library-cafe/lotus.png" alt="" style="width:64px;margin-bottom:16px;opacity:.9" />
+    <div style="font-family:var(--serif);font-size:26px;margin-bottom:4px">Planting Programme</div>
+    <div class="admin-sub" style="margin-bottom:24px">Photo approvals · internal</div>
+    <label style="display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;text-align:left">Enter passcode</label>
+    <input id="code" type="password" inputmode="numeric" maxlength="5" placeholder="•••••" autocomplete="off" />
+    <div id="gate-err" style="color:#a8351a;font-size:13px;margin-top:10px;display:none">Incorrect passcode.</div>
+    <button class="btn-primary" type="submit" style="margin-top:18px;width:100%;justify-content:center">Unlock</button>
+  </form>
+</div>
+
+<main class="admin-shell" id="shell" hidden>
+  <div class="setup-note" id="setup-note" hidden>
+    <b>Database not reachable.</b> Run <code>supabase-setup.sql</code> in the Supabase SQL editor first —
+    dashboard → SQL Editor → New query → paste the file → Run. Then reload this page.
+  </div>
+
+  <div class="admin-head">
+    <h1>Planting approvals</h1>
+    <span class="admin-sub">· photographs sent in by pledgers</span>
+    <button class="mini" id="refresh" style="margin-left:auto">↺ Refresh</button>
+    <button class="mini" id="lock" title="Hide the Admin link on this device and re-lock">Lock this device</button>
+  </div>
+
+  <div class="admin-tabs">
+    <button class="list-tab on" data-f="pending" type="button">Awaiting approval<small id="c-pending">–</small></button>
+    <button class="list-tab" data-f="approved" type="button">Approved<small id="c-approved">–</small></button>
+    <button class="list-tab" data-f="rejected" type="button">Rejected<small id="c-rejected">–</small></button>
+    <button class="list-tab" data-f="none" type="button">Pledged, no photo yet<small id="c-none">–</small></button>
+  </div>
+
+  <div id="rows"></div>
+  <div class="list-empty" id="empty" hidden>Nothing here.</div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="db.js?v=3"></script>
+<script>
+(function () {
+  var DB = window.RK_PLANTS_DB;
+  var PASSCODE = "92424";                 // same passcode as the Requirements admin
+  var $ = function (id) { return document.getElementById(id); };
+  var all = [], filter = "pending";
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function when(iso) { if (!iso) return ""; var d = new Date(iso); return isNaN(d) ? "" : d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }); }
+
+  function render() {
+    var counts = { pending: 0, approved: 0, rejected: 0, none: 0 };
+    all.forEach(function (r) { counts[r.photo_status] = (counts[r.photo_status] || 0) + 1; });
+    ["pending", "approved", "rejected", "none"].forEach(function (k) { $("c-" + k).textContent = counts[k] || 0; });
+
+    var rows = all.filter(function (r) { return r.photo_status === filter; });
+    $("empty").hidden = rows.length !== 0;
+    $("rows").innerHTML = rows.map(function (r) {
+      var img = r.photo_path
+        ? '<img src="' + esc(DB.publicUrl(r.photo_path)) + '" alt="" loading="lazy" onclick="window.open(this.src,\'_blank\')">'
+        : '<div class="noimg">no photo</div>';
+      var acts = "";
+      if (r.photo_status === "pending")  acts = '<button class="mini go" data-ok="' + r.id + '">Approve</button><button class="mini no" data-no="' + r.id + '">Reject</button>';
+      if (r.photo_status === "approved") acts = '<button class="mini no" data-no="' + r.id + '">Withdraw</button>';
+      if (r.photo_status === "rejected") acts = '<button class="mini go" data-ok="' + r.id + '">Approve after all</button>';
+      return '<div class="row">' + img +
+        '<div>' +
+          (r.sinhala_script ? '<div class="row-si">' + esc(r.sinhala_script) + '</div>' : '') +
+          '<div class="row-name">' + esc(r.sinhala || r.english || r.scientific) + '</div>' +
+          '<div class="row-meta"><i>' + esc(r.scientific) + '</i></div>' +
+          '<div class="row-meta">' + esc(r.pledger_name) + ' · ' + (r.qty || 1) + ' plant' + ((r.qty || 1) > 1 ? 's' : '') +
+            ' · pledged ' + when(r.created_at) + (r.planted_at ? ' · planted ' + when(r.planted_at) : '') + '</div>' +
+          (r.note ? '<div class="row-meta">“' + esc(r.note) + '”</div>' : '') +
+          '<div style="margin-top:7px"><span class="pill ' + esc(r.photo_status) + '">' + esc(r.photo_status) + '</span></div>' +
+        '</div>' +
+        '<div class="row-acts">' + acts + '</div>' +
+      '</div>';
+    }).join("");
+  }
+
+  function load() {
+    return DB.fetchPledges().then(function (rows) {
+      $("setup-note").hidden = !!rows;
+      all = rows || [];
+      render();
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    var ok = e.target.closest("[data-ok]"), no = e.target.closest("[data-no]");
+    var t = e.target.closest(".list-tab");
+    if (t) {
+      document.querySelectorAll(".list-tab").forEach(function (x) { x.classList.remove("on"); });
+      t.classList.add("on"); filter = t.getAttribute("data-f"); render(); return;
+    }
+    if (ok) { ok.disabled = true; DB.setPhotoStatus(+ok.getAttribute("data-ok"), "approved").then(load); }
+    if (no) { no.disabled = true; DB.setPhotoStatus(+no.getAttribute("data-no"), "rejected").then(load); }
+  });
+
+  $("refresh").addEventListener("click", load);
+
+  function unlock() { $("gate").hidden = true; $("shell").hidden = false; load(); }
+  $("gate-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    if ($("code").value === PASSCODE) {
+      sessionStorage.setItem("rk-plants-admin", "1");
+      // Remembering the device is what makes the Admin link appear in the
+      // public page's menu — only here, never for ordinary visitors.
+      try { localStorage.setItem("rk-plants-admin-device", "1"); } catch (err) {}
+      unlock();
+    } else { $("gate-err").style.display = "block"; $("code").value = ""; }
+  });
+
+  // Forget this device: hides the Admin link again and re-locks.
+  $("lock").addEventListener("click", function () {
+    if (!confirm("Lock this device? The Admin link will disappear from the planting page until you enter the passcode again.")) return;
+    try { sessionStorage.removeItem("rk-plants-admin"); localStorage.removeItem("rk-plants-admin-device"); } catch (err) {}
+    location.reload();
+  });
+  if (sessionStorage.getItem("rk-plants-admin") === "1") unlock();
+  else $("code").focus();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="si" data-rk="std">
+<head>
+  <script>(function(){try{var m=localStorage.getItem("rk-theme"),u=+localStorage.getItem("rk-theme-until");if((m!=="light"&&m!=="dark")||!u||Date.now()>=u){m="auto";localStorage.removeItem("rk-theme");localStorage.removeItem("rk-theme-until");}var h=new Date().getHours();var day=(m==="auto")?(h>=6&&h<18):(m==="light");var t=day?"light":"dark";var r=document.documentElement;r.setAttribute("data-theme",t);r.setAttribute("data-theme-mode",m);}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ධර්ම දේශනා — රිදීකන්ද ආරණ්‍ය සේනාසනය</title>
+  <meta name="description" content="රිදීකන්ද ආරණ්‍ය සේනාසනයේ විපස්සනා භාවනා වැඩසටහනේ සිංහල ධර්ම දේශනා — නැරඹීමට සහ බාගත කිරීමට.">
+  <link rel="icon" href="../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="../../app/favicon-64.png?v=3" />
+  <link rel="apple-touch-icon" href="../../app/apple-touch-icon.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Sinhala:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css?v=3">
+  <style>
+    /* Sinhala typography for this page */
+    .hero h1, .hero__soon, .ses__title, .ses__day, .ses__about, .hero__about, .hero__lang{font-family:"Noto Serif Sinhala","Cormorant Garamond",serif}
+    .hero h1{font-weight:600;letter-spacing:0}
+  </style>
+  <!-- Google Analytics -->
+  <script src="/analytics.js?v=1"></script>
+  <!-- shared inner-page theme (rk/inner.css) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..600&display=swap" />
+  <link rel="stylesheet" href="../../rk/inner.css?v=3" />
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <img class="lotus" src="../../assets/lotus-logo.png" alt="රිදීකන්ද ආරණ්‍ය සේනාසනය" draggable="false">
+      <p class="place">රිදීකන්ද&nbsp;·&nbsp;ආරණ්‍ය සේනාසනය</p>
+      <h1>ධර්ම දේශනා</h1>
+      <p class="hero__si">Dhamma Talks · Sinhala</p>
+      <p class="hero__lang"><a href="../">View in English →</a></p>
+      <p class="hero__about">
+        විපස්සනා භාවනා වැඩසටහනේ සිංහල ධර්ම දේශනා මෙහි ඇත. එක් එක් දේශනය
+        මෙතැනින්ම නරඹන්න, නැතහොත් බාගත කරගන්න. සියලු සත්වයෝ සුවපත් වෙත්වා! 🙏
+      </p>
+      <div class="rule"></div>
+      <p class="hero__total" id="total"></p>
+      <p class="hero__soon">නව දේශනා ළඟදීම එක් කෙරේ…</p>
+    </section>
+
+    <section class="sessions" id="sessions"></section>
+  </main>
+
+  <script src="sessions-data.js?v=2"></script>
+  <script src="../retreat.js?v=2"></script>
+
+  <!-- registration gate -->
+  <link rel="stylesheet" href="../../register-gate.css?v=2">
+  <script id="rk-gate" src="../../register-gate.js?v=3" data-lang="si" data-page="dharma-deshana" defer></script>
+
+  <!-- eco-header -->
+  <link rel="stylesheet" href="../../eco-header.css?v=11">
+  <script id="eco-header" src="../../eco-header.js?v=10" data-root="../../" data-links='[]' data-pad="true" defer></script>
+  <!-- eco-nav -->
+  <link rel="stylesheet" href="../../eco-nav.css?v=21">
+  <script id="eco-nav" src="../../eco-nav.js?v=41" data-root="../../" data-current="retreat" defer></script>
+  <!-- eco-footer -->
+  <link rel="stylesheet" href="../../eco-footer.css?v=10">
+  <script id="eco-footer" src="../../eco-footer.js?v=10" data-root="../../" defer></script>
+  <!-- eco-theme -->
+  <link rel="stylesheet" href="../../eco-theme.css?v=11">
+  <script src="../../eco-theme.js?v=4" defer></script>
+</body>
+</html>

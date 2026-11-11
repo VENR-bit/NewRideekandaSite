@@ -1,0 +1,1225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <!-- Dashboard boots in night mode; colour the iOS Safari toolbar/status
+       bar to match so no white strip shows on load or refresh. -->
+  <meta name="theme-color" content="#1f1a14">
+  <title>Rideekanda Forest Monastery</title>
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="../app/favicon-64.png?v=3" />
+  <link rel="apple-touch-icon" href="../app/apple-touch-icon.png?v=2" />
+  <!-- Match the very FIRST paint to the auto day/night theme so no light/dark
+       strip flashes in the safe-area / dynamic-viewport gap (iOS Safari) on
+       load or refresh. Runs synchronously before body paints; app.jsx keeps it
+       in sync afterwards. -->
+  <script>
+    (function () {
+      var h = new Date().getHours(), day = (h >= 6 && h < 18);
+      var bg = day ? '#f4ede0' : '#1f1a14';
+      var de = document.documentElement;
+      de.style.background = bg;
+      de.style.colorScheme = day ? 'light' : 'dark';
+      var m = document.querySelector('meta[name="theme-color"]');
+      if (m) m.setAttribute('content', bg);
+    })();
+  </script>
+  <!-- Remember kiosk mode at the launch page so QR codes etc. stay enabled
+       as visitors navigate to inner pages (some kiosk launchers don't report
+       a display-mode on every page). ?kiosk=1 forces on, ?kiosk=0 off. -->
+  <script>
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search).get("kiosk");
+        var mm = window.matchMedia;
+        var k = (mm && (mm("(display-mode: standalone)").matches ||
+                        mm("(display-mode: fullscreen)").matches ||
+                        mm("(display-mode: minimal-ui)").matches)) ||
+                window.navigator.standalone === true;
+        if (p === "1" || k) localStorage.setItem("rk-kiosk", "1");
+        if (p === "0") localStorage.removeItem("rk-kiosk");
+      } catch (e) {}
+    })();
+  </script>
+  <!-- PWA / kiosk install: standalone display = no browser URL bar -->
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="64x64" href="../app/favicon-64.png?v=2">
+  <link rel="apple-touch-icon" href="../app/apple-touch-icon.png?v=2">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Rideekanda">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+Sinhala:wght@400;600&family=Abhaya+Libre:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ─────────────────────────────────────────────────────────
+       Palette — paper (light default) / night (dark).
+       Lifted from new appearance to match the family look.
+       ───────────────────────────────────────────────────────── */
+    :root {
+      --bg: #f4ede0;
+      --bg-deep: #ece3d1;
+      --card: #fdfbf6;
+      --ink: #1f1a14;
+      --ink-dim: #4a4034;
+      --ink-faint: #8a7d68;
+      --muted: #8a7d68;
+      --line: #e6dcc6;
+      --accent: #a3763c;
+      --accent-soft: #c79a5c;
+      --gold: #c08a3e;
+      --saffron: #c08a3e;
+      --halo: rgba(45, 74, 50, 0.22);
+      --shadow-sm: 0 1px 2px rgba(57, 44, 22, 0.05), 0 0 0 1px rgba(57, 44, 22, 0.04);
+      --shadow-md: 0 12px 32px -16px rgba(57, 44, 22, 0.22), 0 2px 6px -2px rgba(57, 44, 22, 0.08), 0 0 0 1px rgba(57, 44, 22, 0.05);
+    }
+    body.dark {
+      --bg: #1f1a14;
+      --bg-deep: #16120d;
+      --card: #2a241c;
+      --ink: #f3ecdb;
+      --ink-dim: #d8ccb4;
+      --ink-faint: #9d8d72;
+      --muted: #9d8d72;
+      --line: #3a3025;
+      --accent: #c08a3e;
+      --accent-soft: #d8a85a;
+      --gold: #e0b76a;
+      --saffron: #e0b76a;
+      --halo: rgba(224, 183, 106, 0.28);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,235,200,0.04);
+      --shadow-md: 0 16px 40px -18px rgba(0,0,0,0.7), 0 2px 6px -2px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,235,200,0.05);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      width: 100%;
+      /* Fallbacks first, then dynamic viewport height (dvh) which tracks
+         iOS Safari's collapsing toolbar — this removes the white margin
+         at the bottom that 100% / 100vh leaves behind. */
+      height: 100%;
+      height: 100vh;
+      height: 100dvh;
+      color: var(--ink);
+      font-family: 'Manrope', system-ui, sans-serif;
+      overflow: hidden;
+      overscroll-behavior: none;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.6s ease, color 0.6s ease;
+    }
+    /* The app BOOTS in night mode. Default BOTH html and body to the night
+       colour so the very first paint (and the strip iOS Safari exposes for
+       its collapsing toolbar / safe area) is dark — no white flash on load
+       or refresh. color-scheme: dark also makes Safari paint its own canvas
+       dark. These rules come AFTER the shared block above so they win the
+       cascade for <html> (the element that paints the safe-area strip).
+       Paper (light) mode is applied at runtime by app.jsx, which sets the
+       body.dark class off and writes html/body background directly. */
+    html { background: #1f1a14; color-scheme: dark; }
+    body { background: var(--bg); }
+    body.dark { background: #1f1a14; }
+    #root {
+      width: 100%;
+      height: 100%;
+      height: 100vh;
+      height: 100dvh;
+    }
+
+    /* Backdrop — paper texture: two faint radial washes (gold + forest) */
+    .backdrop {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--gold) 10%, transparent), transparent 48%),
+        radial-gradient(circle at 82% 88%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 50%),
+        radial-gradient(ellipse 60% 55% at 50% 46%, color-mix(in srgb, var(--card) 55%, transparent), transparent 72%);
+      transition: background 0.6s ease;
+    }
+    /* Very subtle paper grain */
+    .grain {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      opacity: 0.5;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='220' height='220' filter='url(%23n)' opacity='0.025'/></svg>");
+    }
+    body.dark .grain { mix-blend-mode: screen; opacity: 0.4; }
+    /* Decorative mountain wash at bottom — sumi-e silhouette */
+    .horizon {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      height: 30vh;
+      pointer-events: none;
+      opacity: 0.08;
+      background:
+        radial-gradient(ellipse 80% 100% at 30% 100%, rgba(45,74,50,0.15) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 90% at 70% 100%, rgba(45,74,50,0.1) 0%, transparent 50%);
+      transition: opacity 0.6s ease;
+    }
+    body.dark .horizon { opacity: 0.18; }
+
+    /* Top & bottom strips — translucent white bands behind the title and the
+       bottom buttons. Above the tiles (z 2), below the chrome (z 500). */
+    .strip {
+      /* z-index 400: above every tile (tiles are z ~200–300, focal +100) but
+         below the focal caption (z 500) and the body-level chrome.
+         Diffuse glass: a light tint + backdrop blur so tiles passing under
+         the header/footer look blurred. A thin accent line marks the edge. */
+      position: fixed; left: 0; right: 0; z-index: 400;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0.32);          /* day */
+      -webkit-backdrop-filter: blur(16px) saturate(1.3);
+              backdrop-filter: blur(16px) saturate(1.3);
+    }
+    body.dark .strip { background: rgba(0, 0, 0, 0.42); } /* night */
+    /* Extend the band up through the iOS safe area so, in the installed PWA,
+       the glass band sits behind the status bar (env() is 0 in a browser). */
+    .strip-top { top: 0; height: calc(104px + env(safe-area-inset-top, 0px)); }
+    .strip-bottom { bottom: 0; height: 100px; }
+
+    /* Header */
+    .chrome {
+      position: fixed; top: 0; left: 0; right: 0;
+      /* Reserve the iOS safe area on top so the title clears the status bar in
+         the installed PWA; the title stays centred in the 104px below it. */
+      height: calc(104px + env(safe-area-inset-top, 0px));
+      padding: env(safe-area-inset-top, 0px) 32px 0;
+      display: flex; justify-content: center; align-items: center;
+      pointer-events: none;
+      z-index: 500;
+    }
+    .chrome > * { pointer-events: auto; }
+    .brand {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .brand .name {
+      color: var(--muted);
+      text-align: center;
+      transition: color 0.6s ease;
+    }
+    /* English title — Cormorant serif, larger */
+    .brand .name-en {
+      font-family: 'Cormorant', Georgia, serif;
+      font-weight: 600;
+      font-size: 30px;
+      letter-spacing: 0.04em;
+      color: var(--ink-dim);
+      line-height: 1.1;
+    }
+    /* Sinhala title — Abhaya Libre (elegant Sinhala serif), a touch larger */
+    .brand .name-si {
+      font-family: 'Abhaya Libre', 'Noto Serif Sinhala', serif;
+      font-weight: 500;
+      font-size: 19px;
+      letter-spacing: 0.01em;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.2;
+    }
+    @media (max-width: 560px) {
+      .brand .name-en { font-size: 23px; }
+      .brand .name-si { font-size: 16px; }
+    }
+
+    /* Stage: where tiles live */
+    .stage {
+      position: absolute; inset: 0;
+      cursor: grab;
+      touch-action: none;
+    }
+    .stage.dragging { cursor: grabbing; }
+
+    /* Each tile is absolutely positioned — shifted down to leave room for header */
+    .tile {
+      position: absolute;
+      left: 50%; top: 50%;
+      border-radius: 9999px;
+      display: grid; place-items: center;
+      will-change: transform, opacity;
+      transition: filter 0.4s ease, box-shadow 0.5s ease;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .tile-inner {
+      position: absolute; inset: 0;
+      border-radius: 9999px;
+      display: grid; place-items: center;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.45s ease, border-color 0.45s ease, background 0.6s ease;
+    }
+    .tile.focal .tile-inner {
+      box-shadow:
+        var(--shadow-md),
+        0 0 0 1.5px color-mix(in srgb, var(--accent) 38%, transparent),
+        0 0 44px -6px var(--halo);
+      border-color: transparent;
+    }
+    /* Home tile: forest-green (paper) / espresso-gold (night) medallion */
+    .tile--home .tile-inner {
+      background:
+        radial-gradient(circle at 34% 28%, color-mix(in srgb, var(--accent) 82%, #fff 18%), var(--accent) 78%);
+      border-color: transparent;
+      box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.14);
+    }
+    .tile--home.focal .tile-inner {
+      box-shadow:
+        var(--shadow-md),
+        0 0 0 2px color-mix(in srgb, var(--accent) 55%, transparent),
+        0 0 54px -4px var(--halo),
+        inset 0 1px 0 rgba(255,255,255,0.16);
+    }
+    body.dark .tile--home .tile-inner {
+      background: radial-gradient(circle at 34% 28%, #3a3026, #211c15 80%);
+      box-shadow: var(--shadow-md), 0 0 0 1.5px color-mix(in srgb, var(--gold) 45%, transparent), inset 0 1px 0 rgba(255,235,200,0.06);
+    }
+    /* Soft top sheen */
+    .tile-rim {
+      position: absolute; inset: 0;
+      border-radius: 9999px;
+      pointer-events: none;
+      background: radial-gradient(circle at 32% 22%, rgba(255,255,255,0.5), transparent 46%);
+      opacity: 0.5;
+    }
+    body.dark .tile-rim { background: radial-gradient(circle at 32% 22%, rgba(255,240,210,0.08), transparent 46%); opacity: 1; }
+    .tile--home .tile-rim { background: radial-gradient(circle at 34% 24%, rgba(255,255,255,0.22), transparent 50%); opacity: 1; }
+    /* Icon */
+    .tile-icon {
+      position: relative;
+      z-index: 2;
+      color: var(--accent);
+      transition: color 0.45s ease;
+    }
+    .tile--home .tile-icon { color: #f4ede0; }
+    body.dark .tile--home .tile-icon { color: #f4ede0; }
+    /* Day mode only: the centre Home medallion + tile icons use the espresso
+       brown of the night Home medallion. Dark mode is left untouched (night
+       keeps its gold icons via var(--accent); centre lotus stays cream). */
+    body:not(.dark) .tile--home .tile-inner { background: radial-gradient(circle at 34% 28%, #3a3026, #211c15 80%); }
+    body:not(.dark) .tile:not(.tile--home) .tile-icon { color: #3a3026; }
+    /* Mask-based SVG icons inherit currentColor via backgroundColor */
+    /* Tile label beneath */
+    .tile-label {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      opacity: 1;
+      pointer-events: none;
+      transition: opacity 0.3s ease, color 0.6s ease;
+    }
+    .tile.focal .tile-label { opacity: 1; }
+
+    /* Focal readout — just above hint */
+    .focal-bar {
+      position: fixed;
+      bottom: 12px; left: 0; right: 0;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 500;
+      pointer-events: none;
+      transition: color 0.6s ease;
+    }
+    .focal-sep { margin: 0 4px; }
+
+    /* Hint bottom center */
+    .hint {
+      position: fixed;
+      bottom: 22px; left: 0; right: 0;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 500;
+      pointer-events: none;
+      opacity: 0.7;
+      transition: color 0.6s ease;
+    }
+    .hint .key {
+      display: inline-block;
+      padding: 2px 6px;
+      border: 1px solid var(--muted);
+      border-radius: 4px;
+      margin: 0 2px;
+      font-size: 9px;
+    }
+
+    /* Compass — centered above focal readout */
+    .compass {
+      position: fixed; left: 0; right: 0; bottom: 42px;
+      margin: 0 auto;
+      width: 48px; height: 48px;
+      z-index: 500;
+      pointer-events: auto;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+    .compass-ring {
+      stroke: var(--muted);
+      stroke-width: 0.5;
+      fill: none;
+    }
+    .compass-dot { fill: var(--accent); }
+    .compass-tick { stroke: var(--muted); stroke-width: 0.5; }
+
+    /* Day/Night toggle — round icon button, matching the other dock buttons
+       (weather, calendar). Shows a sun in day, a moon at night. */
+    .theme-toggle {
+      position: fixed; top: auto; bottom: 49px; left: calc(50% + 42px); transform: none; z-index: 500;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; padding: 0;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--card) 70%, transparent);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--accent); cursor: pointer;
+      transition: transform 0.25s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .theme-toggle:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+    .theme-toggle .tt-ico { display: inline-flex; }
+    .theme-toggle .tt-ico svg { display: block; width: 19px; height: 19px; }
+    @media (max-width: 600px) {
+      .theme-toggle { bottom: 49px; }
+    }
+
+    /* Calendar button — round icon button matching the chrome buttons.
+       Positioned to the right of the day/night toggle (left set in JS). */
+    .cal-btn {
+      position: fixed; bottom: 49px; left: calc(50% + 150px); z-index: 500;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; padding: 0;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--card) 70%, transparent);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
+    }
+    .cal-btn { flex-direction: column; line-height: 1; gap: 1px; }
+    .cal-btn:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+    .cb-dow { font-family: 'JetBrains Mono', monospace; font-size: 6.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+    .cb-num { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; line-height: 1; color: var(--ink); }
+
+    /* Clock beside the Explore button — pill styled like the chrome buttons */
+    .clock {
+      position: fixed; bottom: 49px; right: calc(50% + 200px); z-index: 500;
+      height: 34px; display: inline-flex; align-items: center; justify-content: center;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--card) 70%, transparent);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px; letter-spacing: 0.14em; font-weight: 500;
+      color: var(--muted); pointer-events: none; white-space: nowrap;
+      transition: color 0.4s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+    @media (max-width: 560px) { .clock { bottom: 48px; font-size: 12px; padding: 0 12px; } }
+
+    /* Weather button — round, live icon, like the other chrome buttons */
+    .wx-btn {
+      position: fixed; bottom: 49px; right: calc(50% + 250px); z-index: 500;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 5px; height: 34px; padding: 0 12px 0 10px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--card) 70%, transparent);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      color: var(--accent); cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.3s ease;
+    }
+    .wx-btn:hover { transform: translateY(-1px); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+    .wx-ico svg, .wx-now-ico svg, .wx-fc svg { display: block; }
+    .wx-ico svg { width: 19px; height: 19px; }
+    .wx-btn-temp {
+      font: 600 13px/1 "Lora", serif; letter-spacing: .2px;
+      color: var(--ink-dim); white-space: nowrap;
+    }
+    .wx-btn-temp:empty { display: none; }
+    @media (max-width: 560px) {
+      .wx-btn { bottom: 48px; gap: 4px; padding: 0 9px 0 7px; height: 32px; }
+      .wx-ico svg { width: 16px; height: 16px; }
+      .wx-btn-temp { font-size: 11px; }
+    }
+
+    /* Weather popup */
+    .wx-modal { position: fixed; inset: 0; z-index: 99600; display: none; }
+    .wx-modal.is-open { display: block; }
+    .wx-overlay { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 50%, rgba(0,0,0,0.5)); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .wx-panel {
+      position: absolute; left: 50%; bottom: 96px; transform: translateX(-50%);
+      width: min(360px, calc(100vw - 32px));
+      background: var(--card); color: var(--ink);
+      border: 1px solid var(--line); border-radius: 18px;
+      box-shadow: 0 40px 90px -30px rgba(0,0,0,0.55);
+      padding: 18px 20px 18px; text-align: center;
+      font-family: 'Manrope', system-ui, sans-serif;
+    }
+    .wx-x { position: absolute; top: 8px; right: 12px; width: 30px; height: 30px; border: 0; background: transparent; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; border-radius: 50%; }
+    .wx-x:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); }
+    .wx-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin: 0; }
+    .wx-place { font-family: 'Cormorant', Georgia, serif; font-size: 1.35rem; margin: 2px 0 10px; color: var(--ink); }
+    .wx-now { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .wx-now-ico svg { width: 46px; height: 46px; color: var(--accent); }
+    .wx-now-temp { font-size: 2.6rem; font-weight: 300; line-height: 1; }
+    .wx-now-temp sup { font-size: 1rem; font-weight: 400; color: var(--muted); top: -1em; }
+    .wx-now-cond { font-size: 0.95rem; color: var(--ink-dim); margin-top: 2px; }
+    .wx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; margin: 14px 0 6px; }
+    .wx-grid div { display: flex; justify-content: space-between; font-size: 0.85rem; border-bottom: 1px solid var(--line); padding-bottom: 5px; }
+    .wx-grid span { color: var(--muted); }
+    .wx-grid b { color: var(--ink); font-weight: 600; }
+    .wx-sun { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0 2px; }
+    .wx-sun-item { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 6px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--accent) 6%, transparent); }
+    .wx-sun-item svg { width: 22px; height: 22px; color: var(--accent); }
+    .wx-sun-l { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+    .wx-sun-item b { font-size: 0.95rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .wx-sec { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin: 14px 0 6px; }
+    .wx-hourly { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+    .wx-hourly .h { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 36px; }
+    .wx-hourly .h .ht { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.02em; color: var(--muted); white-space: nowrap; }
+    .wx-hourly .h svg { width: 20px; height: 20px; color: var(--accent); display: block; }
+    .wx-hourly .h .htemp { font-size: 0.78rem; color: var(--ink); }
+    .wx-hourly .h.now .ht { color: var(--accent); font-weight: 700; }
+    .wx-hourly .h.now .htemp { font-weight: 700; }
+    .wx-hourly::-webkit-scrollbar { height: 5px; }
+    .wx-hourly::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--ink) 18%, transparent); border-radius: 3px; }
+    .wx-fc { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 4px; border-top: 1px solid var(--line); padding-top: 12px; }
+    .wx-fc .d { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .wx-fc .d .dn { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+    .wx-fc .d svg { width: 22px; height: 22px; color: var(--accent); }
+    .wx-fc .d .t { font-size: 0.8rem; color: var(--ink); text-align: center; line-height: 1.15; }
+    .wx-fc .d .t small { display: block; color: var(--muted); font-size: 0.85em; }
+    .wx-foot { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 12px 0 0; }
+    /* Through to Microsoft's precipitation map. It cannot be embedded here --
+       msn.com sends x-frame-options: sameorigin -- so this opens it instead.
+       Its loc parameter is base64 JSON holding the same coordinates as LAT/LON
+       below; move one and move the other, or the map and the panel disagree. */
+    .wx-link {
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      margin: 12px 0 0; padding: 10px 14px;
+      border: 1px solid var(--line); border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace; font-size: 9px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none;
+      transition: border-color .2s ease, color .2s ease, background .2s ease;
+    }
+    .wx-link:hover { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+    .wx-link svg { width: 13px; height: 13px; }
+
+    /* Calendar popup */
+    /* Both popups centre inside the SAFE area, not the raw viewport. On the
+       installed iOS app a panel tall enough to hit max-height otherwise runs
+       up under the status bar, taking its close button with it. The insets go
+       through variables so the geometry can be tested on a desktop browser. */
+    .cal-modal, .rt-modal { --safe-t: env(safe-area-inset-top, 0px); --safe-b: env(safe-area-inset-bottom, 0px); }
+
+    .cal-modal { position: fixed; inset: 0; z-index: 99600; display: none; }
+    .cal-modal.is-open { display: block; }
+    .cal-overlay { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 50%, rgba(0,0,0,0.5)); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .cal-panel {
+      position: absolute; left: 50%;
+      top: calc(50% + (var(--safe-t) - var(--safe-b)) / 2);
+      transform: translate(-50%, -50%);
+      width: min(380px, calc(100vw - 32px)); overflow-y: auto;
+      max-height: calc(100vh  - 48px - var(--safe-t) - var(--safe-b));
+      max-height: calc(100dvh - 48px - var(--safe-t) - var(--safe-b));
+      background: var(--card); color: var(--ink);
+      border: 1px solid var(--line); border-radius: 18px;
+      box-shadow: 0 40px 90px -30px rgba(0,0,0,0.55);
+      padding: 18px 18px 16px;
+      font-family: 'Spectral', Georgia, serif;
+    }
+    .cal-x { position: absolute; top: 10px; right: 12px; width: 30px; height: 30px; border: 0; background: transparent; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; border-radius: 50%; }
+    .cal-x:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); }
+    .cal-head { display: flex; align-items: center; justify-content: space-between; margin: 2px 28px 12px 0; }
+    .cal-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.01em; }
+    .cal-nav { width: 32px; height: 32px; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 50%; font-size: 18px; line-height: 1; cursor: pointer; transition: background .2s ease; }
+    .cal-nav:hover { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+    .cal-dow { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-bottom: 4px; }
+    .cal-dow span { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 4px 0; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+    .cal-cell { position: relative; aspect-ratio: 1 / 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border-radius: 9px; font-size: 0.92rem; color: var(--ink); cursor: default; }
+    .cal-cell.empty { visibility: hidden; }
+    .cal-cell.in-retreat { background: color-mix(in srgb, #4a9d5b 16%, transparent); }
+    .cal-cell.is-today { outline: 2px solid var(--accent); outline-offset: -2px; font-weight: 700; }
+    .cal-cell.has-event { cursor: pointer; }
+    .cal-cell.has-event:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+    .cal-cell .dots { display: flex; gap: 2px; height: 5px; }
+    .cal-cell .dots i { width: 5px; height: 5px; border-radius: 50%; }
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+    .dot.poya, .dots i.poya { background: #d9a521; }
+    .dot.holiday, .dots i.holiday { background: #c0552f; }
+    .dot.retreat, .dots i.retreat { background: #4a9d5b; }
+    .dot.today-dot { background: transparent; box-shadow: inset 0 0 0 2px var(--accent); }
+    .cal-detail { min-height: 1.2em; margin: 12px 2px 0; font-size: 0.86rem; color: var(--ink-soft, var(--muted)); text-align: center; }
+    .cal-detail b { color: var(--ink); font-weight: 600; }
+    .cal-legend { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 12px 0 4px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .cal-legend span { display: inline-flex; align-items: center; }
+
+    /* When tile is loading or initial */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chrome, .hint, .compass, .focal-bar { animation: fadeUp 0.8s ease 0.2s both; }
+
+    /* Dashboard only: move the shared Explore launcher down to flank the
+       compass (radar) at the bottom — to the left of it, mirroring the
+       day/night toggle on the right. Higher specificity (body …) so it
+       overrides the top-left default in eco-nav.css. */
+    body .eco-launch {
+      top: auto;
+      bottom: 49px;   /* centre aligns with the 48px compass (bottom:42px) */
+      left: auto;
+      right: calc(50% + 42px);
+    }
+    /* Hide the launcher until JS moves it into the dock, so it doesn't flash at
+       the eco-nav default (top-left) position during load. Once relocated into
+       .dock it no longer matches this selector and shows normally. */
+    body .eco-root > .eco-launch { display: none; }
+    @media (max-width: 560px) {
+      /* Explore is icon-only (~36px) here, so nudge up 1px to stay centred. */
+      body .eco-launch { bottom: 48px; }
+      .theme-toggle { bottom: 49px; }
+    }
+
+    /* Daily routine button — round icon button, same shape as the calendar
+       and weather ones. Opens the routine page. Position is set by the dock. */
+    .routine-btn {
+      position: fixed; bottom: 49px; left: calc(50% + 194px); z-index: 500;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; padding: 0;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--card) 70%, transparent);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      color: var(--muted); cursor: pointer; text-decoration: none;
+      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.25s ease;
+    }
+    .routine-btn:hover { transform: translateY(-1px); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+    /* The icon is the tile's own artwork, tinted by currentColor through a
+       mask — the same trick icons.jsx uses, so the two never diverge. */
+    .routine-btn .rb-ico {
+      display: block; width: 19px; height: 19px;
+      background-color: currentColor;
+      -webkit-mask-image: url(/icon-daily-routine.svg); mask-image: url(/icon-daily-routine.svg);
+      -webkit-mask-size: contain; mask-size: contain;
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center; mask-position: center;
+    }
+
+    /* Daily routine panel — same shape as the calendar popup */
+    .rt-modal { position: fixed; inset: 0; z-index: 99600; display: none; }
+    .rt-modal.is-open { display: block; }
+    .rt-overlay { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 50%, rgba(0,0,0,0.5)); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .rt-panel {
+      position: absolute; left: 50%;
+      top: calc(50% + (var(--safe-t) - var(--safe-b)) / 2);
+      transform: translate(-50%, -50%);
+      width: min(460px, calc(100vw - 32px)); overflow-y: auto;
+      max-height: calc(100vh  - 48px - var(--safe-t) - var(--safe-b));
+      max-height: calc(100dvh - 48px - var(--safe-t) - var(--safe-b));
+      background: var(--card); color: var(--ink);
+      border: 1px solid var(--line); border-radius: 18px;
+      box-shadow: 0 40px 90px -30px rgba(0,0,0,0.55);
+      padding: 18px 18px 14px;
+      font-family: 'Spectral', Georgia, serif;
+    }
+    .rt-x { position: absolute; top: 10px; right: 12px; width: 30px; height: 30px; border: 0; background: transparent; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; border-radius: 50%; }
+    .rt-x:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink); }
+    .rt-head { margin: 2px 32px 4px 0; }
+    .rt-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; font-weight: 500; }
+    .rt-title-si { font-family: 'Noto Serif Sinhala', Georgia, serif; font-size: 0.86rem; color: var(--accent); margin-top: 2px; }
+    .rt-list { margin-top: 12px; }
+    .rt-row { display: grid; grid-template-columns: 158px 1fr; gap: 0 14px; padding: 9px 10px; border-radius: 11px; align-items: start; }
+    .rt-row + .rt-row { border-top: 1px solid var(--line); }
+    .rt-row.now { background: color-mix(in srgb, var(--accent) 12%, transparent); border-top-color: transparent; }
+    .rt-row.now + .rt-row { border-top-color: transparent; }
+    /* wide enough that "9.00 AM - 12.00 Noon" and its Sinhala stay on one line */
+    .rt-t { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0; color: var(--ink); text-align: right; padding-top: 2px; white-space: nowrap; }
+    .rt-t i { display: block; font-family: 'Noto Serif Sinhala', Georgia, serif; font-style: normal; font-size: 9.5px; color: var(--muted); margin-top: 3px; }
+    .rt-a { font-size: 0.95rem; line-height: 1.35; }
+    .rt-a i { display: block; font-family: 'Noto Serif Sinhala', Georgia, serif; font-style: normal; font-size: 0.78rem; color: var(--muted); margin-top: 3px; line-height: 1.6; }
+    .rt-now { display: inline-block; margin-left: 7px; vertical-align: 1px; font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 1px 6px; }
+    .rt-foot { margin: 12px 4px 0; text-align: center; }
+    .rt-foot a { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; }
+    .rt-foot a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    @media (max-width: 520px) {
+      .rt-row { grid-template-columns: 1fr; gap: 3px; }
+      .rt-t { text-align: left; }
+      .rt-t i { display: inline; margin-left: 7px; }
+    }
+
+    /* ── Bottom dock ──────────────────────────────────────────────
+       All bottom controls live in one centred flex row (assembled by JS).
+       This neutralises each control's individual fixed positioning so they
+       align evenly on any screen. Placed last so it wins the cascade. */
+    .dock {
+      position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%);
+      z-index: 500;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      max-width: calc(100vw - 18px);
+      pointer-events: none;
+    }
+    .dock > * {
+      position: static; inset: auto; margin: 0;
+      flex: 0 0 auto; pointer-events: auto;
+    }
+    .dock .eco-launch { position: static; inset: auto; }   /* beat eco-nav.css */
+    @media (max-width: 560px) { .dock { gap: 7px; bottom: 36px; } }
+  </style>
+  <!-- Google Analytics -->
+  <script src="/analytics.js?v=1"></script>
+</head>
+<body>
+  <div class="backdrop" id="backdrop"></div>
+  <div class="grain"></div>
+  <div class="horizon"></div>
+
+  <div id="root"></div>
+
+  <!-- Bottom dock — the chrome controls are moved in here (in order) by JS
+       so they sit in one evenly-spaced, centred row on every screen size. -->
+  <div class="dock" id="dock"></div>
+
+  <div class="chrome">
+    <div class="brand">
+      <span class="name name-en">Rideekanda Forest Monastery</span>
+      <span class="name name-si">රිදීකන්ද ආරණ්‍ය සේනාසනය</span>
+    </div>
+  </div>
+
+  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle day / night theme">
+    <span class="tt-ico" id="tt-ico"></span>
+  </button>
+  <script>
+    /* Seed the toggle icon by the current hour before React loads, so the
+       circle is never empty (matches app.jsx's day/night boot rule). */
+    (function () {
+      var h = new Date().getHours();
+      var SUN  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M3.5 3.5l1.8 1.8M18.7 18.7l1.8 1.8M2 12h2.5M19.5 12H22M3.5 20.5l1.8-1.8M18.7 5.3l1.8-1.8"/></svg>';
+      var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.2A8 8 0 1 1 9.8 4 6.4 6.4 0 0 0 20 14.2z"/></svg>';
+      var el = document.getElementById('tt-ico');
+      if (el) el.innerHTML = (h >= 6 && h < 18) ? SUN : MOON;
+    })();
+  </script>
+
+  <!-- Daily routine button — opens the routine panel. Carries the same icon
+       as the Daily Routine tile, drawn from the same file. -->
+  <button class="routine-btn" id="routine-btn" type="button" aria-label="Daily routine of the retreat" aria-haspopup="dialog" title="Daily routine">
+    <span class="rb-ico" aria-hidden="true"></span>
+  </button>
+
+  <!-- Calendar button (Poya days, holidays, retreat schedule) -->
+  <button class="cal-btn" id="cal-btn" aria-label="Open calendar" aria-haspopup="dialog">
+    <span class="cb-dow" id="cb-dow">—</span>
+    <span class="cb-num" id="cb-num">–</span>
+  </button>
+
+  <!-- Calendar popup -->
+  <div class="cal-modal" id="cal-modal" aria-hidden="true">
+    <div class="cal-overlay" data-cal-close></div>
+    <div class="cal-panel" role="dialog" aria-modal="true" aria-label="Monastery calendar">
+      <button class="cal-x" type="button" aria-label="Close" data-cal-close>&times;</button>
+      <div class="cal-head">
+        <button class="cal-nav" id="cal-prev" type="button" aria-label="Previous month">&#8249;</button>
+        <div class="cal-title" id="cal-title">Month</div>
+        <button class="cal-nav" id="cal-next" type="button" aria-label="Next month">&#8250;</button>
+      </div>
+      <div class="cal-dow"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-detail" id="cal-detail"></div>
+      <div class="cal-legend">
+        <span><i class="dot poya"></i>Poya</span>
+        <span><i class="dot holiday"></i>Holiday</span>
+        <span><i class="dot retreat"></i>Retreat</span>
+        <span><i class="dot today-dot"></i>Today</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Daily routine popup -->
+  <div class="rt-modal" id="rt-modal" aria-hidden="true">
+    <div class="rt-overlay" data-rt-close></div>
+    <div class="rt-panel" role="dialog" aria-modal="true" aria-label="Daily routine of the retreat">
+      <button class="rt-x" type="button" aria-label="Close" data-rt-close>&times;</button>
+      <div class="rt-head">
+        <div class="rt-title">Daily Routine</div>
+        <div class="rt-title-si">ආරණ්‍යයේ දින චර්යාව</div>
+      </div>
+      <div class="rt-list" id="rt-list"></div>
+      <div class="rt-foot"><a href="../daily-routine/">Open the full page</a></div>
+    </div>
+  </div>
+
+  <!-- Clock — placed beside the Explore button (left set in JS) -->
+  <div class="clock" id="clock" aria-hidden="true"></div>
+
+  <!-- Weather button (live icon) — placed left of the clock (left set in JS) -->
+  <button class="wx-btn" id="wx-btn" aria-label="Weather" aria-haspopup="dialog">
+    <span class="wx-ico" id="wx-icon"></span>
+    <span class="wx-btn-temp" id="wx-btn-temp"></span>
+  </button>
+
+  <!-- Weather report popup -->
+  <div class="wx-modal" id="wx-modal" aria-hidden="true">
+    <div class="wx-overlay" data-wx-close></div>
+    <div class="wx-panel" role="dialog" aria-modal="true" aria-label="Weather report">
+      <button class="wx-x" type="button" aria-label="Close" data-wx-close>&times;</button>
+      <p class="wx-eyebrow">Weather</p>
+      <p class="wx-place">Rideekanda &middot; Matale</p>
+      <div class="wx-now">
+        <span class="wx-now-ico" id="wx-now-ico"></span>
+        <div class="wx-now-temp"><span id="wx-temp">–</span><sup>°C</sup></div>
+        <div class="wx-now-cond" id="wx-cond">—</div>
+      </div>
+      <div class="wx-grid">
+        <div><span>Feels like</span><b id="wx-feels">–</b></div>
+        <div><span>Humidity</span><b id="wx-hum">–</b></div>
+        <div><span>Wind</span><b id="wx-wind">–</b></div>
+        <div><span>Rain</span><b id="wx-rain">–</b></div>
+      </div>
+      <div class="wx-sun">
+        <div class="wx-sun-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v5M5.6 10.6 4.2 9.2M18.4 10.6l1.4-1.4M3 18h18M8 18a4 4 0 0 1 8 0"/><path d="m9 6 3-3 3 3"/></svg>
+          <span class="wx-sun-l">Sunrise</span>
+          <b id="wx-sunrise">&ndash;</b>
+        </div>
+        <div class="wx-sun-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8V3M5.6 10.6 4.2 9.2M18.4 10.6l1.4-1.4M3 18h18M8 18a4 4 0 0 1 8 0"/><path d="m9 5 3 3 3-3"/></svg>
+          <span class="wx-sun-l">Sunset</span>
+          <b id="wx-sunset">&ndash;</b>
+        </div>
+      </div>
+      <div class="wx-sec">Hourly &middot; today</div>
+      <div class="wx-hourly" id="wx-hourly"></div>
+      <div class="wx-sec">Next 5 days</div>
+      <div class="wx-fc" id="wx-fc"></div>
+      <a class="wx-link" id="wx-msn" href="https://www.msn.com/en-us/weather/maps/precipitation/in-Rideekanda,Central-Province?loc=eyJsIjoiUmlkZWVrYW5kYSIsInIiOiJDZW50cmFsIFByb3ZpbmNlIiwiYyI6IlNyaSBMYW5rYSIsImkiOiJMSyIsImciOiJlbi11cyIsIngiOiI4MC41NjAyIiwieSI6IjcuNTM0OCJ9&amp;weadegreetype=C&amp;zoom=14" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 15.5a4 4 0 0 1 1.1-7.8 5.5 5.5 0 0 1 10.6-1.2A4.2 4.2 0 0 1 20 10.6"/>
+          <path d="M8 19.5l-.7 1.4M12 19.5l-.7 1.4M16 19.5l-.7 1.4M20 14.5a3.5 3.5 0 0 0-3.5-3.5H15"/>
+        </svg>
+        Rain radar on MSN
+      </a>
+      <p class="wx-foot" id="wx-foot"></p>
+    </div>
+  </div>
+
+  <svg class="compass" viewBox="-32 -32 64 64">
+    <circle class="compass-ring" r="26"></circle>
+    <circle class="compass-ring" r="14"></circle>
+    <circle class="compass-ring" r="4"></circle>
+    <line class="compass-tick" x1="0" y1="-30" x2="0" y2="-26"></line>
+    <line class="compass-tick" x1="0" y1="26" x2="0" y2="30"></line>
+    <line class="compass-tick" x1="-30" y1="0" x2="-26" y2="0"></line>
+    <line class="compass-tick" x1="26" y1="0" x2="30" y2="0"></line>
+    <circle class="compass-dot" id="compass-dot" cx="0" cy="0" r="1.6"></circle>
+  </svg>
+
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../image-slot.js?v=21"></script>
+  <script src="../tiles-data.js?v=18"></script>
+  <script type="text/babel" src="../tweaks-panel.jsx?v=21"></script>
+  <script type="text/babel" src="../icons.jsx?v=26"></script>
+  <script type="text/babel" src="../admin-panel.jsx?v=25"></script>
+  <script type="text/babel" src="../app.jsx?v=28"></script>
+<!-- eco-nav -->
+  <link rel="stylesheet" href="../eco-nav.css?v=21">
+  <script id="eco-nav" src="../eco-nav.js?v=41" data-root="../" data-current="dashboard" defer></script>
+
+  <!-- Scale the Sinhala brand line so its width matches the English name. -->
+  <script>
+    (function () {
+      var en = document.querySelector('.brand .name-en');
+      var si = document.querySelector('.brand .name-si');
+      if (!en || !si) return;
+      function fit() {
+        si.style.fontSize = '';               // reset to CSS base before measuring
+        var enW = en.getBoundingClientRect().width;
+        var siW = si.getBoundingClientRect().width;
+        if (!enW || !siW) return;
+        var base = parseFloat(getComputedStyle(si).fontSize);
+        si.style.fontSize = (base * (enW / siW)).toFixed(2) + 'px';
+      }
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(fit); }
+      window.addEventListener('load', fit);
+      window.addEventListener('resize', fit);
+      fit();
+    })();
+  </script>
+
+  <!-- Register the service worker so the site installs as a standalone
+       (no URL bar) kiosk app and works through brief network drops. -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('../sw.js').catch(function () {});
+      });
+    }
+  </script>
+
+  <!-- Clock beside the Explore launcher -->
+  <script>
+  (function () {
+    var clock = document.getElementById('clock');
+    var dowEl = document.getElementById('cb-dow');
+    var numEl = document.getElementById('cb-num');
+    var DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    if (!clock) return;
+    function tick() {
+      var d = new Date();
+      var h = d.getHours(), m = d.getMinutes();
+      clock.textContent = (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
+      if (dowEl) dowEl.textContent = DOW[d.getDay()];
+      if (numEl) numEl.textContent = d.getDate();
+    }
+    tick();
+    setInterval(tick, 10000);
+
+    // Assemble the bottom dock in order: weather · date · routine · time · radar ·
+    // Explore · day/night. The Explore launcher is injected by eco-nav.js
+    // (deferred), so retry until it appears, then enforce the final order.
+    var dock = document.getElementById('dock');
+    function buildDock() {
+      if (!dock) return true;
+      [ document.getElementById('wx-btn'),
+        document.getElementById('cal-btn'),
+        document.getElementById('routine-btn'),
+        document.getElementById('clock'),
+        document.querySelector('.compass'),
+        document.querySelector('.eco-launch'),
+        document.getElementById('theme-toggle')
+      ].forEach(function (el) { if (el) dock.appendChild(el); });
+      return !!document.querySelector('.dock .eco-launch');
+    }
+    buildDock();
+    var tries = 0;
+    var pin = setInterval(function () { if (buildDock() || ++tries > 40) clearInterval(pin); }, 150);
+  })();
+  </script>
+
+  <!-- Live weather (Open-Meteo, no API key) -->
+  <script>
+  (function () {
+    var LAT = 7.5348, LON = 80.5602;
+    var btn = document.getElementById('wx-btn');
+    var icoEl = document.getElementById('wx-icon');
+    var modal = document.getElementById('wx-modal');
+    if (!btn || !modal) return;
+
+    var ICONS = {
+      sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.4" fill="currentColor" stroke="none"/><path d="M12 1.6v2.7M12 19.7V22.4M2.9 2.9l1.95 1.95M19.15 19.15l1.95 1.95M1.6 12h2.7M19.7 12H22.4M2.9 21.1l1.95-1.95M19.15 4.85l1.95-1.95"/></svg>',
+      moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.2A8 8 0 1 1 9.8 4 6.4 6.4 0 0 0 20 14.2z"/></svg>',
+      partly: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="7.5" r="2.6"/><path d="M8 2.6v1.4M3.5 7.5H4.9M4.6 4.1l1 1"/><path d="M9 19h8.2a3 3 0 0 0 .3-6 4.3 4.3 0 0 0-8.1-1A3 3 0 0 0 9 19z"/></svg>',
+      cloud: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a3.4 3.4 0 0 0 .4-6.8 5 5 0 0 0-9.6-1.2A3.4 3.4 0 0 0 7 18z"/></svg>',
+      fog: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 9.5h12.3a3.2 3.2 0 0 0-.2-2.2 4.8 4.8 0 0 0-9-1.1"/><path d="M4 13.5h16M6 17.5h12"/></svg>',
+      rain: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15h9.2a3.3 3.3 0 0 0 .3-6.6 4.7 4.7 0 0 0-9-1.1A3.3 3.3 0 0 0 7 15z"/><path d="M9 18l-1 2.5M13 18l-1 2.5M17 18l-1 2.5"/></svg>',
+      snow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14h9.2a3.3 3.3 0 0 0 .3-6.6 4.7 4.7 0 0 0-9-1.1A3.3 3.3 0 0 0 7 14z"/><path d="M9 18h.01M12.5 19.5h.01M16 18h.01M10.5 21h.01M14.5 21h.01"/></svg>',
+      thunder: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14h9.2a3.3 3.3 0 0 0 .3-6.6 4.7 4.7 0 0 0-9-1.1A3.3 3.3 0 0 0 7 14z"/><path d="M13 13l-3 4h2.5l-1 3.5"/></svg>'
+    };
+    function keyFor(code, isDay) {
+      if (code === 0 || code === 1) return isDay ? 'sun' : 'moon';
+      if (code === 2) return 'partly';
+      if (code === 3) return 'cloud';
+      if (code === 45 || code === 48) return 'fog';
+      if ((code >= 71 && code <= 77) || code === 85 || code === 86) return 'snow';
+      if (code >= 95) return 'thunder';
+      if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return 'rain';
+      return 'cloud';
+    }
+    var TEXT = {0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Rime fog',51:'Light drizzle',53:'Drizzle',55:'Dense drizzle',56:'Freezing drizzle',57:'Freezing drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',66:'Freezing rain',67:'Freezing rain',71:'Light snow',73:'Snow',75:'Heavy snow',77:'Snow grains',80:'Light showers',81:'Showers',82:'Heavy showers',85:'Snow showers',86:'Snow showers',95:'Thunderstorm',96:'Thunderstorm',99:'Thunderstorm'};
+    var DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var data = null;
+    function setIcon(el, key) { if (el) el.innerHTML = ICONS[key] || ICONS.cloud; }
+    function pad(n){ return (n<10?'0':'')+n; }
+    function fmtHour(h){ var ap = h < 12 ? 'AM' : 'PM'; var x = h % 12; if (x === 0) x = 12; return x + ap; }
+    // Open-Meteo returns local wall-clock strings like "2026-08-19T05:57";
+    // read them as text so no timezone conversion shifts the time.
+    function fmtClock(iso) {
+      if (!iso || iso.length < 16) return '\u2013';
+      var h = parseInt(iso.slice(11, 13), 10), m = iso.slice(14, 16);
+      var ap = h < 12 ? 'AM' : 'PM', x = h % 12; if (x === 0) x = 12;
+      return x + ':' + m + ' ' + ap;
+    }
+
+    function render() {
+      if (!data || !data.current) return;
+      var c = data.current;
+      var k = keyFor(c.weather_code, c.is_day);
+      setIcon(icoEl, k);
+      var btnTemp = document.getElementById('wx-btn-temp');
+      if (btnTemp) btnTemp.textContent = Math.round(c.temperature_2m) + '°';
+      setIcon(document.getElementById('wx-now-ico'), k);
+      document.getElementById('wx-temp').textContent = Math.round(c.temperature_2m);
+      document.getElementById('wx-cond').textContent = TEXT[c.weather_code] || '';
+      document.getElementById('wx-feels').textContent = Math.round(c.apparent_temperature) + '°';
+      document.getElementById('wx-hum').textContent = c.relative_humidity_2m + '%';
+      document.getElementById('wx-wind').textContent = Math.round(c.wind_speed_10m) + ' km/h';
+      document.getElementById('wx-rain').textContent = (c.precipitation || 0) + ' mm';
+      var d = data.daily, html = '';
+      var srEl = document.getElementById('wx-sunrise'), ssEl = document.getElementById('wx-sunset');
+      if (srEl) srEl.textContent = fmtClock(d.sunrise && d.sunrise[0]);
+      if (ssEl) ssEl.textContent = fmtClock(d.sunset && d.sunset[0]);
+      for (var i = 0; i < Math.min(5, d.time.length); i++) {
+        var dt = new Date(d.time[i] + 'T00:00:00');
+        html += '<div class="d"><span class="dn">' + (i === 0 ? 'Today' : DOW[dt.getDay()]) + '</span>' +
+                ICONS[keyFor(d.weather_code[i], 1)] +
+                '<span class="t">' + Math.round(d.temperature_2m_max[i]) + '°<small>' + Math.round(d.temperature_2m_min[i]) + '°</small></span></div>';
+      }
+      document.getElementById('wx-fc').innerHTML = html;
+
+      // Hourly forecast for today (horizontal scroll, current hour highlighted).
+      //
+      // Which slot is "now" comes from the API's own clock, not the browser's.
+      // The request asks for timezone=auto, so these timestamps are the
+      // monastery's local time; new Date().getHours() is the *viewer's*, and
+      // anyone outside Sri Lanka would mark an hour that is hours adrift.
+      var H = data.hourly, today = d.time[0], hh = '';
+      var nowIso = c.time || '';
+      var nowDay = nowIso ? nowIso.slice(0, 10) : today;
+      var nowH   = nowIso ? parseInt(nowIso.slice(11, 13), 10) : new Date().getHours();
+      if (H && H.time) {
+        for (var j = 0; j < H.time.length; j++) {
+          if (H.time[j].indexOf(today) !== 0) continue;           // present day only
+          var hr = parseInt(H.time[j].slice(11, 13), 10);
+          var isNow = (hr === nowH && H.time[j].indexOf(nowDay) === 0);
+          // The "now" cell repeats the reading above it. The hourly series is
+          // the model's forecast for the top of the hour and the current block
+          // is a nowcast refreshed every 15 minutes, so the two drift apart by
+          // a degree or three -- which reads as a bug when they sit together.
+          var hTemp = isNow ? c.temperature_2m : H.temperature_2m[j];
+          var hCode = isNow ? c.weather_code   : H.weather_code[j];
+          var hDay  = isNow ? c.is_day
+                            : (H.is_day ? H.is_day[j] : (hr >= 6 && hr < 18 ? 1 : 0));
+          hh += '<div class="h' + (isNow ? ' now' : '') + '">' +
+                '<span class="ht">' + (isNow ? 'Now' : fmtHour(hr)) + '</span>' +
+                ICONS[keyFor(hCode, hDay)] +
+                '<span class="htemp">' + Math.round(hTemp) + '°</span></div>';
+        }
+      }
+      var hEl = document.getElementById('wx-hourly');
+      hEl.innerHTML = hh;
+      var nowEl = hEl.querySelector('.h.now');
+      if (nowEl) hEl.scrollLeft = Math.max(0, nowEl.offsetLeft - 8);
+
+      var u = new Date();
+      document.getElementById('wx-foot').textContent = 'Updated ' + pad(u.getHours()) + ':' + pad(u.getMinutes()) + ' · open-meteo';
+    }
+
+    function load() {
+      var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + LAT + '&longitude=' + LON +
+        '&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m' +
+        '&hourly=temperature_2m,weather_code,is_day' +
+        '&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=auto&forecast_days=5';
+      fetch(url).then(function (r) { return r.json(); }).then(function (j) {
+        if (!j || !j.current) return;
+        data = j;
+        try { localStorage.setItem('rk_wx', JSON.stringify(j)); } catch (e) {}
+        render();
+      }).catch(function () {});
+    }
+
+    setIcon(icoEl, 'cloud'); // placeholder until data arrives
+    try { var cached = localStorage.getItem('rk_wx'); if (cached) { data = JSON.parse(cached); render(); } } catch (e) {}
+    load();
+    setInterval(load, 15 * 60 * 1000); // refresh every 15 min
+
+    function open() {
+      render();
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      // panel is visible now → centre the current hour in the hourly strip
+      var hEl = document.getElementById('wx-hourly');
+      var nowEl = hEl && hEl.querySelector('.h.now');
+      if (nowEl) hEl.scrollLeft = Math.max(0, nowEl.offsetLeft - 8);
+    }
+    function close() { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true'); }
+    btn.addEventListener('click', open);
+    modal.addEventListener('click', function (e) { if (e.target.hasAttribute('data-wx-close')) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+  </script>
+
+  <!-- Calendar: Poya days, Sri Lanka holidays, retreat schedule -->
+  <script src="../calendar-data.js?v=31"></script>
+  <script src="../daily-routine/routine-data.js?v=1"></script>
+  <script>
+  (function () {
+    var DATA = window.RK_CALENDAR || { poya: [], holidays: [], retreats: [], bookingUrl: 'book-your-stay/' };
+    var btn = document.getElementById('cal-btn');
+    var modal = document.getElementById('cal-modal');
+    var grid = document.getElementById('cal-grid');
+    var titleEl = document.getElementById('cal-title');
+    var detailEl = document.getElementById('cal-detail');
+    var toggle = document.getElementById('theme-toggle');
+    if (!btn || !modal || !grid) return;
+
+    var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    function pad(n){ return (n < 10 ? '0' : '') + n; }
+    function iso(d){ return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()); }
+    function parse(s){ var p = s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+    function fmtRange(s, e){
+      var a = parse(s), b = parse(e), mo = function (d){ return MONTHS[d.getMonth()].slice(0,3); };
+      return a.getMonth() === b.getMonth()
+        ? mo(a) + ' ' + a.getDate() + '–' + b.getDate()
+        : mo(a) + ' ' + a.getDate() + ' – ' + mo(b) + ' ' + b.getDate();
+    }
+
+    // Position the calendar button just right of the day/night toggle.
+    function placeBtn(){ if (toggle){ var r = toggle.getBoundingClientRect(); if (r.width) btn.style.left = (r.right + 10) + 'px'; } }
+    window.addEventListener('resize', placeBtn);
+    window.addEventListener('load', placeBtn);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeBtn);
+    if (toggle) toggle.addEventListener('click', function(){ setTimeout(placeBtn, 80); });
+    // The Day/Night label width changes (incl. on auto theme switches), so
+    // re-place the button whenever the toggle's contents change.
+    if (toggle && window.MutationObserver) new MutationObserver(placeBtn).observe(toggle, { subtree: true, childList: true, characterData: true });
+    placeBtn();
+
+    function eventsFor(di){
+      var ev = [];
+      DATA.poya.forEach(function (p){ if (p.date === di) ev.push({ type:'poya', name:p.name }); });
+      DATA.holidays.forEach(function (h){ if (h.date === di) ev.push({ type:'holiday', name:h.name }); });
+      DATA.retreats.forEach(function (r){ if (di >= r.start && di <= r.end) ev.push({ type:'retreat', name:r.name, start:r.start, end:r.end }); });
+      return ev;
+    }
+
+    var view = new Date(); view.setDate(1);
+    var todayIso = iso(new Date());
+
+    function render(){
+      titleEl.textContent = MONTHS[view.getMonth()] + ' ' + view.getFullYear();
+      grid.innerHTML = '';
+      var startDow = new Date(view.getFullYear(), view.getMonth(), 1).getDay();
+      var days = new Date(view.getFullYear(), view.getMonth()+1, 0).getDate();
+      for (var i = 0; i < startDow; i++){ var b = document.createElement('div'); b.className = 'cal-cell empty'; grid.appendChild(b); }
+      for (var d = 1; d <= days; d++){
+        var cd = new Date(view.getFullYear(), view.getMonth(), d), di = iso(cd), ev = eventsFor(di);
+        var cell = document.createElement('div');
+        cell.className = 'cal-cell';
+        if (ev.some(function (e){ return e.type === 'retreat'; })) cell.classList.add('in-retreat');
+        if (di === todayIso) cell.classList.add('is-today');
+        var num = document.createElement('span'); num.textContent = d; cell.appendChild(num);
+        var types = {}; ev.forEach(function (e){ types[e.type] = 1; });
+        var dots = document.createElement('div'); dots.className = 'dots';
+        ['poya','holiday','retreat'].forEach(function (t){ if (types[t]){ var s = document.createElement('i'); s.className = t; dots.appendChild(s); } });
+        cell.appendChild(dots);
+        if (ev.length){
+          cell.classList.add('has-event');
+          (function (evs, dd){ cell.addEventListener('click', function (){ showDetail(dd, evs); }); })(ev, cd);
+        }
+        grid.appendChild(cell);
+      }
+    }
+
+    function showDetail(dateObj, evs){
+      var label = MONTHS[dateObj.getMonth()].slice(0,3) + ' ' + dateObj.getDate();
+      var names = evs.map(function (e){ return e.type === 'retreat' ? e.name + ' (' + fmtRange(e.start, e.end) + ')' : e.name; });
+      detailEl.innerHTML = '<b>' + label + '</b> — ' + names.join(' · ');
+    }
+
+    function open(){
+      view = new Date(); view.setDate(1);
+      todayIso = iso(new Date());
+      render();
+      var todayEv = eventsFor(todayIso);
+      if (todayEv.length) showDetail(new Date(), todayEv); else detailEl.textContent = '';
+      modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false');
+    }
+    function close(){ modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true'); }
+
+    btn.addEventListener('click', open);
+    document.getElementById('cal-prev').addEventListener('click', function (){ view.setMonth(view.getMonth()-1); render(); });
+    document.getElementById('cal-next').addEventListener('click', function (){ view.setMonth(view.getMonth()+1); render(); });
+    modal.addEventListener('click', function (e){ if (e.target.hasAttribute('data-cal-close')) close(); });
+    document.addEventListener('keydown', function (e){ if (e.key === 'Escape') close(); });
+  })();
+  </script>
+
+  <!-- Daily routine panel — reads the same routine-data.js the routine page does -->
+  <script>
+  (function () {
+    var btn   = document.getElementById('routine-btn');
+    var modal = document.getElementById('rt-modal');
+    var list  = document.getElementById('rt-list');
+    if (!btn || !modal || !list) return;
+
+    var R = (window.RK_ROUTINE || {}).rows || [];
+    // Nothing to show without the data file; leave the button as a plain link
+    // to the page rather than opening an empty panel.
+    if (!R.length) {
+      btn.addEventListener('click', function () { location.href = '../daily-routine/'; });
+      return;
+    }
+
+    function esc(t){ return String(t == null ? '' : t).replace(/[&<>"]/g, function (c){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+    function mins(hhmm){ var p = String(hhmm || '').split(':'); return (+p[0]) * 60 + (+p[1] || 0); }
+    // The night period wraps past midnight, so `to` is smaller than `from`.
+    function covers(r, now){
+      var a = mins(r.from), b = mins(r.to);
+      return a <= b ? (now >= a && now < b) : (now >= a || now < b);
+    }
+
+    list.innerHTML = R.map(function (r) {
+      return '<div class="rt-row">' +
+        '<div class="rt-t">' + esc(r.t.en) + '<i>' + esc(r.t.si) + '</i></div>' +
+        '<div class="rt-a">' + esc(r.a.en) + '<span class="rt-slot"></span>' +
+          '<i>' + esc(r.a.si) + '</i></div>' +
+      '</div>';
+    }).join('');
+    var rows = [].slice.call(list.children);
+
+    function markNow(){
+      var d = new Date(), now = d.getHours() * 60 + d.getMinutes();
+      rows.forEach(function (el, i) {
+        var on = covers(R[i], now);
+        el.classList.toggle('now', on);
+        var slot = el.querySelector('.rt-slot');
+        if (slot) slot.innerHTML = on ? '<span class="rt-now">Now</span>' : '';
+      });
+    }
+
+    var timer = null;
+    function open(){
+      markNow();
+      timer = setInterval(markNow, 30000);
+      modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false');
+      var cur = list.querySelector('.rt-row.now');
+      if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest' });
+    }
+    function close(){
+      modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true');
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+
+    btn.addEventListener('click', open);
+    modal.addEventListener('click', function (e){ if (e.target.hasAttribute('data-rt-close')) close(); });
+    document.addEventListener('keydown', function (e){ if (e.key === 'Escape') close(); });
+  })();
+  </script>
+</body>
+</html>

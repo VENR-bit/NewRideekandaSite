@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" data-rk="std">
+<head>
+  <script>(function(){try{var m=localStorage.getItem("rk-theme"),u=+localStorage.getItem("rk-theme-until");if((m!=="light"&&m!=="dark")||!u||Date.now()>=u){m="auto";localStorage.removeItem("rk-theme");localStorage.removeItem("rk-theme-until");}var h=new Date().getHours();var day=(m==="auto")?(h>=6&&h<18):(m==="light");var t=day?"light":"dark";var r=document.documentElement;r.setAttribute("data-theme",t);r.setAttribute("data-theme-mode",m);}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gallery — Rideekanda Forest Monastery</title>
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="../app/favicon-64.png?v=3" />
+  <link rel="apple-touch-icon" href="../app/apple-touch-icon.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=5">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <!-- Google Analytics -->
+  <script src="/analytics.js?v=1"></script>
+  <!-- shared inner-page theme (rk/inner.css) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..600&display=swap" />
+  <link rel="stylesheet" href="../rk/inner.css?v=3" />
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" src="tweaks-panel.jsx?v=2"></script>
+  <script type="text/babel" src="gallery.jsx?v=18"></script>
+  <!-- page watermark -->
+  <img class="rk-watermark" src="../assets/logo-mark.png" alt="" aria-hidden="true">
+  <style>.rk-watermark{position:absolute;top:210px;left:50%;transform:translateX(-50%);width:min(72vw,460px);opacity:.06;pointer-events:none;user-select:none;z-index:0}</style>
+  <script>(function(){function place(){var w=document.querySelector(".rk-watermark");if(!w)return;var cs=document.querySelectorAll(".hero .lotus-mark,.lotus-mark,.lotus,.rk-lotus");var logo=null;for(var i=0;i<cs.length;i++){var c=cs[i];if(c===w)continue;var r=c.getBoundingClientRect();if(r.top>=0&&r.top<700&&r.width>20){logo=c;break;}}if(!logo)return;var lr=logo.getBoundingClientRect();w.style.top=(lr.bottom+window.scrollY-8)+"px";}if(document.readyState!=="loading")place();else document.addEventListener("DOMContentLoaded",place);[200,700,1500].forEach(function(t){setTimeout(place,t);});window.addEventListener("resize",place);})();</script>
+
+<!-- eco-header -->
+  <link rel="stylesheet" href="../eco-header.css?v=11">
+  <script id="eco-header" src="../eco-header.js?v=10" data-root="../" data-links='[]' data-pad="true" defer></script>
+<!-- eco-nav -->
+  <link rel="stylesheet" href="../eco-nav.css?v=21">
+  <script id="eco-nav" src="../eco-nav.js?v=41" data-root="../" data-current="gallery" defer></script>
+  <!-- eco-footer -->
+  <link rel="stylesheet" href="../eco-footer.css?v=10">
+  <script id="eco-footer" src="../eco-footer.js?v=10" data-root="../" defer></script>
+  <!-- eco-theme -->
+  <link rel="stylesheet" href="../eco-theme.css?v=11">
+  <script src="../eco-theme.js?v=4" defer></script>
+</body>
+</html>

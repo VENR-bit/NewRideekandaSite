@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1f1a14" />
+<title>Rideekanda Forest Monastery — Buddhist Forest Meditation Monastery</title>
+  <link rel="icon" href="./favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="./app/favicon-64.png?v=3" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./app/icon-192.png?v=2" />
+  <link rel="apple-touch-icon" href="./app/apple-touch-icon.png?v=2" />
+  <!-- Install to the Home Screen from here as well as from the dashboard.
+       The manifest's scope is "/" and its start_url is /dashboard/, so an
+       install begun on this page still opens the app at the dashboard. -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="Rideekanda" />
+<meta name="description" content="Rideekanda Forest Monastery — a Buddhist forest meditation monastery on a hillside in Matale, Sri Lanka. Residential retreats, the monastery, projects, news, and more." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<script>
+  /* Set the theme before first paint (no flash). Mode: "auto" (by time) | "light" | "dark".
+     Auto = light from 06:00–18:00, dark otherwise — same rule as the dashboard. */
+  (function () {
+    try {
+      var m = localStorage.getItem('rk-home-theme');
+      if (m !== 'light' && m !== 'dark' && m !== 'auto') m = 'auto';
+      var h = new Date().getHours();
+      var theme = (m === 'auto') ? ((h >= 6 && h < 18) ? 'light' : 'dark') : m;
+      var r = document.documentElement;
+      r.setAttribute('data-theme', theme);
+      r.setAttribute('data-theme-mode', m);
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="styles.css?v=15" />
+  <!-- Google Analytics -->
+  <script src="/analytics.js?v=1"></script>
+</head>
+<body>
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-bg"><img src="assets/hero.jpg?v=2" alt="" aria-hidden="true" /></div>
+    <div class="hero-veil"></div>
+    <div class="hero-inner">
+      <img class="lotus-mark reveal" src="assets/lotus-logo.png" alt="Rideekanda Forest Monastery" />
+      <h1 class="reveal" style="--reveal-delay:120ms"><span class="ln1">Rideekanda</span><span class="ln2">Forest Monastery</span></h1>
+      <p class="si reveal" style="--reveal-delay:220ms">රිදීකන්ද ආරණ්‍ය සේනාසනය</p>
+      <p class="tagline reveal" style="--reveal-delay:320ms">Buddhist Forest Meditation Monastery&nbsp;&middot;&nbsp;Matale, Sri Lanka</p>
+      <p class="lead reveal" style="--reveal-delay:420ms">A place for meditation in the stillness of the forest — preserving the true teaching of the Buddha and guiding seekers along the noble path.</p>
+      <div class="hero-cta reveal" style="--reveal-delay:520ms">
+        <a class="btn" href="book-your-stay/">Plan your visit</a>
+        <a class="btn btn-ghost" href="#explore">Explore the monastery</a>
+      </div>
+    </div>
+    <div class="scroll-cue">Scroll</div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <p class="eyebrow">The Monastery</p>
+          <h2 class="section-title">A forest refuge for <em>meditation</em> and the Dhamma</h2>
+          <p class="lead-p">Set on a quiet hillside at Udasgiriya in Matale, Rideekanda is a Theravāda forest monastery in the Sri Lankan forest tradition — a sanctuary of silence, simplicity, and sincere practice.</p>
+          <p>Monastics and lay practitioners come together here for residential retreats, daily meditation, walking meditation, chanting, and Dhamma discussion, surrounded by ancient forest, golden sunsets, and the stillness of the mountains.</p>
+          <div class="hero-cta" style="margin-top:1.8rem">
+            <a class="btn" href="monastery/">About the monastery</a>
+            <a class="btn btn-ghost" href="retreat-center/">Our retreats</a>
+          </div>
+        </div>
+        <div class="about-figure reveal" style="--reveal-delay:160ms">
+          <img loading="lazy" decoding="async" src="assets/about.jpg" alt="The Rideekanda Forest Monastery community" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPLORE (feature tiles) ============ -->
+  <section class="section" id="explore" style="padding-top:0">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Explore</p>
+        <h2 class="section-title">Find your way <em>around Rideekanda</em></h2>
+        <p class="lead-p">Everything from the monastery and residential retreats to projects, the gallery, and the latest news.</p>
+      </div>
+
+      <div class="tiles">
+        <a class="tile lg reveal" href="monastery/">
+          <img loading="lazy" decoding="async" src="assets/monastery.jpg" alt="" />
+          <div class="cap"><span class="si">ආරණ්‍ය සේනාසනය</span><h3>The Monastery</h3><p>About the monastery, its teachers, and the forest tradition it keeps.</p><span class="go">Enter &rarr;</span></div>
+        </a>
+        <a class="tile lg reveal" href="retreat-center/" style="--reveal-delay:90ms">
+          <img loading="lazy" decoding="async" src="assets/retreat.jpg" alt="" />
+          <div class="cap"><span class="si">භාවනා වැඩසටහන</span><h3>Retreat Program</h3><p>Residential meditation retreats — concentration and Vipassana in the forest.</p><span class="go">Enter &rarr;</span></div>
+        </a>
+
+        <a class="tile reveal" href="book-your-stay/">
+          <img loading="lazy" decoding="async" src="assets/booking.jpg?v=2" alt="" />
+          <div class="cap"><span class="si">වෙන් කරවා ගැනීම</span><h3>Book Your Stay</h3><p>Reserve a place for an upcoming retreat.</p><span class="go">Book &rarr;</span></div>
+        </a>
+        <a class="tile reveal" href="gallery/" style="--reveal-delay:80ms">
+          <img loading="lazy" decoding="async" src="assets/gallery.jpg" alt="" />
+          <div class="cap"><span class="si">ඡායාරූප</span><h3>Gallery</h3><p>Scenes of the hillside, shrine, and daily life.</p><span class="go">View &rarr;</span></div>
+        </a>
+        <a class="tile reveal" href="news-and-events/" style="--reveal-delay:160ms">
+          <img loading="lazy" decoding="async" src="assets/news.jpg?v=2" alt="" />
+          <div class="cap"><span class="si">ප්‍රවෘත්ති සහ සිදුවීම්</span><h3>News &amp; Events</h3><p>Happenings, observances, and announcements.</p><span class="go">Read &rarr;</span></div>
+        </a>
+
+        <a class="tile reveal" href="videos/">
+          <img loading="lazy" decoding="async" src="assets/videos.jpg?v=3" alt="" />
+          <div class="cap"><span class="si">වීඩියෝ</span><h3>Video Gallery</h3><p>Dhamma talks and films — watch on-site.</p><span class="go">Watch &rarr;</span></div>
+        </a>
+        <a class="tile reveal" href="projects/" style="--reveal-delay:80ms">
+          <img loading="lazy" decoding="async" src="assets/projects.jpg?v=2" alt="" />
+          <div class="cap"><span class="si">ව්‍යාපෘති</span><h3>Projects</h3><p>Ongoing building &amp; design initiatives.</p><span class="go">Explore &rarr;</span></div>
+        </a>
+        <a class="tile reveal" href="donate/" style="--reveal-delay:160ms">
+          <img loading="lazy" decoding="async" src="assets/donate.jpg?v=2" alt="" />
+          <div class="cap"><span class="si">පරිත්‍යාග</span><h3>Dāna &middot; Donation</h3><p>Support the monastery and its offerings.</p><span class="go">Give &rarr;</span></div>
+        </a>
+
+        <a class="tile reveal" href="reviews/">
+          <img loading="lazy" decoding="async" src="assets/reviews.jpg?v=3" alt="" />
+          <div class="cap"><span class="si">ඇගයීම්</span><h3>Reviews</h3><p>Experiences shared by visiting practitioners.</p><span class="go">Read &rarr;</span></div>
+        </a>
+        <a class="tile reveal" href="contact/" style="--reveal-delay:160ms">
+          <img loading="lazy" decoding="async" src="assets/contact.jpg?v=3" alt="" />
+          <div class="cap"><span class="si">සම්බන්ධ වන්න</span><h3>Contact</h3><p>Reach us by phone, email, or WhatsApp.</p><span class="go">Contact &rarr;</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUOTE ============ -->
+  <section class="quote">
+    <div class="container">
+      <blockquote class="reveal" id="dhp-quote">
+        <span class="dhp-pali"></span>
+        <span class="dhp-en"></span>
+      </blockquote>
+      <cite class="reveal" id="dhp-cite" style="--reveal-delay:120ms"></cite>
+    </div>
+  </section>
+
+  <!-- Dhammapada · Citta Vagga (the Mind, verses 33–43) — a random verse on each visit -->
+  <script>
+  (function () {
+    var V = [
+      { n: 33, pali: ["Phandanaṃ capalaṃ cittaṃ, dūrakkhaṃ dunnivārayaṃ;", "Ujuṃ karoti medhāvī, usukārova tejanaṃ."],
+        en: "The restless, agitated mind, hard to guard and hard to restrain — the wise one straightens it, as a fletcher straightens an arrow." },
+      { n: 34, pali: ["Vārijova thale khitto, okamokata ubbhato;", "Pariphandatidaṃ cittaṃ, māradheyyaṃ pahātave."],
+        en: "Like a fish pulled from its watery home and cast on dry ground, this mind quivers and thrashes to escape the realm of Māra." },
+      { n: 35, pali: ["Dunniggahassa lahuno, yatthakāmanipātino;", "Cittassa damatho sādhu, cittaṃ dantaṃ sukhāvahaṃ."],
+        en: "Hard to subdue, swift, alighting wherever it wishes — good it is to tame the mind; a tamed mind brings happiness." },
+      { n: 36, pali: ["Sududdasaṃ sunipuṇaṃ, yatthakāmanipātinaṃ;", "Cittaṃ rakkhetha medhāvī, cittaṃ guttaṃ sukhāvahaṃ."],
+        en: "So subtle and hard to see, alighting wherever it wishes — let the wise guard the mind; a guarded mind brings happiness." },
+      { n: 37, pali: ["Dūraṅgamaṃ ekacaraṃ, asarīraṃ guhāsayaṃ;", "Ye cittaṃ saṃyamissanti, mokkhanti mārabandhanā."],
+        en: "Faring far, wandering alone, bodiless, dwelling in the cave of the heart — those who restrain the mind are freed from the bonds of Māra." },
+      { n: 38, pali: ["Anavaṭṭhitacittassa, saddhammaṃ avijānato;", "Pariplavapasādassa, paññā na paripūrati."],
+        en: "He whose mind is unsteady, who does not know the true Dhamma, whose confidence wavers — his wisdom never comes to fullness." },
+      { n: 39, pali: ["Anavassutacittassa, ananvāhatacetaso;", "Puññapāpapahīnassa, natthi jāgarato bhayaṃ."],
+        en: "He whose mind is free of craving and unassailed by hatred, who has risen above good and evil — for that wakeful one there is no fear." },
+      { n: 40, pali: ["Kumbhūpamaṃ kāyamimaṃ viditvā, nagarūpamaṃ cittamidaṃ ṭhapetvā;", "Yodhetha māraṃ paññāyudhena, jitañca rakkhe anivesano siyā."],
+        en: "Knowing this body to be fragile as a clay pot, making the mind firm as a fortress, fight Māra with the sword of wisdom; guard your gain, clinging to nothing." },
+      { n: 41, pali: ["Aciraṃ vatayaṃ kāyo, pathaviṃ adhisessati;", "Chuddho apetaviññāṇo, niratthaṃva kaliṅgaraṃ."],
+        en: "Before long, alas, this body will lie upon the earth — cast aside, devoid of consciousness, like a useless log." },
+      { n: 42, pali: ["Diso disaṃ yaṃ taṃ kayirā, verī vā pana verinaṃ;", "Micchāpaṇihitaṃ cittaṃ, pāpiyo naṃ tato kare."],
+        en: "Whatever harm a foe may do to a foe, or a hater to one he hates, a wrongly directed mind does to oneself far greater harm." },
+      { n: 43, pali: ["Na taṃ mātā pitā kayirā, aññe vāpi ca ñātakā;", "Sammāpaṇihitaṃ cittaṃ, seyyaso naṃ tato kare."],
+        en: "Neither mother, father, nor any other kin can do one the good that a rightly directed mind can do." }
+    ];
+    var v = V[Math.floor(Math.random() * V.length)];
+    var pali = document.querySelector('#dhp-quote .dhp-pali');
+    var en = document.querySelector('#dhp-quote .dhp-en');
+    var cite = document.getElementById('dhp-cite');
+    if (pali) pali.innerHTML = '“' + v.pali.join('<br>') + '”';
+    if (en) en.textContent = v.en;
+    if (cite) cite.textContent = 'Dhammapada · Citta Vagga · Verse ' + v.n;
+  })();
+  </script>
+
+  <!-- ============ VISIT ============ -->
+  <section class="section visit" id="visit">
+    <div class="container">
+      <div class="section-head reveal" style="margin-inline:auto; text-align:center">
+        <p class="eyebrow" style="justify-content:center">Visit</p>
+        <h2 class="section-title">Come and <em>practice with us</em></h2>
+      </div>
+      <p class="lead reveal" style="--reveal-delay:120ms">Practitioners of all levels — from complete beginners to those deepening an existing practice — are warmly welcome. Reach out to arrange your stay.</p>
+      <div class="visit-cta reveal" style="--reveal-delay:200ms">
+        <a class="btn" href="book-your-stay/">Book your stay</a>
+        <a class="btn btn-ghost" href="contact/">Contact us</a>
+      </div>
+      <div class="visit-meta reveal" style="--reveal-delay:280ms">
+        <div><b>Where</b>Udasgiriya, Yatawatta<br>Matale District, Sri Lanka</div>
+        <div><b>Tradition</b>Theravāda · Sri Lankan<br>Forest Tradition</div>
+        <div><b>Practice</b>Concentration &amp; Vipassana<br>Residential retreats</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer is injected by the shared eco-footer component (see end of body). -->
+
+</main>
+
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light / dark theme"></button>
+
+<script>
+  (function(){ var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear(); })();
+
+  // Scale "FOREST MONASTERY" so its width matches "RIDEEKANDA" above it.
+  (function () {
+    var l1 = document.querySelector('.hero h1 .ln1');
+    var l2 = document.querySelector('.hero h1 .ln2');
+    if (!l1 || !l2) return;
+    function fit() {
+      l2.style.fontSize = '';                       // reset to CSS base before measuring
+      for (var i = 0; i < 2; i++) {                 // two passes → exact width match
+        var w1 = l1.getBoundingClientRect().width;
+        var w2 = l2.getBoundingClientRect().width;
+        if (!w1 || !w2) return;
+        var cur = parseFloat(getComputedStyle(l2).fontSize);
+        l2.style.fontSize = (cur * (w1 / w2)).toFixed(2) + 'px';
+      }
+    }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    window.addEventListener('load', fit);
+    window.addEventListener('resize', fit);
+    fit();
+  })();
+
+  (function () {
+    var reveals = [].slice.call(document.querySelectorAll('.reveal'));
+    var ticking = false;
+    function sweep() {
+      ticking = false;
+      var trigger = window.innerHeight * 0.92;
+      for (var i = reveals.length - 1; i >= 0; i--) {
+        if (reveals[i].getBoundingClientRect().top < trigger) {
+          reveals[i].classList.add('in');
+          reveals.splice(i, 1);
+        }
+      }
+    }
+    function onReveal() { if (!ticking) { ticking = true; requestAnimationFrame(sweep); } }
+    window.addEventListener('scroll', onReveal, { passive: true });
+    window.addEventListener('resize', onReveal, { passive: true });
+    sweep();
+  })();
+
+  // Theme control — Sun/Moon toggle. Fresh visitors follow the time of day
+  // (light 06:00–18:00, dark otherwise, re-checked every minute). A tap forces
+  // light or dark and remembers it (localStorage).
+  (function () {
+    var KEY = 'rk-home-theme';
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var SUN  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M3.5 3.5l1.8 1.8M18.7 18.7l1.8 1.8M2 12h2.5M19.5 12H22M3.5 20.5l1.8-1.8M18.7 5.3l1.8-1.8"/></svg>';
+    var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.2A8 8 0 1 1 9.8 4 6.4 6.4 0 0 0 20 14.2z"/></svg>';
+    function timeTheme() { var h = new Date().getHours(); return (h >= 6 && h < 18) ? 'light' : 'dark'; }
+    function getMode() {   // 'light' | 'dark' if chosen; else 'auto' (follow time)
+      try { var m = localStorage.getItem(KEY); if (m === 'light' || m === 'dark') return m; } catch (e) {}
+      return 'auto';
+    }
+    function resolved() { var m = getMode(); return m === 'auto' ? timeTheme() : m; }
+    function applyTheme() {
+      root.setAttribute('data-theme', resolved());
+      root.setAttribute('data-theme-mode', getMode());
+    }
+    function isDark() { return resolved() === 'dark'; }
+    function paint() {
+      if (!btn) return;
+      btn.innerHTML = isDark() ? MOON : SUN;   // shows the current theme
+      var label = isDark() ? 'Dark theme — tap for light' : 'Light theme — tap for dark';
+      btn.setAttribute('title', label);
+      btn.setAttribute('aria-label', label);
+    }
+    applyTheme();   // re-sync with the head script
+    paint();
+    if (btn) btn.addEventListener('click', function () {
+      var next = isDark() ? 'light' : 'dark';   // flip to the opposite, as a sticky manual choice
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+      applyTheme();
+      paint();
+    });
+    // Fresh visitors (no manual choice) keep following the clock.
+    setInterval(function () {
+      if (getMode() !== 'auto') return;
+      var t = timeTheme();
+      if (root.getAttribute('data-theme') !== t) { root.setAttribute('data-theme', t); paint(); }
+    }, 60000);
+  })();
+</script>
+
+<!-- eco-header -->
+  <link rel="stylesheet" href="eco-header.css?v=11">
+  <script id="eco-header" src="eco-header.js?v=10" data-root="" data-links='[{"label":"About","href":"#about"},{"label":"Visit","href":"#visit"},{"label":"News","href":"news-and-events/"},{"label":"Donate","href":"donate/","cta":true}]' data-pad="false" defer></script>
+<!-- eco-nav -->
+  <link rel="stylesheet" href="eco-nav.css?v=21">
+  <script id="eco-nav" src="eco-nav.js?v=41" data-root="" data-current="home" defer></script>
+<!-- eco-footer -->
+  <link rel="stylesheet" href="eco-footer.css?v=10">
+  <script id="eco-footer" src="eco-footer.js?v=10" data-root="" defer></script>
+  <script>
+    // An installable app needs a registered service worker on the page the
+    // install is offered from, not only on the dashboard.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/sw.js').catch(function () {});
+      });
+    }
+  </script>
+</body>
+</html>

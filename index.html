@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0c120e" />
+<title>Rideekanda Forest Monastery — Buddhist Forest Meditation Monastery</title>
+<meta name="description" content="Rideekanda Forest Monastery — a Buddhist forest meditation monastery on a hillside in Matale, Sri Lanka. Residential retreats, the monastery, projects, news, and more." />
+<link rel="icon" href="./favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="64x64" href="./app/favicon-64.png?v=6" />
+<link rel="icon" type="image/png" sizes="192x192" href="./app/icon-192.png?v=6" />
+<link rel="apple-touch-icon" href="./app/apple-touch-icon.png?v=6" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-mobile-web-app-title" content="Rideekanda" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Hanken+Grotesk:wght@300..600&family=Noto+Serif+Sinhala:wght@300..500&display=swap" rel="stylesheet" />
+<script>
+  /* Theme before first paint. Same rule and storage key as the rest of the
+     site: "auto" follows the clock (light 06:00–18:00), a tap on the toggle
+     pins light or dark. */
+  (function () {
+    var r = document.documentElement;
+    r.className += " js";
+    try {
+      var m = localStorage.getItem('rk-home-theme');
+      if (m !== 'light' && m !== 'dark') m = 'auto';
+      var h = new Date().getHours();
+      r.setAttribute('data-theme', m === 'auto' ? ((h >= 6 && h < 18) ? 'light' : 'dark') : m);
+      r.setAttribute('data-theme-mode', m);
+    } catch (e) { r.setAttribute('data-theme', 'dark'); }
+  })();
+</script>
+<link rel="stylesheet" href="rk/rk.css?v=11" />
+<script src="/analytics.js?v=1"></script>
+</head>
+<body>
+
+<!-- ═════════ Loader ═════════ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-in">
+    <span class="logo loader-logo"></span>
+    <p class="loader-word"><em>Ehipassiko</em><span>come and see</span></p>
+  </div>
+  <div class="loader-bar"><i id="loaderBar"></i></div>
+  <span class="loader-num" id="loaderNum">0</span>
+</div>
+
+<!-- The living sky (WebGL). Fixed behind the page; the hero and the
+     "day on the hill" chapter are windows onto it. -->
+<div class="sky" aria-hidden="true"><canvas id="sky"></canvas><div class="sky-fallback"></div></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><i></i><span></span></div>
+<div class="veil" id="veil" aria-hidden="true"></div>
+
+<!-- ═════════ Header ═════════ -->
+<header class="hd" id="hd">
+  <a class="hd-brand" href="./" aria-label="Rideekanda Forest Monastery — home">
+    <span class="logo"></span>
+    <span class="hd-name">Rideekanda<small>Forest Monastery</small></span>
+  </a>
+  <nav class="hd-links" aria-label="Primary">
+    <a href="monastery/">Monastery</a>
+    <a href="retreat-center/">Retreats</a>
+    <a href="news-and-events/">News</a>
+    <a href="donate/">Dāna</a>
+  </nav>
+  <div class="hd-tools">
+    <button class="ic-btn" id="soundBtn" type="button" aria-pressed="false" aria-label="Forest ambience: off" title="Forest ambience">
+      <span class="bars"><i></i><i></i><i></i><i></i></span>
+    </button>
+    <button class="ic-btn" id="themeBtn" type="button" aria-label="Toggle light / dark theme"></button>
+    <a class="pill hd-book" href="book-your-stay/" data-magnet><span>Book a stay</span></a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="menu-btn-t"><b>Menu</b><b>Close</b></span><span class="menu-btn-i"><i></i><i></i></span>
+    </button>
+  </div>
+</header>
+
+<!-- ═════════ Full-screen menu ═════════ -->
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Site navigation" hidden>
+  <div class="menu-bg"></div>
+  <div class="menu-in">
+    <div class="menu-main">
+      <p class="label">Explore the monastery</p>
+      <ul class="menu-big">
+        <li><a href="monastery/" data-img="rk/img/x-monastery.webp"><span>The Monastery</span><small lang="si">ආරණ්‍ය සේනාසනය</small></a></li>
+        <li><a href="retreat-center/" data-img="rk/img/x-retreat.webp"><span>Retreat Program</span><small lang="si">භාවනා වැඩසටහන</small></a></li>
+        <li><a href="book-your-stay/" data-img="rk/img/x-booking.webp"><span>Book Your Stay</span><small lang="si">වෙන් කරවා ගැනීම</small></a></li>
+        <li><a href="news-and-events/" data-img="rk/img/x-news.webp"><span>News &amp; Events</span><small lang="si">ප්‍රවෘත්ති සහ සිදුවීම්</small></a></li>
+        <li><a href="gallery/" data-img="rk/img/x-gallery.webp"><span>Gallery</span><small lang="si">ඡායාරූප</small></a></li>
+        <li><a href="donate/" data-img="rk/img/x-donate.webp"><span>Dāna · Donation</span><small lang="si">පරිත්‍යාග</small></a></li>
+        <li><a href="contact/" data-img="rk/img/x-contact.webp"><span>Contact</span><small lang="si">සම්බන්ධ වන්න</small></a></li>
+      </ul>
+    </div>
+    <div class="menu-side">
+      <div class="menu-col">
+        <p class="label">More</p>
+        <ul>
+          <li><a href="videos/">Video Gallery</a></li>
+          <li><a href="reviews/">Reviews</a></li>
+          <li><a href="daily-routine/">Daily Routine</a></li>
+          <li><a href="dashboard/">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="menu-col">
+        <p class="label">Projects</p>
+        <ul>
+          <li><a href="projects/">All Projects</a></li>
+          <li><a href="projects/road-project/">Road Project</a></li>
+          <li><a href="projects/herbal-plants/">Herbal Planting</a></li>
+          <li><a href="projects/threestory/">ThreeStory Building</a></li>
+          <li><a href="projects/library-cafe/">Library Café</a></li>
+          <li><a href="requirements/">Monastery Requirements</a></li>
+        </ul>
+      </div>
+      <div class="menu-col">
+        <p class="label">Libraries</p>
+        <ul>
+          <li><a href="ebooks/">E-Book Library</a></li>
+          <li><a href="dhamma-talks/">Dhamma Talks · English</a></li>
+          <li><a href="dhamma-talks/si/" lang="si">ධර්ම දේශනා · සිංහල</a></li>
+          <li><a href="audio-library/">Audio Library</a></li>
+          <li><a href="retreat-docs/">Retreat Documents</a></li>
+        </ul>
+      </div>
+      <div class="menu-foot">
+        <a href="https://wa.me/94742252980" target="_blank" rel="noopener">WhatsApp +94 74 225 2980</a>
+        <a href="mailto:rideekanda@gmail.com">rideekanda@gmail.com</a>
+        <span class="menu-social">
+          <a href="https://www.facebook.com/rideekandaforest" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.instagram.com/rideekanda.monastery/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://youtube.com/c/RideekandaForestMonastery" target="_blank" rel="noopener">YouTube</a>
+        </span>
+      </div>
+    </div>
+    <div class="menu-preview" aria-hidden="true"><img alt="" /></div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ═════════ 00 · Hero ═════════ -->
+<section class="hero" id="top" data-sky>
+  <div class="hero-top">
+    <span>Theravāda · Sri Lankan Forest Tradition</span>
+    <span>Udasgiriya, Matale — Sri Lanka</span>
+  </div>
+  <div class="hero-mid">
+    <p class="hero-si" lang="si">රිදීකන්ද ආරණ්‍ය සේනාසනය</p>
+    <h1 class="hero-title" aria-label="Rideekanda Forest Monastery">
+      <span class="ht-1" aria-hidden="true">Rideekanda</span>
+      <span class="ht-2" aria-hidden="true"><em>Forest</em> Monastery</span>
+    </h1>
+    <p class="hero-lead">A place for meditation in the stillness of the forest.</p>
+    <div class="hero-cta">
+      <a class="pill pill-solid" href="book-your-stay/" data-magnet><span>Plan your visit</span><i class="arr"></i></a>
+      <a class="pill pill-glass" href="#about" data-magnet><span>Explore the monastery</span></a>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <div class="now" id="now" title="The sky behind this page follows the real hour at the monastery">
+      <i class="now-dot"></i>
+      <span class="now-k">Now on the hill</span>
+      <span class="now-t" id="nowTime">—</span>
+      <span class="now-a" id="nowAct"></span>
+    </div>
+    <a class="scroll-cue" href="#about" aria-label="Scroll to the monastery"><span>Scroll</span><i></i></a>
+  </div>
+</section>
+
+<!-- ═════════ 01 · The monastery ═════════ -->
+<section class="sec about" id="about">
+  <div class="mist-edge" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="label reveal"><b>01</b>The Monastery</p>
+    <p class="statement" id="statement">A place for meditation in the stillness of the forest — preserving the true teaching of the Buddha and guiding seekers along the noble path.</p>
+
+    <div class="about-grid">
+      <figure class="about-fig-a clip" data-speed="0.12">
+        <img src="rk/img/monk-view.webp" width="1280" height="880" alt="A monk seated on a rock, looking out over the forested hills below Rideekanda" loading="lazy" decoding="async" />
+        <figcaption>Rideekanda — “Silver Hill”</figcaption>
+      </figure>
+      <div class="about-copy">
+        <h2 class="h2 split">A forest refuge for <em>meditation</em> and the Dhamma</h2>
+        <p class="reveal">Set on a quiet hillside at Udasgiriya in Matale, Rideekanda is a Theravāda forest monastery in the Sri Lankan forest tradition — a sanctuary of silence, simplicity, and sincere practice.</p>
+        <p class="reveal">Monastics and lay practitioners come together here for residential retreats, daily meditation, walking meditation, chanting, and Dhamma discussion, surrounded by ancient forest, golden sunsets, and the stillness of the mountains.</p>
+        <div class="row-cta reveal">
+          <a class="link-arrow" href="monastery/"><span>About the monastery</span><i class="arr"></i></a>
+          <a class="link-arrow" href="retreat-center/"><span>Our retreats</span><i class="arr"></i></a>
+        </div>
+      </div>
+      <figure class="about-fig-b clip" data-speed="-0.1">
+        <img src="rk/img/steps.webp" width="1280" height="960" alt="Stone steps climbing through the forest at Rideekanda" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+
+    <ul class="facts">
+      <li class="reveal"><b><span data-count="2017" data-plain>2017</span></b><span>Building began — a journey of eight years, together</span></li>
+      <li class="reveal"><b><span data-count="7">7</span><small>days</small></b><span>The core residential retreat: Concentration &amp; Vipassanā</span></li>
+      <li class="reveal"><b><span data-count="2500">2,500</span><small>years</small></b><span>A tradition of teaching freely given, as Dāna</span></li>
+      <li class="reveal"><b><span data-count="4.9" data-dec="1">4.9</span><small>/ 5</small></b><span>From 127 reviews by visiting practitioners</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═════════ 02 · The practice (horizontal journey) ═════════ -->
+<section class="path dark" id="practice">
+  <div class="path-track" id="pathTrack">
+    <article class="path-panel path-intro">
+      <p class="label"><b>02</b>The 7-Day Residential Retreat</p>
+      <h2 class="h1">A progressive<br /><em>journey</em> to insight</h2>
+      <p class="path-lead">Concentration &amp; Vipassanā meditation, taught in the Sri Lankan Forest Tradition. The programme unfolds in three movements, each building on the last.</p>
+      <span class="path-hint"><i class="arr"></i>Keep scrolling</span>
+    </article>
+
+    <article class="path-panel path-step">
+      <figure class="path-img"><img src="rk/img/sit-hall.webp" width="960" height="1280" alt="A practitioner sitting in meditation in the hall" loading="lazy" decoding="async" /></figure>
+      <div class="path-copy">
+        <span class="path-num">01</span>
+        <h3 class="h2">Concentration</h3>
+        <p class="pali">samādhi · Ānāpānasati</p>
+        <p>Begin by developing deep concentration through breath meditation — calming the restless mind and exploring the jhāna states the Buddha himself used as the foundation for his awakening.</p>
+      </div>
+    </article>
+
+    <article class="path-panel path-step">
+      <figure class="path-img"><img src="rk/img/sit-wall.webp" width="1280" height="964" alt="A practitioner meditating on a stone wall among the trees" loading="lazy" decoding="async" /></figure>
+      <div class="path-copy">
+        <span class="path-num">02</span>
+        <h3 class="h2">Body contemplation</h3>
+        <p class="pali">arising · passing away</p>
+        <p>Learn to perceive the body not as a solid, permanent entity but as a dynamic interplay of fundamental energies, constantly arising and passing away — loosening the misconceptions of permanence, pleasure, and selfhood.</p>
+      </div>
+    </article>
+
+    <article class="path-panel path-step">
+      <figure class="path-img"><img src="rk/img/sit-view.webp" width="1280" height="1024" alt="A practitioner seated on a deck above the valley" loading="lazy" decoding="async" /></figure>
+      <div class="path-copy">
+        <span class="path-num">03</span>
+        <h3 class="h2">Vipassanā insight</h3>
+        <p class="pali">udayabbaya-ñāṇa</p>
+        <p>Develop the wisdom of rising and falling through walking meditation and specialised breathing — perceiving directly the impermanence (<i>anicca</i>), unsatisfactoriness (<i>dukkha</i>), and non-self (<i>anattā</i>) of all things.</p>
+      </div>
+    </article>
+
+    <article class="path-panel path-end">
+      <blockquote>“Drop by drop is the water pot filled. Likewise, the wise person, gathering it little by little, fills oneself with good.”<cite>The Dhammapada</cite></blockquote>
+      <ul class="path-tags">
+        <li>Taught as Dāna</li><li>All levels welcome</li><li>One-to-one guidance</li>
+      </ul>
+      <a class="pill pill-line" href="retreat-center/" data-magnet><span>The retreat programme</span><i class="arr"></i></a>
+    </article>
+  </div>
+  <div class="path-bar" aria-hidden="true"><i id="pathBar"></i></div>
+</section>
+
+<!-- ═════════ 03 · A day on the hill (the sky returns) ═════════ -->
+<section class="day" id="day" data-sky>
+  <div class="day-pin">
+    <div class="day-shade" aria-hidden="true"></div>
+    <div class="day-head">
+      <p class="label on-sky"><b>03</b>A Day at the Retreat</p>
+      <h2 class="h2 on-sky">The daily <em>rhythm</em></h2>
+    </div>
+    <div class="day-read" aria-live="off">
+      <p class="day-time" id="dayTime">5.30 AM</p>
+      <p class="day-act" id="dayAct">Waking up &amp; Getting Ready</p>
+      <p class="day-si" id="daySi" lang="si">අවදි වී සූදානම් වීම</p>
+    </div>
+    <ol class="day-ticks" id="dayTicks"></ol>
+    <a class="link-arrow on-sky day-link" href="daily-routine/"><span>The full routine, in English &amp; Sinhala</span><i class="arr"></i></a>
+  </div>
+</section>
+
+<!-- ═════════ 04 · Upcoming retreats ═════════ -->
+<section class="sec retreats" id="retreats">
+  <div class="mist-edge" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label reveal"><b>04</b>Upcoming Retreats</p>
+      <h2 class="h1 split">Reserve your place<br />in the <em>forest</em></h2>
+      <p class="sec-lead reveal">A seven-day residential programme on concentration and Vipassanā meditation, held on pre-scheduled dates each month. Spaces are limited, so we encourage you to book well in advance.</p>
+    </div>
+    <ol class="rt-list" id="rtList">
+      <li class="rt-fallback"><a href="book-your-stay/">See the retreat calendar and book your stay →</a></li>
+    </ol>
+    <div class="rt-foot reveal">
+      <p class="poya" id="poya" hidden><span class="moon" aria-hidden="true"></span><span id="poyaText"></span></p>
+      <a class="pill pill-solid" href="book-your-stay/" data-magnet><span>Book your stay</span><i class="arr"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 05 · Life at the retreat ═════════ -->
+<section class="sec life" id="life">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label reveal"><b>05</b>Life at the Retreat</p>
+      <h2 class="h1 split">Simple, comfortable,<br />arranged with <em>care</em></h2>
+    </div>
+    <div class="life-grid">
+      <article class="life-card" data-speed="0.06">
+        <figure class="clip"><img src="rk/img/accommodation.webp" width="1400" height="1050" alt="A meditation kuti lit at dusk" loading="lazy" decoding="async" /></figure>
+        <h3>Accommodation</h3>
+        <p>Simple yet comfortable spaces with minimalist décor — private single rooms, private double rooms, and shared dormitories with individual beds.</p>
+      </article>
+      <article class="life-card" data-speed="-0.06">
+        <figure class="clip"><img src="rk/img/dining.webp" width="1400" height="1054" alt="Retreatants sharing tea on the open veranda" loading="lazy" decoding="async" /></figure>
+        <h3>The dining experience</h3>
+        <p>Wholesome vegetarian meals prepared with locally-sourced ingredients. A full breakfast and lunch, with a light evening meal of soup or porridge.</p>
+      </article>
+      <article class="life-card" data-speed="0.1">
+        <figure class="clip"><img src="rk/img/hall.webp" width="1400" height="1054" alt="The open-sided meditation hall above the valley" loading="lazy" decoding="async" /></figure>
+        <h3>Guided practice</h3>
+        <p>Experienced meditation masters guide and support each practitioner, with one-to-one sessions to address individual needs and questions.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ 06 · Teachers ═════════ -->
+<section class="sec teachers dark" id="teachers">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label reveal"><b>06</b>Our Teachers</p>
+      <h2 class="h1 split">Years of practice in the<br /><em>remote forests</em></h2>
+      <p class="sec-lead reveal">Our programmes are designed and led by teachers with years of dedicated practice in the forests of Sri Pada, Anuradhapura, and Polonnaruwa.</p>
+    </div>
+    <div class="t-grid">
+      <article class="t-card">
+        <figure class="clip" data-tilt><img src="rk/img/ariyajeewa.webp" width="896" height="1191" alt="Ven. Anuradhapura Ariyajeewa Thero" loading="lazy" decoding="async" /></figure>
+        <p class="t-role">Meditation Teacher · Abbot</p>
+        <h3>Royal Paṇḍita Ven. Anuradhapura Ariyajeewa Thero</h3>
+        <p>Founder of the Ehipassiko International Meditation Center and a scholar of Sinhala, Pāli, and Sanskrit, he lived in the forests of Sri Pada, Anuradhapura, and Polonnaruwa for nearly five years — and teaches that emancipation is practically attainable.</p>
+      </article>
+      <article class="t-card">
+        <figure class="clip" data-tilt><img src="rk/img/rewatha.webp" width="718" height="985" alt="Ven. Homagama Rewatha Thero" loading="lazy" decoding="async" /></figure>
+        <p class="t-role">Meditation Teacher · Administrator</p>
+        <h3>Ven. Homagama Rewatha Thero</h3>
+        <p>With nearly a decade of meditation practice, he conducts weekly, monthly, and residential retreats for local and international practitioners — bridging ancient Buddhist wisdom with contemporary scientific perspectives.</p>
+      </article>
+    </div>
+    <a class="link-arrow reveal" href="monastery/"><span>Read more about the teachers</span><i class="arr"></i></a>
+  </div>
+</section>
+
+<!-- ═════════ 07 · Explore ═════════ -->
+<section class="sec explore" id="explore">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label reveal"><b>07</b>Explore</p>
+      <h2 class="h1 split">Find your way<br /><em>around Rideekanda</em></h2>
+    </div>
+    <ul class="x-list" id="xList">
+      <li><a href="monastery/" data-img="rk/img/x-monastery.webp"><i>01</i><h3>The Monastery</h3><span lang="si">ආරණ්‍ය සේනාසනය</span><p>About the monastery, its teachers, and the forest tradition it keeps.</p><b class="arr"></b></a></li>
+      <li><a href="retreat-center/" data-img="rk/img/x-retreat.webp"><i>02</i><h3>Retreat Program</h3><span lang="si">භාවනා වැඩසටහන</span><p>Residential meditation retreats — concentration and Vipassanā in the forest.</p><b class="arr"></b></a></li>
+      <li><a href="book-your-stay/" data-img="rk/img/x-booking.webp"><i>03</i><h3>Book Your Stay</h3><span lang="si">වෙන් කරවා ගැනීම</span><p>Reserve a place for an upcoming retreat.</p><b class="arr"></b></a></li>
+      <li><a href="gallery/" data-img="rk/img/x-gallery.webp"><i>04</i><h3>Gallery</h3><span lang="si">ඡායාරූප</span><p>Scenes of the hillside, shrine, and daily life.</p><b class="arr"></b></a></li>
+      <li><a href="videos/" data-img="rk/img/x-videos.webp"><i>05</i><h3>Video Gallery</h3><span lang="si">වීඩියෝ</span><p>Dhamma talks and films — watch on-site.</p><b class="arr"></b></a></li>
+      <li><a href="dhamma-talks/" data-img="rk/img/x-talks.webp"><i>06</i><h3>Dhamma Talks</h3><span lang="si">ධර්ම දේශනා</span><p>A recorded 7-day Vipassanā retreat — watch, listen &amp; download.</p><b class="arr"></b></a></li>
+      <li><a href="ebooks/" data-img="rk/img/x-library.webp"><i>07</i><h3>E-Book Library</h3><span lang="si">ඊ-පොත් පුස්තකාලය</span><p>Free Dhamma &amp; meditation books — read online or download.</p><b class="arr"></b></a></li>
+      <li><a href="reviews/" data-img="rk/img/x-reviews.webp"><i>08</i><h3>Reviews</h3><span lang="si">ඇගයීම්</span><p>Experiences shared by visiting practitioners.</p><b class="arr"></b></a></li>
+      <li><a href="projects/" data-img="rk/img/x-projects.webp"><i>09</i><h3>Projects</h3><span lang="si">ව්‍යාපෘති</span><p>Ongoing building &amp; design initiatives.</p><b class="arr"></b></a></li>
+      <li><a href="contact/" data-img="rk/img/x-contact.webp"><i>10</i><h3>Contact</h3><span lang="si">සම්බන්ධ වන්න</span><p>Reach us by phone, email, or WhatsApp.</p><b class="arr"></b></a></li>
+    </ul>
+  </div>
+  <div class="x-float" id="xFloat" aria-hidden="true"><div><img alt="" /></div></div>
+</section>
+
+<!-- ═════════ Gallery ribbon ═════════ -->
+<section class="ribbon" id="ribbon" aria-label="Scenes from the monastery">
+  <div class="rb-row" data-dir="-1"></div>
+  <div class="rb-row" data-dir="1"></div>
+  <a class="rb-link pill pill-solid" href="gallery/" data-magnet><span>Open the gallery</span><i class="arr"></i></a>
+</section>
+
+<!-- ═════════ 08 · Voices ═════════ -->
+<section class="sec voices" id="voices">
+  <div class="wrap">
+    <p class="label reveal"><b>08</b>Voices of practitioners</p>
+    <div class="v-stage" id="vStage" aria-roledescription="carousel" aria-label="Reviews"></div>
+    <div class="v-foot">
+      <div class="v-nav">
+        <button class="ic-btn lg" id="vPrev" type="button" aria-label="Previous review"><i class="arr back"></i></button>
+        <span class="v-count"><b id="vNow">01</b> / <span id="vTot">06</span></span>
+        <button class="ic-btn lg" id="vNext" type="button" aria-label="Next review"><i class="arr"></i></button>
+      </div>
+      <p class="v-score"><b>4.9</b><span class="stars" aria-label="4.9 out of 5">★★★★★</span><span>127 reviews on Google</span></p>
+      <a class="link-arrow" href="reviews/"><span>Read all reviews</span><i class="arr"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ Verse & breath ═════════ -->
+<section class="verse dark" id="verse">
+  <div class="breath" id="breath" aria-hidden="true"><i></i><i></i><i></i><span id="breathWord">Breathe in</span></div>
+  <div class="wrap verse-in">
+    <blockquote>
+      <p class="verse-pali" id="versePali" lang="pi"></p>
+      <p class="verse-en" id="verseEn"></p>
+    </blockquote>
+    <cite id="verseCite"></cite>
+  </div>
+</section>
+
+<!-- ═════════ 09 · Projects & Dāna ═════════ -->
+<section class="sec projects" id="projects">
+  <div class="wrap">
+    <div class="sec-head two">
+      <div>
+        <p class="label reveal"><b>09</b>Projects &amp; Dāna</p>
+        <h2 class="h1 split">Built over eight<br />years, <em>together</em></h2>
+      </div>
+      <p class="sec-lead reveal">Since 2017 the monastery has grown through the collective efforts of the village community, meditation practitioners, and generous donors. These are the works under way — and how you can take part.</p>
+    </div>
+  </div>
+  <div class="pj-rail" id="pjRail" data-cursor="Drag">
+    <a class="pj-card" href="projects/road-project/">
+      <figure><img src="rk/img/p-road.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="si">මාර්ග ව්‍යාපෘතිය</span><h3>Road Project</h3>
+      <p>Paving the 2,000 ft concrete road to the monastery — pledge the road by the linear foot.</p>
+    </a>
+    <a class="pj-card" href="projects/herbal-plants/">
+      <figure><img src="rk/img/path.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="si">ඖෂධ පැළ රෝපණ වැඩසටහන</span><h3>Herbal Plant Planting</h3>
+      <p>Replanting Sri Lanka's medicinal trees and herbs across the grounds — choose a plant, bring it, and plant it yourself.</p>
+    </a>
+    <a class="pj-card" href="projects/threestory/">
+      <figure class="contain"><img src="rk/img/p-three.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="si">තෙමහල් ගොඩනැගිල්ල</span><h3>ThreeStory Building</h3>
+      <p>A three-storey building with a meditation hall and accommodation, presented as an interactive 3D model.</p>
+    </a>
+    <a class="pj-card" href="projects/library-cafe/">
+      <figure class="contain"><img src="rk/img/p-cafe.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="si">පුස්තකාල කැෆේ</span><h3>Library Café</h3>
+      <p>A contemplative library and café space — furniture, joinery and interior design for the monastery grounds.</p>
+    </a>
+    <a class="pj-card" href="requirements/">
+      <figure><img src="rk/img/x-projects.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="si">ආරණ්‍ය අවශ්‍යතා</span><h3>Monastery Requirements</h3>
+      <p>Items and resources the monastery currently needs — see the list and how you can help provide them.</p>
+    </a>
+    <a class="pj-card pj-dana" href="donate/">
+      <span lang="si">පරිත්‍යාග</span><h3>Dāna · Donation</h3>
+      <p>When you offer Dāna, you join an unbroken chain of generosity stretching back to the time of the Buddha himself.</p>
+      <b class="pill pill-line"><span>Give</span><i class="arr"></i></b>
+    </a>
+  </div>
+</section>
+
+<!-- ═════════ 10 · News ═════════ -->
+<section class="sec news" id="news" hidden>
+  <div class="wrap">
+    <div class="sec-head two">
+      <div>
+        <p class="label reveal"><b>10</b>News &amp; Events</p>
+        <h2 class="h1 split">Lately, <em>on the hill</em></h2>
+      </div>
+      <a class="link-arrow reveal" href="news-and-events/"><span>All news &amp; events</span><i class="arr"></i></a>
+    </div>
+    <div class="nw-grid" id="nwGrid"></div>
+  </div>
+</section>
+
+<!-- ═════════ Visit ═════════ -->
+<section class="visit dark" id="visit">
+  <div class="visit-bg" aria-hidden="true"><img src="rk/img/dusk.webp" alt="" loading="lazy" decoding="async" /></div>
+  <div class="wrap visit-in">
+    <p class="label on-sky reveal">Visit</p>
+    <h2 class="display split">Come and<br /><em>practice with us</em></h2>
+    <p class="visit-lead reveal">Practitioners of all levels — from complete beginners to those deepening an existing practice — are warmly welcome. The forest road is steep, so please contact us before visiting.</p>
+    <div class="visit-cta reveal">
+      <a class="pill pill-solid" href="book-your-stay/" data-magnet><span>Book your stay</span><i class="arr"></i></a>
+      <a class="pill pill-glass" href="contact/" data-magnet><span>Contact us</span></a>
+    </div>
+    <dl class="visit-meta">
+      <div class="reveal"><dt>Where</dt><dd>Udasgiriya, Yatawatta<br />Matale District, Sri Lanka</dd><dd><a href="https://maps.app.goo.gl/3Gb3nt8qaPqdSTgB9" target="_blank" rel="noopener">Open in Maps ↗</a></dd></div>
+      <div class="reveal"><dt>Tradition</dt><dd>Theravāda · Sri Lankan<br />Forest Tradition</dd></div>
+      <div class="reveal"><dt>Practice</dt><dd>Concentration &amp; Vipassanā<br />Residential retreats</dd></div>
+      <div class="reveal"><dt>Reach us</dt><dd><a href="https://wa.me/94742252980" target="_blank" rel="noopener">WhatsApp +94 74 225 2980</a><br /><a href="mailto:rideekanda@gmail.com">rideekanda@gmail.com</a></dd><dd>Open daily 8:30 am – 5:00 pm</dd></div>
+    </dl>
+  </div>
+</section>
+
+</main>
+
+<!-- ═════════ Footer ═════════ -->
+<footer class="ft dark" id="ft">
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <span class="logo"></span>
+        <p>A Buddhist forest meditation monastery in Matale, Sri Lanka, devoted to preserving the true teaching of the Buddha and guiding seekers along the noble path.</p>
+      </div>
+      <div><h4>Explore</h4><ul>
+        <li><a href="monastery/">The Monastery</a></li><li><a href="retreat-center/">Retreat Program</a></li><li><a href="gallery/">Gallery</a></li><li><a href="projects/">Projects</a></li><li><a href="news-and-events/">News &amp; Events</a></li>
+      </ul></div>
+      <div><h4>Visit &amp; Support</h4><ul>
+        <li><a href="book-your-stay/">Book your stay</a></li><li><a href="donate/">Dāna · Donation</a></li><li><a href="contact/">Contact</a></li><li><a href="dashboard/">Dashboard</a></li>
+      </ul></div>
+      <div><h4>Follow</h4><ul>
+        <li><a href="https://www.facebook.com/rideekandaforest" target="_blank" rel="noopener">Facebook</a></li><li><a href="https://www.instagram.com/rideekanda.monastery/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://youtube.com/c/RideekandaForestMonastery" target="_blank" rel="noopener">YouTube</a></li>
+      </ul></div>
+    </div>
+    <div class="ft-word" aria-hidden="true"><span>Rideekanda</span></div>
+    <div class="ft-base">
+      <span>© <span id="year">2026</span> Rideekanda Forest Monastery · <a href="terms/">Terms &amp; Conditions</a></span>
+      <span lang="pi"><em>Sabbadānaṃ dhammadānaṃ jināti</em> — the gift of Dhamma surpasses all gifts</span>
+      <a class="ft-top" href="#top">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Data shared with the rest of the site, so dates and times stay in one place. -->
+<script src="calendar-data.js?v=31"></script>
+<script src="daily-routine/routine-data.js?v=1"></script>
+<script src="news-and-events/posts.js"></script>
+<script src="rk/vendor/gsap.min.js"></script>
+<script src="rk/vendor/ScrollTrigger.min.js"></script>
+<script src="rk/vendor/SplitText.min.js"></script>
+<script src="rk/vendor/lenis.min.js"></script>
+<script src="rk/sky.js?v=7"></script>
+<script src="rk/rk.js?v=8"></script>
+<script src="rk/dash.js?v=1" data-root="" data-after="0.6" defer></script>
+<script>
+  /* Installable app / kiosk: keep the service worker registered from the home
+     page too (skipped on a local preview so edits are never served stale). */
+  if ('serviceWorker' in navigator && !/^(localhost|127\.|\[::1\])/.test(location.hostname)) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
+  }
+</script>
+</body>
+</html>

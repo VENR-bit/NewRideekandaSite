@@ -1,0 +1,88 @@
+/* ──────────────────────────────────────────────────────────────
+   Rideekanda Ecosystem Header  ·  eco-header.css
+   One canonical top bar shared by every sub-page. Namespaced
+   `.eco-h*` so it never collides with a host page's own styles.
+   Colours come from the chrome palette in eco-nav.css (--rkc-*),
+   with fallbacks so the bar still reads if that file is absent.
+   ────────────────────────────────────────────────────────────── */
+html { scroll-padding-top: 84px; }
+
+/* Optional body offset so content isn't hidden behind the fixed bar.
+   Toggled by eco-header.js when the script tag sets data-pad="true". */
+body.eco-h-pad { padding-top: calc(64px + env(safe-area-inset-top, 0px)); }
+@media (max-width: 860px) { body.eco-h-pad { padding-top: calc(56px + env(safe-area-inset-top, 0px)); } }
+
+.eco-header, .eco-header * { box-sizing: border-box; }
+.eco-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
+  padding-top: env(safe-area-inset-top, 0px);
+  color: var(--rkc-ink, #17201a);
+  font-family: var(--rkc-text, "Hanken Grotesk", system-ui, sans-serif);
+  transition: transform .6s cubic-bezier(.2, .7, .1, 1), color .4s ease;
+}
+.eco-header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--rkc-bg, #ece7da);
+  background: color-mix(in srgb, var(--rkc-bg, #ece7da) 84%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
+  border-bottom: 1px solid var(--rkc-line, rgba(23, 32, 26, .15));
+  opacity: 0; transition: opacity .4s ease;
+}
+.eco-header.eco-h-scrolled::before, body.eco-h-pad .eco-header::before { opacity: 1; }
+/* At the very top the bar is clear glass: a soft wash of the page colour
+   keeps the links legible over whatever photograph sits behind them. */
+.eco-header::after {
+  content: ""; position: absolute; inset: 0 0 -36px 0; z-index: -2; pointer-events: none;
+  background: linear-gradient(var(--rkc-bg, #ece7da), transparent); opacity: .8; transition: opacity .4s ease;
+}
+.eco-header.eco-h-scrolled::after, body.eco-h-pad .eco-header::after { opacity: 0; }
+.eco-header.eco-h-hidden { transform: translateY(-105%); }
+html.rkm-open .eco-header { transform: none; }
+
+.eco-h-inner {
+  display: flex; align-items: center; gap: 18px;
+  height: 64px; padding: 0 var(--rkc-gut, clamp(20px, 5vw, 72px));
+}
+.eco-h-brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; flex: 0 0 auto; }
+.eco-h-brand .eco-h-mark { width: 42px; aspect-ratio: 593 / 388; color: var(--rkc-accent, #b4601a); flex: 0 0 auto; transition: transform .8s cubic-bezier(.2, .7, .1, 1); }
+.eco-h-brand:hover .eco-h-mark { transform: scale(1.08); }
+.eco-h-brandtext { display: flex; flex-direction: column; line-height: 1; }
+.eco-h-brandtext b { font-family: var(--rkc-display, "Cormorant Garamond", Georgia, serif); font-weight: 500; font-size: 1.42rem; letter-spacing: -.01em; }
+.eco-h-brandtext small { margin-top: .42em; font-size: .54rem; letter-spacing: .26em; text-transform: uppercase; opacity: .72; }
+
+.eco-h-links { margin-left: auto; display: flex; align-items: center; gap: clamp(14px, 1.9vw, 28px); }
+.eco-h-links a {
+  position: relative; padding: .5em 0; font-size: .76rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  color: inherit; text-decoration: none; white-space: nowrap;
+}
+.eco-h-links a:not(.eco-h-cta)::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: 100% 50%; transition: transform .5s cubic-bezier(.2, .7, .1, 1); }
+.eco-h-links a:not(.eco-h-cta):hover::after { transform: scaleX(1); transform-origin: 0 50%; }
+.eco-h-links a.eco-h-cta {
+  padding: .82em 1.3em; border-radius: 999px; border: 1px solid var(--rkc-line, rgba(23, 32, 26, .22));
+  transition: background-color .35s ease, color .35s ease, border-color .35s ease;
+}
+.eco-h-links a.eco-h-cta:hover { background: var(--rkc-saffron, #e39a48); border-color: var(--rkc-saffron, #e39a48); color: #1a1208; }
+
+.eco-h-menu {
+  display: inline-flex; align-items: center; gap: .8rem; height: 42px; margin-left: 6px; padding: 0; background: none; border: 0; cursor: pointer;
+  color: inherit; font: 500 .76rem/1 var(--rkc-text, "Hanken Grotesk", system-ui, sans-serif); letter-spacing: .12em; text-transform: uppercase;
+}
+.eco-h-links:empty + .eco-h-menu { margin-left: auto; }
+.eco-h-menu i { position: relative; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--rkc-line, rgba(23, 32, 26, .22)); transition: background-color .3s; }
+.eco-h-menu:hover i { background: color-mix(in srgb, currentColor 10%, transparent); }
+.eco-h-menu i b { position: absolute; left: 13px; right: 13px; top: 50%; height: 1px; background: currentColor; }
+.eco-h-menu i b:first-child { transform: translateY(-3.5px); }
+.eco-h-menu i b:last-child { transform: translateY(3.5px); }
+
+@media (max-width: 1080px) {
+  .eco-h-links a:not(.eco-h-cta) { display: none; }
+}
+@media (max-width: 860px) {
+  .eco-h-inner { height: 56px; }
+  .eco-h-links { display: none; }
+  .eco-h-menu { margin-left: auto; }
+  .eco-h-brandtext small { display: none; }
+  .eco-h-brand .eco-h-mark { width: 38px; }
+}
+@media (max-width: 420px) { .eco-h-menu span { display: none; } }
+@media print { .eco-header { display: none; } }

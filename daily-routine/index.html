@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-rk="std">
+<head>
+  <script>(function(){try{var m=localStorage.getItem("rk-theme"),u=+localStorage.getItem("rk-theme-until");if((m!=="light"&&m!=="dark")||!u||Date.now()>=u){m="auto";localStorage.removeItem("rk-theme");localStorage.removeItem("rk-theme-until");}var h=new Date().getHours();var day=(m==="auto")?(h>=6&&h<18):(m==="light");var t=day?"light":"dark";var r=document.documentElement;r.setAttribute("data-theme",t);r.setAttribute("data-theme-mode",m);}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Daily Routine — Rideekanda Forest Monastery</title>
+  <meta name="description" content="The daily routine of a residential retreat at Rideekanda Forest Monastery, hour by hour, in English and Sinhala — from waking at 5.30 to night rest at 10.00.">
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="../app/favicon-64.png?v=3" />
+  <link rel="apple-touch-icon" href="../app/apple-touch-icon.png?v=2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Sinhala:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1">
+  <!-- Google Analytics -->
+  <script src="/analytics.js?v=1"></script>
+  <!-- shared inner-page theme (rk/inner.css) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..600&display=swap" />
+  <link rel="stylesheet" href="../rk/inner.css?v=3" />
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <img class="lotus" src="../assets/lotus-logo.png" alt="Rideekanda Forest Monastery" draggable="false">
+      <p class="place">Rideekanda&nbsp;·&nbsp;Forest Monastery</p>
+      <h1>Daily Routine</h1>
+      <p class="hero__si">ආරණ්‍යයේ දින චර්යාව</p>
+      <p class="hero__about">
+        How a day unfolds on a residential retreat — from waking before dawn to
+        night rest. The routine may vary a little with each programme.
+      </p>
+      <div class="rule"></div>
+      <p class="hero__total" id="total"></p>
+    </section>
+
+    <section class="day" id="day"></section>
+
+    <p class="note">
+      The same routine is available to download as a PDF, in English and Sinhala,
+      on the <a href="../retreat-docs/">Retreat Documents</a> page.
+      <span class="si">මෙම දින චර්යාව සිංහල හා ඉංග්‍රීසි PDF ලෙස ලේඛන පිටුවෙන් බාගත කළ හැකිය.</span>
+    </p>
+  </main>
+
+  <script src="routine-data.js?v=1"></script>
+  <script src="routine.js?v=1"></script>
+
+  <!-- eco-header -->
+  <link rel="stylesheet" href="../eco-header.css?v=11">
+  <script id="eco-header" src="../eco-header.js?v=10" data-root="../" data-links='[{"label": "Retreat Documents", "href": "../retreat-docs/"}, {"label": "Retreat Program", "href": "../retreat-center/"}]' data-pad="true" defer></script>
+  <!-- eco-nav -->
+  <link rel="stylesheet" href="../eco-nav.css?v=21">
+  <script id="eco-nav" src="../eco-nav.js?v=41" data-root="../" data-current="retreat" defer></script>
+  <!-- eco-footer -->
+  <link rel="stylesheet" href="../eco-footer.css?v=10">
+  <script id="eco-footer" src="../eco-footer.js?v=10" data-root="../" defer></script>
+  <!-- eco-theme -->
+  <link rel="stylesheet" href="../eco-theme.css?v=11">
+  <script src="../eco-theme.js?v=4" defer></script>
+</body>
+</html>

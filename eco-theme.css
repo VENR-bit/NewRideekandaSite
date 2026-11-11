@@ -1,0 +1,103 @@
+/* ──────────────────────────────────────────────────────────────
+   Rideekanda Ecosystem Theme  ·  eco-theme.css
+   Shared light/dark theming for the content pages. The night palette
+   overrides the family CSS variables when <html data-theme="dark">.
+   eco-theme.js sets data-theme (Auto by time, or a manual Light/Dark
+   choice) and injects the toggle button.
+   ────────────────────────────────────────────────────────────── */
+
+/* Night palette — same values the home page / dashboard use. Applied
+   whenever the manual or time-based choice resolves to dark. */
+:root[data-theme="dark"] {
+  --bg: #0c120e;
+  --bg-2: #111a14;
+  --card: #151f18;
+  --ink: #ebe6d6;
+  --ink-soft: #bdbcaa;
+  --ink-dim: #bdbcaa;
+  --muted: #8b9484;
+  --line: rgba(235, 230, 214, 0.15);
+  --accent: #e39a48;
+  --accent-soft: #f0b469;
+  color-scheme: dark;
+}
+:root[data-theme="light"] { color-scheme: light; }
+
+/* Keep the <html> canvas (safe-area / overscroll) in sync with the theme,
+   beating any page-level prefers-color-scheme rules on <html>/:root. */
+:root[data-theme] { background: var(--bg); transition: background .4s ease; }
+
+/* Round theme toggle, bottom-right. Cycles Auto → Light → Dark. */
+.eco-theme-toggle {
+  position: fixed; right: 18px; bottom: 18px; z-index: 99500;
+  width: 42px; height: 42px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; cursor: pointer; padding: 0;
+  background: color-mix(in srgb, var(--card, #fffaf0) 82%, transparent);
+  color: var(--accent, #a3763c);
+  border: 0;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  /* A hairline ring, drawn inside the circle so it costs no layout, lifts the
+     disc off a photograph or a pale band of page. Warm dark on paper, warm
+     pale at night — see the data-theme rule below. */
+  box-shadow: inset 0 0 0 1px rgba(43, 38, 32, 0.22),
+              0 8px 22px -10px rgba(0,0,0,0.45);
+  transition: transform .2s ease, background .3s ease, color .3s ease;
+}
+/* Pages that keep their surfaces under names of their own (the monastery and
+   retreat pages have no --card) fell back to the paper colour at night, which
+   left a pale disc on a dark page — and the Dashboard pill, which takes its
+   colours from this button, went pale with it. Give the fallback a night
+   value; where --card does exist this changes nothing. */
+:root[data-theme="dark"] .eco-theme-toggle,
+:root[data-theme="night"] .eco-theme-toggle {
+  background: color-mix(in srgb, var(--card, #151f18) 82%, transparent);
+  color: var(--accent, #e39a48);
+  box-shadow: inset 0 0 0 1px rgba(255, 235, 200, 0.24),
+              0 8px 22px -10px rgba(0,0,0,0.45);
+}
+.eco-theme-toggle:hover { transform: translateY(-2px); }
+.eco-theme-toggle svg { width: 20px; height: 20px; display: block; }
+@media print { .eco-theme-toggle { display: none; } }
+
+/* ── Keyboard focus visibility (accessibility) ──────────────────
+   A clear focus ring for keyboard users on links, buttons, custom
+   button-role elements and form fields. Mouse clicks don't trigger it
+   (:focus-visible), so it stays unobtrusive. */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #c0894a;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+:root[data-theme="dark"] a:focus-visible,
+:root[data-theme="dark"] button:focus-visible,
+:root[data-theme="dark"] [role="button"]:focus-visible,
+:root[data-theme="dark"] [tabindex]:not([tabindex="-1"]):focus-visible,
+:root[data-theme="dark"] input:focus-visible,
+:root[data-theme="dark"] select:focus-visible,
+:root[data-theme="dark"] textarea:focus-visible {
+  outline-color: #e0b76a;
+}
+
+/* The day / night button and the Dashboard pill (rk/dash.js) are a pair:
+   the same dark glass disc on every page, in either theme. */
+.eco-theme-toggle,
+:root[data-theme="dark"] .eco-theme-toggle,
+:root[data-theme="night"] .eco-theme-toggle {
+  right: calc(18px + env(safe-area-inset-right, 0px)); bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  background: rgba(10, 16, 12, .84); color: #e39a48;
+  border: 1px solid rgba(235, 230, 214, .2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .55);
+  transition: transform .5s cubic-bezier(.2, .7, .1, 1), background-color .35s ease, color .35s ease;
+}
+.eco-theme-toggle svg { width: 18px; height: 18px; }
+@media (hover: hover) { .eco-theme-toggle:hover { transform: rotate(40deg); background: #e39a48; color: #1a1208; } }
+html.rkm-open .eco-theme-toggle { opacity: 0; pointer-events: none; }

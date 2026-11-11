@@ -1,0 +1,84 @@
+/* Rideekanda — Daily Routine.
+   Same paper palette and type as the retreat-documents page, so the two read
+   as one family. Both languages are shown together rather than behind a
+   switch: visitors here are a mix, and the kiosk has no keyboard to hunt for
+   a language toggle with. */
+:root{
+  --bg:#f3ecdc; --paper:#faf6ea; --ink:#2a2418; --muted:rgba(42,36,24,.6);
+  --line:rgba(42,36,24,.14); --accent:#b07a2e; --forest:#586b49;
+  --shadow:0 14px 40px rgba(42,36,24,.16);
+  --display:"Cormorant Garamond",Georgia,serif; --body:"Lora",Georgia,serif;
+  --sinhala:"Noto Serif Sinhala","Iskoola Pota",serif;
+}
+[data-theme="dark"]{
+  --bg:#1f1a14; --paper:#2a241c; --ink:#f3ecdb; --muted:rgba(243,236,219,.6);
+  --line:rgba(255,235,200,.14); --accent:#cf9a52; --forest:#9aa87f;
+  --shadow:0 16px 44px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--body);
+  -webkit-font-smoothing:antialiased; line-height:1.6;
+  padding-top:calc(64px + env(safe-area-inset-top,0px));
+}
+@media (max-width:860px){ body{padding-top:calc(56px + env(safe-area-inset-top,0px));} }
+.shell{max-width:840px;margin:0 auto;padding:0 22px 90px}
+.si{font-family:var(--sinhala)}
+
+/* hero */
+.hero{text-align:center;padding:48px 0 8px}
+.hero .lotus{width:64px;height:auto;display:block;margin:0 auto 14px}
+.place{font-family:var(--display);letter-spacing:.16em;text-transform:uppercase;font-size:13px;color:var(--muted);margin:0 0 6px}
+.hero h1{font-family:var(--display);font-weight:500;font-size:clamp(38px,6.5vw,64px);margin:0 0 6px;letter-spacing:.01em}
+.hero__si{font-family:var(--sinhala);font-size:clamp(17px,3.2vw,24px);color:var(--accent);margin:0 0 16px;font-weight:500}
+.hero__about{max-width:560px;margin:0 auto;color:var(--muted);font-size:16.5px}
+.rule{width:54px;height:1px;background:var(--accent);opacity:.6;margin:30px auto 0}
+.hero__total{font-family:var(--display);text-transform:uppercase;letter-spacing:.16em;font-size:12.5px;color:var(--muted);margin:18px 0 0}
+
+/* the day */
+.day{margin:38px 0 0}
+.slot{
+  display:grid; grid-template-columns:190px 1fr; gap:0 26px; align-items:start;
+  padding:18px 20px; border-radius:14px;
+  opacity:0; transform:translateY(10px);
+  transition:opacity .5s ease, transform .5s ease, background .2s ease;
+}
+.slot.in{opacity:1;transform:none}
+.slot + .slot{border-top:1px solid var(--line)}
+.slot:hover{background:var(--paper)}
+/* the period now under way */
+.slot.now{background:var(--paper);box-shadow:var(--shadow)}
+.slot.now + .slot{border-top-color:transparent}
+
+.slot__time{text-align:right;padding-top:2px}
+.t-en{font-family:var(--display);font-size:19px;font-weight:600;line-height:1.25;color:var(--ink);letter-spacing:.01em}
+.t-si{font-family:var(--sinhala);font-size:12.5px;color:var(--muted);margin-top:5px;line-height:1.5}
+.slot__what{min-width:0}
+.a-en{font-family:var(--display);font-size:22px;line-height:1.3;margin:0}
+.a-si{font-family:var(--sinhala);font-size:15px;color:var(--muted);margin:6px 0 0;line-height:1.75}
+.now-tag{
+  display:inline-block;margin-left:9px;vertical-align:middle;
+  font-family:var(--body);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:2px 8px;
+}
+
+/* footer note */
+.note{
+  margin:44px auto 0;max-width:620px;text-align:center;color:var(--muted);font-size:14.5px;
+  border-top:1px solid var(--line);padding-top:26px;line-height:1.9;
+}
+.note a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+.note a:hover{border-bottom-color:var(--accent)}
+.note .si{display:block;font-size:13.5px;margin-top:2px}
+
+@media (max-width:640px){
+  .shell{padding:0 16px 80px}
+  .slot{grid-template-columns:1fr;gap:6px;padding:16px 14px}
+  /* time and its Sinhala reading sit on one line, sharing the row above */
+  .slot__time{text-align:left;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  .t-en{font-size:15px;letter-spacing:.02em}
+  .t-si{margin-top:0;font-size:12px}
+  .a-en{font-size:19px}
+  .a-si{font-size:14px}
+}

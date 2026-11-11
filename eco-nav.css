@@ -1,0 +1,188 @@
+/* ──────────────────────────────────────────────────────────────
+   Rideekanda Ecosystem Navigation  ·  eco-nav.css
+   The site menu (full-screen, opened from the header's Menu button),
+   the page-leave curtain, the pointer dot, and the Dashboard pill.
+   Also carries the chrome palette (--rkc-*) the header and footer
+   share, so those follow the page's day / night setting.
+   ────────────────────────────────────────────────────────────── */
+:root {
+  --rkc-bg: #ece7da; --rkc-ink: #17201a; --rkc-mute: #79816f; --rkc-line: rgba(23, 32, 26, .15);
+  --rkc-accent: #b4601a; --rkc-saffron: #e39a48;
+  --rkc-forest: #0a100c; --rkc-forest-ink: #ebe6d6; --rkc-forest-mute: #8f9889; --rkc-forest-line: rgba(235, 230, 214, .16);
+  --rkc-display: "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --rkc-text: "Hanken Grotesk", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --rkc-si: "Noto Serif Sinhala", "Iskoola Pota", serif;
+  --rkc-ease: cubic-bezier(.2, .7, .1, 1);
+  --rkc-gut: clamp(20px, 5vw, 72px);
+}
+html[data-theme="dark"], html[data-theme="night"], html.dark, html.night, body.dark, body.night {
+  --rkc-bg: #0c120e; --rkc-ink: #ebe6d6; --rkc-mute: #848d7e; --rkc-line: rgba(235, 230, 214, .15); --rkc-accent: #e39a48;
+}
+
+/* ── Site menu ── */
+.rkm, .rkm * { box-sizing: border-box; }
+.rkm { position: fixed; inset: 0; z-index: 99600; color: var(--rkc-forest-ink); font-family: var(--rkc-text); font-size: 16px; line-height: 1.5; overflow: hidden; }
+.rkm[hidden] { display: none; }
+.rkm a { color: inherit; text-decoration: none; }
+.rkm ul { list-style: none; margin: 0; padding: 0; }
+.rkm p { margin: 0; }
+.rkm-bg { position: absolute; inset: 0; background: var(--rkc-forest); clip-path: inset(0 0 100% 0); transition: clip-path .75s cubic-bezier(.76, 0, .24, 1); }
+.rkm.is-open .rkm-bg { clip-path: inset(0 0 0 0); }
+.rkm-bar { position: absolute; z-index: 2; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: calc(14px + env(safe-area-inset-top, 0px)) var(--rkc-gut) 14px; opacity: 0; transition: opacity .4s ease; }
+.rkm.is-open .rkm-bar { opacity: 1; transition-delay: .3s; }
+.rkm-brand { display: flex; align-items: center; gap: .8rem; font-family: var(--rkc-display); font-weight: 500; font-size: 1.45rem; line-height: 1; }
+.rkm-brand small { display: block; margin-top: .4em; font-family: var(--rkc-si); font-size: .68rem; font-weight: 400; color: var(--rkc-forest-mute); }
+.rkm-logo { display: block; width: 44px; aspect-ratio: 593 / 388; color: var(--rkc-saffron); flex: none; }
+.rkm-close { display: inline-flex; align-items: center; gap: .8rem; background: none; border: 0; padding: 0; cursor: pointer; color: inherit; font: 500 .8rem/1 var(--rkc-text); letter-spacing: .12em; text-transform: uppercase; }
+.rkm-close i { position: relative; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(244, 239, 226, .32); transition: background-color .3s; }
+.rkm-close:hover i { background: rgba(244, 239, 226, .14); }
+.rkm-close i::before, .rkm-close i::after { content: ""; position: absolute; left: 13px; right: 13px; top: 50%; height: 1px; background: currentColor; transform: rotate(45deg); }
+.rkm-close i::after { transform: rotate(-45deg); }
+.rkm-in {
+  position: relative; height: 100%; overflow-y: auto; overscroll-behavior: contain;
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 6rem); align-items: end;
+  padding: 110px var(--rkc-gut) clamp(28px, 5vh, 56px);
+}
+.rkm-label { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 500; color: var(--rkc-forest-mute); margin-bottom: 1.2rem !important; }
+.rkm-big li { overflow: hidden; }
+.rkm-big a {
+  display: flex; align-items: baseline; gap: 1.2rem; padding: .06em 0; font-family: var(--rkc-display); font-weight: 300;
+  font-size: clamp(1.9rem, 5.2vh, 4rem); line-height: 1.1; letter-spacing: -.02em;
+  transform: translateY(110%); transition: transform .9s var(--rkc-ease), color .4s;
+}
+.rkm.is-open .rkm-big a { transform: none; transition-delay: calc(.32s + var(--i, 0) * .05s), 0s; }
+.rkm-big a span { display: inline-block; transition: transform .6s var(--rkc-ease); }
+.rkm-big a small { font-family: var(--rkc-si); font-size: .82rem; letter-spacing: 0; color: var(--rkc-forest-mute); opacity: 0; transform: translateX(-10px); transition: opacity .4s, transform .5s var(--rkc-ease); }
+.rkm-big a:hover, .rkm-big a.is-current { color: var(--rkc-saffron); font-style: italic; }
+.rkm-big a:hover span { transform: translateX(.3em); }
+.rkm-big a:hover small { opacity: 1; transform: none; }
+.rkm-side { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 1.5rem; align-content: end; opacity: 0; transform: translateY(14px); transition: opacity .5s, transform .7s var(--rkc-ease); }
+.rkm.is-open .rkm-side { opacity: 1; transform: none; transition-delay: .55s; }
+.rkm-page { display: none; }
+.rkm-col li a { display: inline-block; padding: .26em 0; color: #cfcab9; font-size: .98rem; transition: color .3s, transform .4s var(--rkc-ease); }
+.rkm-col li a:hover, .rkm-col li a.is-current { color: var(--rkc-saffron); }
+.rkm-col li a:hover { transform: translateX(4px); }
+.rkm-foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .6rem 2rem; padding-top: 1.5rem; border-top: 1px solid var(--rkc-forest-line); font-size: .86rem; color: #a9ad9c; }
+.rkm-foot a:hover { color: var(--rkc-saffron); }
+.rkm-social { display: flex; gap: 1.4rem; margin-left: auto; }
+.rkm-preview { position: absolute; right: var(--rkc-gut); top: 110px; width: min(30vw, 420px); aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; opacity: 0; transform: scale(.94); transition: opacity .5s, transform .7s var(--rkc-ease); pointer-events: none; }
+.rkm-preview.on { opacity: 1; transform: none; }
+.rkm-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+html.rkm-open { overflow: hidden; }
+
+@media (max-width: 1100px) {
+  .rkm-in { grid-template-columns: 1fr; align-items: start; align-content: start; gap: 2.4rem; }
+  .rkm-preview { display: none; }
+}
+@media (max-width: 860px) {
+  .rkm-in { padding-top: 92px; }
+  .rkm-side { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rkm-page { display: block; }
+  .rkm-social { margin-left: 0; width: 100%; }
+  .rkm-big a small { display: none; }
+  .rkm-brand small { display: none; }
+}
+
+/* Floating Menu button — only on a page that has no shared header. */
+.rkm-launch {
+  position: fixed; z-index: 9500; left: 16px; top: calc(14px + env(safe-area-inset-top, 0px));
+  display: inline-flex; align-items: center; gap: .6rem; height: 42px; padding: 0 16px 0 12px; border-radius: 999px; cursor: pointer;
+  font: 500 .76rem/1 var(--rkc-text); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--rkc-forest-ink); background: rgba(10, 16, 12, .6); border: 1px solid rgba(244, 239, 226, .25);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.rkm-launch .rkm-logo { width: 26px; }
+
+/* ── Page-leave curtain ── */
+.rk-veil { position: fixed; inset: 0; z-index: 99900; background: #0a100c; transform: translateY(101%); pointer-events: none; transition: transform .52s cubic-bezier(.76, 0, .24, 1); }
+.rk-veil.is-up { transform: none; pointer-events: auto; }
+
+/* ── Pointer dot ── */
+.rk-cursor { position: fixed; left: 0; top: 0; z-index: 99950; pointer-events: none; mix-blend-mode: difference; transition: opacity .3s; }
+.rk-cursor i { position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: #fff; transition: transform .4s var(--rkc-ease), opacity .3s; }
+.rk-cursor.is-link i { transform: scale(4.2); opacity: .55; }
+.rk-cursor.is-hidden { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rkm-bg, .rkm-big a, .rkm-side, .rkm-bar { transition-duration: .01ms !important; transition-delay: 0s !important; }
+}
+@media print { .rkm, .rkm-launch, .rk-veil, .rk-cursor { display: none !important; } }
+
+/* ── Dashboard button ──────────────────────────────────────
+   A pill in the bottom-right corner that takes a visitor back to the
+   dashboard. It is parked behind the day/night toggle and slides out
+   from under it a moment after the page settles. The slot is placed
+   from the toggle's own measurements (see eco-nav.js), because the
+   home page's toggle is a few pixels larger than the shared one, and
+   it clips on the right only — so the parked pill stays hidden while
+   the shadow still falls freely on the other three sides.
+   The pill wears the toggle's own background and ink, copied from it at
+   runtime (--eco-dash-bg / --eco-dash-ink). Taking both from the toggle
+   is what keeps the pair legible: the family --eco-* colours follow the
+   device's dark mode rather than the site's clock, and a page that
+   leaves --card unset has a toggle that stays pale at night while its
+   --ink turns light, which would put light text on a pale pill. */
+.eco-dash-slot {
+  position: fixed; z-index: 99400;
+  right: var(--eco-dash-right, 18px);
+  bottom: var(--eco-dash-bottom, 18px);
+  height: var(--eco-dash-size, 42px);
+  max-width: calc(100vw - 28px);
+  display: flex; justify-content: flex-end;
+  border-radius: 999px;
+  clip-path: inset(-60px 0 -60px -60px);
+  pointer-events: none;
+}
+.eco-dash {
+  display: inline-flex; align-items: center;
+  height: 100%;
+  padding: 0 calc(var(--eco-dash-size, 42px) + 10px) 0 17px;
+  border-radius: 999px; white-space: nowrap; text-decoration: none;
+  font-family: var(--rkc-text);
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--eco-dash-ink, var(--ink, #2b2620));
+  background: var(--eco-dash-bg, color-mix(in srgb, var(--card, #fffaf0) 86%, transparent));
+  border: 0;                       /* no stroke — the toggle has none either */
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  /* The toggle's hairline, continued round the pill. eco-nav.js sets
+     --eco-dash-line from the toggle's own colouring, so the two agree
+     whichever way the page's day/night choice has fallen. */
+  box-shadow: inset 0 0 0 1px var(--eco-dash-line, rgba(43, 38, 32, 0.22)),
+              0 10px 26px -14px rgba(0,0,0,0.5);
+  pointer-events: auto; position: relative; z-index: 1;
+  /* Parked fully to the right of the slot, whose edge is the toggle's own:
+     the pill is clipped away there, and the first stretch of its travel
+     passes behind the toggle, so it appears to grow out of it. */
+  transform: translateX(100%);
+  transition: transform .62s cubic-bezier(0.22, 1, 0.36, 1), color .25s ease;
+}
+.eco-dash-slot.is-out .eco-dash { transform: none; }
+.eco-dash-slot.is-tucked .eco-dash { transform: translateX(100%); }
+.eco-dash-slot.is-out .eco-dash:hover { transform: translateY(-2px); }
+/* The label waits for the pill to clear the toggle before it fades up. */
+.eco-dash .eco-dash-label { opacity: 0; transition: opacity .3s ease; }
+.eco-dash-slot.is-out .eco-dash .eco-dash-label { opacity: 1; transition-delay: .24s; }
+/* The drawn disc for pages with no day/night control (see eco-nav.js). It
+   matches .eco-theme-toggle, sits over the pill so the pill still slides out
+   from under it, and passes clicks through to the pill. */
+.eco-dash-mark {
+  position: absolute; right: 0; top: 0; z-index: 2;
+  width: var(--eco-dash-size, 42px); height: var(--eco-dash-size, 42px);
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; pointer-events: none;
+  color: var(--accent, #a3763c);
+  background: color-mix(in srgb, var(--card, #fffaf0) 82%, transparent);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px var(--eco-dash-line, rgba(43, 38, 32, 0.22)),
+              0 8px 22px -10px rgba(0,0,0,0.45);
+}
+.eco-dash-mark svg { width: 20px; height: 20px; display: block; }
+
+@media (max-width: 560px) { .eco-dash { font-size: 12px; padding-left: 15px; } }
+@media print { .eco-dash-slot { display: none; } }
+@media (max-width: 700px) and (display-mode: browser) { .eco-dash-slot { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .eco-launch, .eco-overlay, .eco-panel, .eco-link, .eco-close { transition: none; }
+  .eco-dash, .eco-dash .eco-dash-label { transition: none; }
+}

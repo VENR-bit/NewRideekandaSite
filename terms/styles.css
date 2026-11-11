@@ -1,0 +1,91 @@
+/* Rideekanda — Terms & Conditions.
+   Same paper palette as the retreat-documents and daily-routine pages. Long
+   prose, so: a narrow measure, generous leading, and numbered sections that
+   can be cited in an email ("clause 5.2"). */
+:root{
+  --bg:#f3ecdc; --paper:#faf6ea; --ink:#2a2418; --muted:rgba(42,36,24,.62);
+  --line:rgba(42,36,24,.14); --accent:#b07a2e; --forest:#586b49;
+  --shadow:0 14px 40px rgba(42,36,24,.16);
+  --display:"Cormorant Garamond",Georgia,serif; --body:"Lora",Georgia,serif;
+  --sinhala:"Noto Serif Sinhala","Iskoola Pota",serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+[data-theme="dark"]{
+  --bg:#1f1a14; --paper:#2a241c; --ink:#f3ecdb; --muted:rgba(243,236,219,.62);
+  --line:rgba(255,235,200,.14); --accent:#cf9a52; --forest:#9aa87f;
+  --shadow:0 16px 44px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--body);
+  -webkit-font-smoothing:antialiased; line-height:1.75; font-size:16.5px;
+  padding-top:calc(64px + env(safe-area-inset-top,0px));
+}
+@media (max-width:860px){ body{padding-top:calc(56px + env(safe-area-inset-top,0px));} }
+.shell{max-width:760px;margin:0 auto;padding:0 22px 90px}
+.si{font-family:var(--sinhala)}
+
+/* hero */
+.hero{text-align:center;padding:48px 0 8px}
+.hero .lotus{width:64px;height:auto;display:block;margin:0 auto 14px}
+.place{font-family:var(--display);letter-spacing:.16em;text-transform:uppercase;font-size:13px;color:var(--muted);margin:0 0 6px}
+.hero h1{font-family:var(--display);font-weight:500;font-size:clamp(38px,6.5vw,62px);margin:0 0 6px;letter-spacing:.01em;line-height:1.06}
+.hero__si{font-family:var(--sinhala);font-size:clamp(16px,3.2vw,22px);color:var(--accent);margin:0 0 16px;font-weight:500}
+.hero__about{max-width:560px;margin:0 auto;color:var(--muted);font-size:16px}
+.rule{width:54px;height:1px;background:var(--accent);opacity:.6;margin:30px auto 0}
+.stamp{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--muted);margin:18px 0 0}
+
+/* the short version */
+.gist{
+  background:var(--paper);border:1px solid var(--line);border-radius:16px;
+  padding:22px 26px;margin:40px 0 8px;box-shadow:var(--shadow);
+}
+.gist h2{font-family:var(--display);font-weight:500;font-size:23px;margin:0 0 10px}
+.gist ul{margin:0;padding-left:20px}
+.gist li{margin-bottom:7px;font-size:15.5px;color:var(--ink)}
+.gist li:last-child{margin-bottom:0}
+.gist em{color:var(--muted);font-style:italic}
+
+/* contents */
+.toc{margin:34px 0 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0}
+.toc h2{font-family:var(--mono);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--muted);font-weight:400;margin:0 0 12px}
+.toc ol{margin:0;padding-left:22px;columns:2;column-gap:34px}
+.toc li{margin-bottom:5px;font-size:14.5px;break-inside:avoid}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+@media (max-width:600px){ .toc ol{columns:1} }
+
+/* sections */
+section.clause{padding-top:38px;scroll-margin-top:84px}
+section.clause h2{
+  font-family:var(--display);font-weight:500;font-size:clamp(25px,3.6vw,33px);
+  line-height:1.15;margin:0 0 4px;letter-spacing:.005em;
+}
+section.clause h2 .n{color:var(--accent);font-family:var(--mono);font-size:.5em;vertical-align:.45em;margin-right:10px;letter-spacing:.06em}
+section.clause h3{font-family:var(--display);font-weight:600;font-size:19px;margin:22px 0 4px}
+section.clause p{margin:12px 0}
+section.clause ul{margin:12px 0;padding-left:22px}
+section.clause li{margin-bottom:6px}
+section.clause a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+section.clause a:hover{border-bottom-color:var(--accent)}
+blockquote{
+  margin:16px 0;padding:2px 0 2px 18px;border-left:2px solid var(--accent);
+  font-style:italic;color:var(--ink);
+}
+
+/* rate table */
+.rates{width:100%;border-collapse:collapse;margin:16px 0;font-size:15.5px}
+.rates th,.rates td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+.rates th{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:400}
+.rates td.amt{font-family:var(--mono);white-space:nowrap;text-align:right}
+.rates tr:last-child td{border-bottom:0}
+.tablewrap{overflow-x:auto}
+
+/* contact block */
+.contact{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin-top:16px}
+.contact p{margin:6px 0;font-size:15.5px}
+.contact .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:inline-block;min-width:88px}
+
+.foot-note{margin-top:52px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;line-height:1.8}

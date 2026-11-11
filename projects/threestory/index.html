@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en" data-rk="three">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Three-Story Building — Rideekanda Forest Monastery</title>
+  <link rel="icon" href="../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="64x64" href="../../app/favicon-64.png?v=3" />
+  <link rel="apple-touch-icon" href="../../app/apple-touch-icon.png?v=2" />
+  <meta name="description" content="Support the expansion of Rideekanda Forest Monastery with a three-story building for meditation, monastic life, and spiritual growth.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  <style>
+    :root {
+      --paper:       #FAF6EC;
+      --paper-2:     #F1E9D2;
+      --ink:         #1A1612;
+      --ink-2:       #2F2820;
+      --ink-soft:    #6B6354;
+      --ink-faint:   #C9BEA0;
+      --green:       #2F4F3A;
+      --green-light: #3A6348;
+      --accent:      #B3502A;
+      --accent-warm: #E0A645;
+      --hand:        "Cormorant Garamond", Georgia, serif;
+      --sans:        "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono:        "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.6; }
+
+
+    /* ---- HERO ---- */
+    .hero {
+      text-align: center;
+      padding: 80px 48px 60px;
+      max-width: 860px; margin: 0 auto;
+    }
+    .hero-logo { height: 64px; margin-bottom: 20px; }
+    .hero-label {
+      font-family: var(--mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: var(--hand); font-size: 72px; font-weight: 400;
+      line-height: 1.05; letter-spacing: -0.01em;
+      color: var(--ink); margin-bottom: 24px;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-family: var(--hand); font-size: 20px; font-style: italic;
+      color: var(--ink-soft); line-height: 1.5;
+      max-width: 600px; margin: 0 auto 36px;
+    }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .hero-milestone {
+      margin: 26px auto 0; max-width: 560px;
+      font-family: var(--mono); font-size: 12.5px; line-height: 1.6;
+      letter-spacing: 0.01em; color: var(--ink-soft);
+      display: inline-flex; align-items: baseline; gap: 8px; text-align: left;
+    }
+    .hero-milestone strong { color: var(--accent); font-weight: 600; }
+    .hero-milestone .dot {
+      flex: none; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); position: relative; top: 1px;
+      box-shadow: 0 0 0 4px rgba(47,79,58,0.14);
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      background: var(--green); color: #fff;
+      font-family: var(--sans); font-size: 15px; font-weight: 600;
+      border: none; border-radius: 999px;
+      text-decoration: none; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--green-light); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      background: transparent; color: var(--ink);
+      font-family: var(--sans); font-size: 15px; font-weight: 600;
+      border: 1.5px solid var(--ink-faint); border-radius: 999px;
+      text-decoration: none; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--ink); background: rgba(0,0,0,0.02); }
+
+    /* ---- HERO IMAGE ---- */
+    .hero-image {
+      max-width: 1060px; margin: 0 auto;
+      padding: 0 48px;
+    }
+    .hero-image-card {
+      position: relative;
+      background: var(--paper-2); border-radius: 16px;
+      overflow: hidden; border: 1px solid var(--ink-faint);
+    }
+    .hero-image-card img { width: 100%; height: auto; display: block; }
+    .hero-image-badge {
+      position: absolute; bottom: 20px; left: 20px;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px;
+      background: #fff; border-radius: 999px;
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .hero-image-badge::before {
+      content: ''; width: 8px; height: 8px;
+      background: var(--green); border-radius: 50%;
+    }
+
+    /* ---- SECTION HEADERS (centered) ---- */
+    .section-header {
+      text-align: center;
+      max-width: 700px; margin: 0 auto 48px;
+    }
+    .section-label {
+      font-family: var(--mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 16px;
+    }
+    .section-header h2 {
+      font-family: var(--hand); font-size: 48px; font-weight: 400;
+      line-height: 1.1; color: var(--ink); margin-bottom: 16px;
+    }
+    .section-header h2 em { font-style: italic; color: var(--accent); }
+    .section-header p {
+      font-family: var(--hand); font-size: 18px; font-style: italic;
+      color: var(--ink-soft); line-height: 1.5;
+    }
+
+    /* ---- VISION SECTION ---- */
+    .vision { padding: 100px 48px; }
+    .vision-content {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start;
+      max-width: 1060px; margin: 0 auto;
+    }
+    .vision-text h2 {
+      font-family: var(--hand); font-size: 44px; font-weight: 400;
+      line-height: 1.1; margin-bottom: 24px;
+    }
+    .vision-text h2 em { font-style: italic; color: var(--accent); }
+    .vision-text p {
+      font-family: var(--hand); font-size: 17px; font-style: italic;
+      color: var(--ink-soft); line-height: 1.6; margin-bottom: 16px;
+    }
+    .vision-cards {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    .vision-card {
+      padding: 28px;
+      background: rgba(250,246,236,0.6);
+      border: 1px solid var(--ink-faint);
+      border-radius: 14px;
+    }
+    .vision-card-icon {
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--paper); border: 1px solid var(--ink-faint);
+      border-radius: 10px; margin-bottom: 14px;
+      font-size: 20px; color: var(--ink-soft);
+    }
+    .vision-card h3 {
+      font-family: var(--hand); font-size: 20px; font-weight: 400;
+      font-style: italic; margin-bottom: 8px;
+    }
+    .vision-card p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+
+    /* ---- 3D MODEL ---- */
+    .model-section { padding: 100px 48px; }
+    .model-card {
+      max-width: 1060px; margin: 0 auto;
+      background: var(--ink); border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(250,246,236,0.1);
+      position: relative;
+    }
+    .model-card model-viewer {
+      width: 100%; height: 520px; display: block;
+      --poster-color: #1A1612;
+    }
+    .model-badge {
+      position: absolute; top: 16px; left: 16px;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      background: rgba(250,246,236,0.1);
+      border: 1px solid rgba(250,246,236,0.15);
+      border-radius: 999px;
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(250,246,236,0.7);
+      z-index: 2;
+    }
+    .model-badge::before {
+      content: ''; width: 7px; height: 7px;
+      background: #4ade80; border-radius: 50%;
+    }
+    .model-hints {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; max-width: 1060px; margin: 20px auto 0;
+    }
+    .model-hint { padding: 16px 0; }
+    .model-hint-label {
+      font-family: var(--mono); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 4px;
+    }
+    .model-hint h4 { font-family: var(--hand); font-size: 18px; font-style: italic; margin-bottom: 2px; }
+    .model-hint p { font-size: 13px; color: var(--ink-soft); font-style: italic; font-family: var(--hand); }
+
+    /* ---- GALLERY ---- */
+    .gallery { padding: 100px 48px; }
+    .gallery-grid {
+      display: grid; gap: 14px;
+      max-width: 1060px; margin: 0 auto;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .gallery-item {
+      position: relative; overflow: hidden;
+      border-radius: 12px; cursor: pointer;
+      transition: transform 0.25s;
+    }
+    .gallery-item:hover { transform: scale(1.015); }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .gallery-item-overlay {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 20px;
+      background: linear-gradient(transparent, rgba(26,22,18,0.7));
+      color: #fff;
+    }
+    .gallery-item-overlay .num {
+      font-family: var(--mono); font-size: 9px; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.6); margin-bottom: 4px; display: block;
+    }
+    .gallery-item-overlay .caption {
+      font-family: var(--hand); font-size: 18px; font-style: italic; color: #fff;
+    }
+
+    /* ---- VIDEO ---- */
+    .video-section { padding: 100px 48px; }
+    .video-card {
+      max-width: 1060px; margin: 0 auto;
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--ink-faint);
+      background: var(--ink);
+    }
+    .video-card iframe { width: 100%; aspect-ratio: 16/9; display: block; border: none; }
+
+    /* ---- PROGRESS ---- */
+    .progress { padding: 100px 48px; }
+    .progress-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 14px; max-width: 1060px; margin: 0 auto 40px;
+    }
+    .floor-card {
+      padding: 32px;
+      background: var(--paper-2); border-radius: 14px;
+      border: 1px solid var(--ink-faint);
+    }
+    .floor-num {
+      font-family: var(--hand); font-size: 64px; line-height: 1;
+      font-style: italic; margin-bottom: 8px;
+    }
+    .floor-num.done { color: var(--accent-warm); }
+    .floor-num.active-num { color: var(--green); }
+    .floor-num.dim { color: var(--ink-faint); }
+    .floor-label {
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-soft); margin-bottom: 6px; display: block;
+    }
+    .floor-card h3 {
+      font-family: var(--hand); font-size: 24px; font-weight: 400;
+      font-style: italic; margin-bottom: 8px;
+    }
+    .floor-card p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+    .floor-bar { margin-top: 20px; height: 4px; background: rgba(0,0,0,0.06); border-radius: 2px; overflow: hidden; }
+    .floor-bar-fill { height: 100%; border-radius: 2px; }
+    .floor-bar-fill.done { background: var(--accent-warm); }
+    .floor-bar-fill.active { background: var(--green); }
+    .floor-status {
+      display: block; margin-top: 10px;
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .floor-status.status-done { color: var(--accent-warm); }
+    .floor-status.status-active { color: var(--green); }
+    .floor-status.status-dim { color: var(--ink-soft); }
+
+    /* Estimate card */
+    .estimate-card {
+      max-width: 1060px; margin: 0 auto;
+      padding: 40px;
+      background: var(--ink); border-radius: 16px;
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 40px; align-items: center;
+      color: var(--paper);
+    }
+    .estimate-card .label {
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(250,246,236,0.5);
+    }
+    .estimate-card h3 {
+      font-family: var(--hand); font-size: 26px; font-weight: 400;
+      font-style: italic; margin-top: 10px; color: var(--paper);
+    }
+    .estimate-amount { text-align: right; }
+    .estimate-amount .big {
+      font-family: var(--hand); font-size: 72px; font-weight: 400;
+      line-height: 1; color: var(--accent-warm);
+    }
+    .estimate-amount .big .unit { font-size: 32px; opacity: 0.6; }
+    .estimate-amount .big .currency { font-size: 20px; vertical-align: top; opacity: 0.6; }
+    .report-row {
+      max-width: 1060px; margin: 16px auto 0; padding: 20px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+      background: var(--paper-2); border: 1px solid var(--ink-faint); border-radius: 14px;
+    }
+    .report-note {
+      font-family: var(--hand); font-size: 16px; font-style: italic;
+      color: var(--ink-soft); flex: 1; min-width: 240px; margin: 0;
+    }
+    .report-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .report-btns .btn-primary, .report-btns .btn-outline { padding: 11px 20px; font-size: 14px; }
+
+    /* BOQ report viewer */
+    .boq-modal {
+      display: none; position: fixed; inset: 0; z-index: 99700;   /* above eco-header/nav */
+      flex-direction: column; background: var(--paper);
+    }
+    .boq-modal.open { display: flex; }
+    .boq-bar {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 16px; padding-top: calc(12px + env(safe-area-inset-top, 0px));
+      background: var(--ink); color: var(--paper); flex: none;
+    }
+    .boq-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 18px; border-radius: 999px; cursor: pointer;
+      background: var(--green); color: #fff; border: none;
+      font-family: var(--sans); font-size: 14px; font-weight: 600;
+    }
+    .boq-back:hover { background: var(--green-light); }
+    .boq-heading {
+      flex: 1; font-family: var(--hand); font-style: italic; font-size: 18px;
+      color: var(--paper); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .boq-dl {
+      padding: 8px 16px; border-radius: 999px; text-decoration: none;
+      border: 1px solid rgba(250,246,236,0.35); color: var(--paper);
+      font-family: var(--sans); font-size: 13px; font-weight: 600; flex: none;
+    }
+    .boq-dl:hover { background: rgba(250,246,236,0.12); }
+    .boq-body {
+      flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+      background: #3a3a3c; padding: 16px;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    }
+    .boq-body img {
+      width: 100%; max-width: 900px; height: auto; display: block;
+      border-radius: 4px; box-shadow: 0 6px 24px rgba(0,0,0,0.4);
+    }
+    @media (max-width: 600px) {
+      .boq-heading { font-size: 15px; }
+      .boq-dl { display: none; }   /* keep the bar tidy on phones; Download is on the page */
+    }
+
+    /* Floating progress panel */
+    .fprog {
+      position: fixed; right: 20px; bottom: 20px; z-index: 150;
+      width: 232px; padding: 14px 16px 15px;
+      background: var(--paper); border: 1px solid var(--ink-faint); border-radius: 14px;
+      box-shadow: 0 12px 34px rgba(26,22,18,0.16);
+      text-decoration: none; color: var(--ink);
+      opacity: 0; transform: translateY(14px); pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .fprog.show { opacity: 1; transform: none; pointer-events: auto; }
+    .fprog:hover { border-color: var(--green); }
+    .fprog__top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 9px; }
+    .fprog__label {
+      font-family: var(--mono); font-size: 9.5px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft);
+    }
+    .fprog__pct { font-family: var(--hand); font-style: italic; font-size: 22px; color: var(--accent); line-height: 1; }
+    .fprog__bar { height: 6px; background: #e6e1d5; border-radius: 999px; overflow: hidden; }
+    .fprog__fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--green-light)); border-radius: 999px; transition: width 0.6s ease; }
+    .fprog__ft { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-top: 8px; }
+    .fprog__cta {
+      font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--green);
+      margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--ink-faint);
+    }
+    @media (max-width: 600px) {
+      .fprog { right: 12px; left: 12px; bottom: 12px; width: auto; padding: 12px 14px; }
+      .fprog__cta { display: none; }
+    }
+
+    /* ---- DONATE / SUPPORT ---- */
+    .support {
+      padding: 100px 48px;
+      text-align: center;
+    }
+    .support-inner {
+      max-width: 700px; margin: 0 auto;
+    }
+    .support h2 {
+      font-family: var(--hand); font-size: 48px; font-weight: 400;
+      line-height: 1.1; margin-bottom: 20px;
+    }
+    .support h2 em { font-style: italic; color: var(--accent); }
+    .support > .support-inner > p {
+      font-family: var(--hand); font-size: 18px; font-style: italic;
+      color: var(--ink-soft); line-height: 1.5;
+      margin-bottom: 36px;
+    }
+    .support-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+    .support-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px; max-width: 560px; margin: 0 auto;
+      padding-top: 40px;
+      border-top: 1px solid var(--ink-faint);
+    }
+    .support-stat-num {
+      font-family: var(--hand); font-size: 36px; font-weight: 400;
+      color: var(--ink); margin-bottom: 4px;
+    }
+    .support-stat-label {
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    /* ---- SINHALA ---- */
+    .sinhala {
+      padding: 80px 48px;
+      background: var(--paper-2); text-align: center;
+    }
+    .sinhala-label {
+      font-family: var(--mono); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.2em; color: var(--ink-soft);
+    }
+    .sinhala h2 {
+      font-family: var(--hand); font-size: 40px; font-weight: 400;
+      margin-top: 16px; line-height: 1.3;
+    }
+    .sinhala-body {
+      max-width: 680px; margin: 28px auto 0; text-align: left;
+      font-size: 15px; line-height: 1.9; color: var(--ink-2);
+    }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      padding: 48px 48px 32px;
+      text-align: center;
+    }
+    .footer-brand {
+      font-family: var(--mono); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-soft); margin-bottom: 12px;
+    }
+    .footer-quote {
+      font-family: var(--hand); font-size: 18px; font-style: italic;
+      color: var(--ink-soft); margin-bottom: 20px;
+    }
+    .footer-copy {
+      font-family: var(--sans); font-size: 13px;
+      color: var(--ink-faint);
+    }
+
+    /* ---- LIGHTBOX ---- */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(26,22,18,0.92);
+      align-items: center; justify-content: center;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 90vw; max-height: 85vh; object-fit: contain;
+      border-radius: 12px;
+    }
+    .lightbox-close {
+      position: absolute; top: 24px; right: 24px;
+      background: rgba(250,246,236,0.1); border: 1px solid rgba(250,246,236,0.2);
+      color: var(--paper); width: 44px; height: 44px;
+      border-radius: 50%; font-size: 22px; cursor: pointer;
+      font-family: var(--sans); display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox-close:hover { background: rgba(250,246,236,0.2); }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(250,246,236,0.1); border: 1px solid rgba(250,246,236,0.2);
+      color: var(--paper); width: 44px; height: 44px;
+      border-radius: 50%; font-size: 22px; cursor: pointer;
+      font-family: var(--mono); display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox-nav:hover { background: rgba(250,246,236,0.2); }
+    .lightbox-prev { left: 24px; }
+    .lightbox-next { right: 24px; }
+    .lightbox-counter {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em;
+      color: rgba(250,246,236,0.5);
+    }
+
+    /* ---- FADE-IN ---- */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .hero { padding: 48px 20px 40px; }
+      .hero h1 { font-size: 36px; }
+      .hero-sub { font-size: 16px; }
+      .hero-logo { height: 48px; }
+      .hero-image { padding: 0 20px; }
+      .vision { padding: 60px 20px; }
+      .vision-content { grid-template-columns: 1fr; gap: 32px; }
+      .vision-text h2 { font-size: 32px; }
+      .vision-cards { grid-template-columns: 1fr; }
+      .section-header { padding: 0 20px; }
+      .section-header h2 { font-size: 32px; }
+      .model-section, .gallery, .video-section, .progress, .support, .sinhala { padding: 60px 20px; }
+      .model-card model-viewer { height: 320px; }
+      .model-hints { grid-template-columns: 1fr; gap: 8px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item { grid-column: span 1 !important; height: 200px; }
+      .progress-grid { grid-template-columns: 1fr; }
+      .estimate-card { grid-template-columns: 1fr; text-align: center; padding: 28px; }
+      .estimate-amount { text-align: center; }
+      .estimate-amount .big { font-size: 48px; }
+      .support h2 { font-size: 32px; }
+      .support-stats { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .support-stat-num { font-size: 28px; }
+      .footer { padding: 40px 20px 24px; }
+      .sinhala h2 { font-size: 28px; }
+    }
+
+    /* ---- PLEDGE THE SLAB ---- */
+    .pledge-section { padding: 100px 48px; }
+    .slab-wrap {
+      display: grid; grid-template-columns: 0.9fr 1.1fr;
+      gap: 40px; max-width: 1060px; margin: 0 auto; align-items: start;
+    }
+    /* Let the grid columns shrink below their content width (grid items default
+       to min-width:auto, which otherwise overflows the viewport on mobile). */
+    .slab-wrap > * { min-width: 0; }
+    .slab-pledge {
+      background: var(--paper-2); border: 1px solid var(--ink-faint);
+      border-radius: 16px; padding: 32px; position: sticky; top: 88px;
+    }
+    .slab-pledge h3 { font-family: var(--hand); font-size: 26px; font-style: italic; font-weight: 400; margin-bottom: 6px; }
+    .sp-hint { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 22px; }
+    .sp-hint b { color: var(--ink); font-weight: 600; }
+    .sp-field { margin-bottom: 16px; }
+    .sp-field label {
+      display: block; font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 7px;
+    }
+    .sp-input {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--ink-faint);
+      border-radius: 10px; background: var(--paper); font-family: var(--sans);
+      font-size: 15px; color: var(--ink);
+    }
+    .sp-input:focus { outline: none; border-color: var(--green); }
+    .sp-ftrow {
+      display: flex; align-items: stretch; border: 1px solid var(--ink-faint);
+      border-radius: 10px; overflow: hidden; background: var(--paper);
+    }
+    .sp-ftrow button {
+      width: 46px; border: none; background: var(--paper-2);
+      font-size: 20px; color: var(--ink-soft); cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .sp-ftrow button:hover { background: var(--ink-faint); color: var(--ink); }
+    .sp-ftrow input {
+      flex: 1; min-width: 0; border: none; text-align: center;
+      font-family: var(--mono); font-size: 18px; font-weight: 600;
+      color: var(--ink); background: transparent; -moz-appearance: textfield;
+    }
+    .sp-ftrow input::-webkit-outer-spin-button, .sp-ftrow input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .sp-ftrow .sp-suffix {
+      display: flex; align-items: center; padding: 0 14px;
+      font-family: var(--mono); font-size: 12px; color: var(--ink-soft); border-left: 1px solid var(--ink-faint);
+    }
+    .sp-quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+    .sp-chip {
+      padding: 7px 12px; border: 1px solid var(--ink-faint); border-radius: 999px;
+      background: var(--paper); font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
+      cursor: pointer; transition: border-color 0.15s, color 0.15s;
+    }
+    .sp-chip:hover { border-color: var(--green); color: var(--green); }
+    .sp-cost {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin: 22px 0 18px; padding-top: 18px; border-top: 1px dashed var(--ink-faint);
+    }
+    .sp-cost .l { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+    .sp-cost .v { font-family: var(--hand); font-size: 32px; font-style: italic; color: var(--accent); }
+    .sp-cost .v .cur { font-size: 15px; opacity: 0.6; margin-right: 3px; }
+    .sp-submit {
+      width: 100%; padding: 15px; background: var(--green); color: #fff;
+      border: none; border-radius: 999px; font-family: var(--sans); font-weight: 600;
+      font-size: 15px; cursor: pointer; transition: background 0.2s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .sp-submit:hover { background: var(--green-light); }
+    .sp-note { font-size: 12.5px; color: var(--ink-soft); text-align: center; margin-top: 14px; line-height: 1.5; }
+    .sp-rate { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-align: center; margin-top: 12px; }
+    .sp-err { color: var(--accent); font-size: 13px; margin-top: 10px; text-align: center; }
+    .sp-ok { text-align: center; }
+    .sp-ok .tick {
+      width: 56px; height: 56px; border-radius: 50%; background: var(--green); color: #fff;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 26px;
+    }
+
+    /* slab visual */
+    .slab-visual { position: relative; }
+    .slab-legend {
+      display: flex; gap: 22px; justify-content: space-between; margin: 0 auto 12px;
+      max-width: 420px; font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
+    }
+    .slab-legend b { color: var(--ink); }
+    .slab-legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+    .dot--filled { background: var(--green); }
+    .dot--open { background: #f3efe6; border: 1px solid #c4c0b6; }
+    .slab-frame {
+      position: relative; background: #d8d5cd; padding: 12px;   /* light grey formwork */
+      border-radius: 14px; border: 1px solid var(--ink-faint);
+      max-width: 420px; margin: 0 auto;      /* keep the tall portrait slab a tidy width */
+    }
+    .slab-grid { display: grid; grid-template-columns: repeat(40, 1fr); gap: 1px; }
+    .scell { aspect-ratio: 1; background: #f3efe6; border-radius: 1px; transition: background 0.3s; }
+    .slab-labels { position: absolute; inset: 12px; pointer-events: none; }
+    .slab-name {
+      position: absolute; transform: translate(-50%, -50%);
+      font-family: var(--mono); font-size: 9px; font-weight: 600; color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7); letter-spacing: 0.02em;
+      max-width: 26%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .slab-tip {
+      position: absolute; z-index: 5; pointer-events: none;
+      background: var(--ink); color: var(--paper); padding: 7px 11px; border-radius: 8px;
+      font-size: 12.5px; transform: translate(-50%, -135%); white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    }
+    .slab-tip b { color: var(--accent-warm); }
+
+    .slab-progress { max-width: 1060px; margin: 36px auto 0; }
+    .slab-bar { height: 8px; background: #efe7d4; border: 1px solid var(--ink-faint); border-radius: 999px; overflow: hidden; }
+    .slab-bar-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--green-light)); border-radius: 999px; transition: width 0.6s ease; }
+    .slab-bar-labels { display: flex; justify-content: space-between; margin-top: 10px; font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+    .slab-bar-labels b { color: var(--ink); }
+
+    .slab-donors { max-width: 1060px; margin: 44px auto 0; }
+    .slab-donors-head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--ink-faint); padding-bottom: 12px; margin-bottom: 18px; }
+    .slab-donors-head h4 { font-family: var(--hand); font-size: 24px; font-style: italic; font-weight: 400; }
+    .slab-donors-head span { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+    .slab-donorgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+    .slab-donor { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--paper-2); border: 1px solid var(--ink-faint); border-radius: 12px; }
+    .slab-donor .sw { width: 26px; height: 26px; border-radius: 6px; flex: none; }
+    .slab-donor .dn { font-family: var(--hand); font-size: 17px; font-style: italic; }
+    .slab-donor .df { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+
+    @media (max-width: 900px) {
+      .pledge-section { padding: 60px 20px; }
+      .slab-wrap { grid-template-columns: 1fr; gap: 28px; }
+      .slab-pledge { position: static; }
+      .slab-name { font-size: 8px; }
+    }
+  </style>
+  <!-- Google Analytics -->
+  <script src="/analytics.js?v=1"></script>
+  <!-- shared inner-page theme (rk/inner.css) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300..600&display=swap" />
+  <link rel="stylesheet" href="../../rk/inner.css?v=3" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <!-- HERO -->
+  <section class="hero fade-in">
+    <img src="images/logo.png" alt="" class="hero-logo">
+    <div class="hero-label">A Sanctuary for Practice &amp; Community</div>
+    <h1>A three-story building<br>in the <em>forest.</em></h1>
+    <p class="hero-sub">
+      A serene space for meditation, monastic life, and spiritual growth &mdash; nestled in the forest at Rideekanda Monastery. Your generous support brings this vision to life.
+    </p>
+    <div class="hero-btns">
+      <a href="#pledge" class="btn-primary">Pledge a sq ft to build the 1st floor slab &rarr;</a>
+      <a href="#vision" class="btn-outline">Learn about the project</a>
+    </div>
+    <p class="hero-milestone">
+      <span class="dot"></span> Now under way &mdash; the <strong>3,000&nbsp;ft&sup2; concrete slab</strong> of the first floor, the next milestone in raising this building.
+    </p>
+  </section>
+
+  <!-- HERO IMAGE -->
+  <div class="hero-image fade-in">
+    <div class="hero-image-card">
+      <img loading="lazy" decoding="async" src="images/building-4.png" alt="Three-story building architectural concept">
+    </div>
+  </div>
+
+  <!-- VISION -->
+  <section class="vision fade-in" id="vision">
+    <div class="section-label" style="text-align:left;max-width:1060px;margin:0 auto 12px;">THE VISION</div>
+    <div class="vision-content">
+      <div class="vision-text">
+        <h2>A forest sanctuary for <em>mindful living.</em></h2>
+        <p>
+          Embraced by the Rideekanda forest, our new three-story building is taking shape. Rather than disrupting the wilderness, this space is designed to sit quietly among the trees &mdash; offering a serene, secluded sanctuary where monks and practitioners can commit fully to intensive meditation and monastic life.
+        </p>
+        <p>
+          The design thoughtfully integrates living quarters, a meditation hall, and communal spaces &mdash; letting the architecture serve the practice with quiet dignity.
+        </p>
+      </div>
+      <div class="vision-cards">
+        <div class="vision-card">
+          <div class="vision-card-icon">&#x1F3DB;</div>
+          <h3>Main Hall</h3>
+          <p>Meditation, teachings, and gathering on the upper floor.</p>
+        </div>
+        <div class="vision-card">
+          <div class="vision-card-icon">&#x1F6CF;</div>
+          <h3>Accommodation</h3>
+          <p>Quarters for monks and visiting practitioners on the middle floor.</p>
+        </div>
+        <div class="vision-card">
+          <div class="vision-card-icon">&#x1F372;</div>
+          <h3>Alms Hall &amp; Kitchen</h3>
+          <p>Dining and food preparation on the ground floor.</p>
+        </div>
+        <div class="vision-card">
+          <div class="vision-card-icon">&#x2728;</div>
+          <h3>Contemplation</h3>
+          <p>Natural light, gentle silence, room to sit with the breath.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D MODEL -->
+  <section class="model-section fade-in" id="model">
+    <div class="section-header">
+      <div class="section-label">Interactive Experience</div>
+      <h2>Explore the <em>3D design</em></h2>
+      <p>Rotate, zoom, and look around the full architectural model &mdash; every wall, every window, every line of the building.</p>
+    </div>
+    <div class="model-card">
+      <div class="model-badge">Live &middot; 3D Model</div>
+      <model-viewer
+        src="building-2-compressed.glb"
+        alt="Interactive 3D model of the three-story monastery building"
+        camera-controls
+        touch-action="pan-y"
+        auto-rotate
+        auto-rotate-delay="2000"
+        shadow-intensity="1"
+        exposure="0.8"
+        camera-orbit="45deg 65deg auto"
+        poster="images/building-6.png"
+        loading="lazy"
+        style="background-color: #1A1612;"
+      ></model-viewer>
+    </div>
+    <div class="model-hints">
+      <div class="model-hint">
+        <div class="model-hint-label">Drag</div>
+        <h4>Orbit around the building</h4>
+        <p>See every facade.</p>
+      </div>
+      <div class="model-hint">
+        <div class="model-hint-label">Pinch</div>
+        <h4>Zoom into details</h4>
+        <p>From window frame to roofline.</p>
+      </div>
+      <div class="model-hint">
+        <div class="model-hint-label">Tap</div>
+        <h4>Inspect every angle</h4>
+        <p>Walk around the entire structure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery fade-in" id="gallery">
+    <div class="section-header">
+      <div class="section-label">Design Views</div>
+      <h2>Architectural <em>perspectives</em></h2>
+      <p>Explore the building from every angle &mdash; 3D renders, elevations, and detailed views of each space.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="grid-column:span 7;height:280px;" onclick="openLightbox(0)">
+        <img src="images/building-4.png" alt="Full design perspective" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="num">No. 01</span>
+          <span class="caption">Full Design &mdash; Perspective</span>
+        </div>
+      </div>
+      <div class="gallery-item" style="grid-column:span 5;height:280px;" onclick="openLightbox(1)">
+        <img src="images/building-2.png" alt="Front elevation" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="num">No. 02</span>
+          <span class="caption">Front Elevation</span>
+        </div>
+      </div>
+      <div class="gallery-item" style="grid-column:span 4;height:240px;" onclick="openLightbox(2)">
+        <img src="images/building-1.png" alt="Entrance facade" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="num">No. 03</span>
+          <span class="caption">Entrance Facade</span>
+        </div>
+      </div>
+      <div class="gallery-item" style="grid-column:span 4;height:240px;" onclick="openLightbox(3)">
+        <img src="images/building-3.png" alt="Side view" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="num">No. 04</span>
+          <span class="caption">Side &mdash; 3D View</span>
+        </div>
+      </div>
+      <div class="gallery-item" style="grid-column:span 4;height:240px;" onclick="openLightbox(4)">
+        <img src="images/building-5.png" alt="Rear elevation" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="num">No. 05</span>
+          <span class="caption">Rear Elevation</span>
+        </div>
+      </div>
+      <div class="gallery-item" style="grid-column:span 6;height:260px;" onclick="openLightbox(5)">
+        <img src="images/building-6.png" alt="Aerial perspective" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="num">No. 06</span>
+          <span class="caption">Aerial 3D Perspective</span>
+        </div>
+      </div>
+      <div class="gallery-item" style="grid-column:span 6;height:260px;" onclick="openLightbox(6)">
+        <img src="images/building-7.png" alt="Long facade with porch" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="num">No. 07</span>
+          <span class="caption">Long Facade with Porch</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="video-section fade-in" id="video">
+    <div class="section-header">
+      <div class="section-label">Watch</div>
+      <h2>The vision, <em>in motion.</em></h2>
+      <p>A short video walkthrough of the building &mdash; how it sits in the forest, and how it will be used.</p>
+    </div>
+    <div class="video-card">
+      <iframe
+        src="https://www.youtube.com/embed/6lkENh9GOd0"
+        title="ThreeStory Building 3D Walkthrough"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section class="progress fade-in" id="progress">
+    <div class="section-header">
+      <div class="section-label">Latest Update</div>
+      <h2>Where we are <em>today.</em></h2>
+      <p>The ground floor is complete and in daily use. Now we turn our attention upward.</p>
+    </div>
+    <div class="progress-grid">
+      <div class="floor-card">
+        <div class="floor-num done">00</div>
+        <span class="floor-label">Ground Floor</span>
+        <h3>Complete &amp; in use.</h3>
+        <p>Dining hall, kitchen, common bathrooms &mdash; built, finished, operating.</p>
+        <div class="floor-bar"><div class="floor-bar-fill done" style="width:100%;"></div></div>
+        <span class="floor-status status-done">&bull; Functioning</span>
+      </div>
+      <div class="floor-card">
+        <div class="floor-num active-num">01</div>
+        <span class="floor-label">First Floor</span>
+        <h3>In progress.</h3>
+        <p>Next milestone: the 3,000 ft&sup2; concrete slab.</p>
+        <div class="floor-bar"><div class="floor-bar-fill active" style="width:14%;"></div></div>
+        <span class="floor-status status-active">&bull; Slab Pending</span>
+      </div>
+      <div class="floor-card">
+        <div class="floor-num dim">02</div>
+        <span class="floor-label">Second Floor</span>
+        <h3>Awaiting Floor 01.</h3>
+        <p>The Main Hall will rise above the accommodation level.</p>
+        <div class="floor-bar"><div class="floor-bar-fill" style="width:0%;"></div></div>
+        <span class="floor-status status-dim">&bull; Planned</span>
+      </div>
+    </div>
+    <div class="estimate-card">
+      <div>
+        <span class="label">Immediate Need &middot; Floor 01 Slab</span>
+        <h3>3,000 ft&sup2; of structural concrete &mdash; the next thing we build.</h3>
+      </div>
+      <div class="estimate-amount">
+        <span class="label">Lowest Estimate</span>
+        <div class="big">5.69<span class="unit"> M</span><span class="currency"> LKR</span></div>
+      </div>
+    </div>
+    <div class="report-row">
+      <p class="report-note">Costed from a full Bill of Quantities &mdash; rebar, cement, sand, aggregate, formwork &amp; labour.</p>
+      <div class="report-btns">
+        <button type="button" class="btn-primary" id="boqView">View BOQ &amp; cost report</button>
+        <a class="btn-outline" href="1st-floor-slab-boq.pdf" download>Download report</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOQ report viewer (in-page, with a Back button) -->
+  <div class="boq-modal" id="boqModal" aria-hidden="true" role="dialog" aria-label="BOQ &amp; Cost Report">
+    <div class="boq-bar">
+      <button type="button" class="boq-back" id="boqBack">&larr; Back</button>
+      <span class="boq-heading">BOQ &amp; Cost Report &middot; 1st Floor Slab</span>
+      <a class="boq-dl" href="1st-floor-slab-boq.pdf" download>Download</a>
+    </div>
+    <div class="boq-body" id="boqBody" aria-label="Bill of Quantities &amp; Cost Report pages"></div>
+  </div>
+
+  <!-- Floating progress panel — quick view of the slab funding -->
+  <a class="fprog" id="fprog" href="#pledge" aria-label="Jump to pledge the slab">
+    <div class="fprog__top">
+      <span class="fprog__label">1st Floor Slab</span>
+      <span class="fprog__pct" id="fprogPct">0%</span>
+    </div>
+    <div class="fprog__bar"><div class="fprog__fill" id="fprogFill" style="width:0%"></div></div>
+    <div class="fprog__ft" id="fprogFt">0 / 3,000 ft&sup2; pledged</div>
+    <div class="fprog__cta">Pledge a sq ft &rarr;</div>
+  </a>
+
+  <!-- PLEDGE THE SLAB -->
+  <section class="pledge-section fade-in" id="pledge">
+    <div class="section-header">
+      <div class="section-label">Build the Floor 01 Slab</div>
+      <h2>Pledge a <em>square foot</em></h2>
+      <p>The next milestone is a 3,000&nbsp;ft&sup2; structural concrete slab. Contribute by the square foot and watch the floor take shape &mdash; your name rests on the ground you help to lay.</p>
+    </div>
+
+    <div class="slab-wrap">
+      <div class="slab-pledge" id="slabPledge"><!-- pledge form injected by script --></div>
+
+      <div class="slab-visual">
+        <div class="slab-legend">
+          <span><i class="dot dot--filled"></i> Pledged <b id="slabPledgedFt">0 ft&sup2;</b></span>
+          <span><i class="dot dot--open"></i> Open <b id="slabOpenFt">3,000 ft&sup2;</b></span>
+        </div>
+        <div class="slab-frame">
+          <div class="slab-grid" id="slabGrid" role="img" aria-label="A 3,000 square foot slab, each cell one square foot; filled cells are pledged."></div>
+          <div class="slab-labels" id="slabLabels"></div>
+        </div>
+        <div class="slab-tip" id="slabTip" hidden></div>
+      </div>
+    </div>
+
+    <div class="slab-progress">
+      <div class="slab-bar"><div class="slab-bar-fill" id="slabBarFill" style="width:0%"></div></div>
+      <div class="slab-bar-labels">
+        <span id="slabPct">0% pledged &middot; 0 / 3,000 ft&sup2;</span>
+        <span>Goal &middot; <b id="slabGoal">LKR 5,694,120</b></span>
+      </div>
+    </div>
+
+    <div class="slab-donors" id="slabDonors" hidden>
+      <div class="slab-donors-head"><h4>Contributors</h4><span id="slabDonorCount">0</span></div>
+      <div class="slab-donorgrid" id="slabDonorGrid"></div>
+    </div>
+  </section>
+
+  <!-- SUPPORT / DONATE -->
+  <section class="support fade-in" id="donate">
+    <div class="support-inner">
+      <div class="section-label">Support This Place</div>
+      <h2>An act of generosity,<br>an act of <em>practice.</em></h2>
+      <p>Whether you fund a single slab or the entire floor, every contribution &mdash; large or small &mdash; helps build a lasting space for meditation, peace, and community at Rideekanda.</p>
+      <div class="support-btns">
+        <a href="../../donate/" class="btn-primary">Make a donation</a>
+        <a href="#progress" class="btn-outline">See building progress</a>
+      </div>
+      <div class="support-stats">
+        <div>
+          <div class="support-stat-num">3</div>
+          <div class="support-stat-label">Stories</div>
+        </div>
+        <div>
+          <div class="support-stat-num">3,000</div>
+          <div class="support-stat-label">sq ft per floor</div>
+        </div>
+        <div>
+          <div class="support-stat-num">&infin;</div>
+          <div class="support-stat-label">Beings Helped</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SINHALA -->
+  <section class="sinhala fade-in">
+    <span class="sinhala-label">සිංහල</span>
+    <h2>රිදීකන්ද ආරණ්‍ය සේනාසනය<br>උඩස්ගිරිය, මාතලේ</h2>
+    <div class="sinhala-body">
+      <p>
+        මාතලේ උඩස්ගිරිය රිදීකන්ද ආරණ්‍ය සේනාසනය නිර්වාණ මාර්ගය සෝයන භාවනායෝගීන් සඳහා මනා තෝතැන්නක් වන අතර හුදකලාව ආරණ්‍ය පැවිදි ජීවිතය සඳහා ද නිවහනකි. පැමිණෙන දෙස්විදෙස් භාවනායෝගීන්ට අවශ්‍ය පහසුකම් සැපයීමත්, තාවකාලික පැවදි පුහුණු වැඩසටහන් තවදුරටත් පුළුල් කිරීමටත් අවශ්‍ය පරිසරයක් නිර්මාණය කිරීමේ අදහසින්, ආරණ්‍යයේ පහසුකම් පුළුල් කරන සහ අපගේ සේවා හැකියාව වැඩිකරන තෙමහල් ගොඩනැගිල්ලක් ඉදිකිරීමේ අභිලාෂකාමී ව්‍යාපෘතියක් ආරම්භ කළෙමු.
+      </p>
+      <p style="margin-top:20px;">
+        එම ගොඩනැගිල්ලේ පහත පහසුකම් සහිතව ගොඩනැගීමට බලාපොරොත්තු වෙමු.
+      </p>
+      <ul style="margin-top:12px;padding-left:20px;list-style:disc;">
+        <li><strong>ප්‍රධාන ශාලාව:</strong> භාවනා වැඩසටහන්, ඉගැන්වීම් සිදුකිරීමට</li>
+        <li><strong>නවාතැන් පහසුකම්:</strong> පුහුණු භික්ෂූන් වහන්සේලාට සහ භාවනා යෝගීන් සඳහා නවාතැන් පහසුකම්.</li>
+        <li><strong>දාන ශාලාව සහ මුළුතැන්ගෙය:</strong> ආහාර පිළියෙල කිරීම සඳහා නවීන පහසුකම්.</li>
+        <li><strong>වැසිකිළි පද්ධතිය:</strong> වැසිකිළි සහ සනීපාරක්ෂාව සඳහා අත්‍යවශ්‍ය පහසුකම්.</li>
+      </ul>
+      <p style="margin-top:20px;">
+        මෙම උතුම් ව්‍යාපෘතිය සාර්ථක කරගැනීමට දායක වෙමින් එම කුසල ශක්තියේ බලමහිමයෙන් ඔබටත් නිර්වාණ අවබෝධය පිණිස, දස පාරමිතා පූර්ණය වීම පිණිස හේතු වාසනා වේවායි අප පර්ථනා කරමු.
+      </p>
+      <p style="margin-top:24px;text-align:center;">
+        <strong>රිදීකන්ද ආරණ්‍ය සේනාසනය</strong><br>
+        උඩස්ගිරිය<br>
+        මාතලේ.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+<!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="navLightbox(-1)">&lsaquo;</button>
+    <img loading="lazy" decoding="async" id="lightboxImg" src="" alt="Gallery image">
+    <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">&rsaquo;</button>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+
+  <script>
+    // Lightbox
+    var images = [
+      'images/building-4.png','images/building-2.png','images/building-1.png',
+      'images/building-3.png','images/building-5.png','images/building-6.png',
+      'images/building-7.png'
+    ];
+    var currentIdx = 0;
+    function openLightbox(idx) {
+      currentIdx = idx;
+      document.getElementById('lightboxImg').src = images[idx];
+      document.getElementById('lightboxCounter').textContent = (idx+1) + ' / ' + images.length;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    function navLightbox(dir) {
+      currentIdx = (currentIdx + dir + images.length) % images.length;
+      document.getElementById('lightboxImg').src = images[currentIdx];
+      document.getElementById('lightboxCounter').textContent = (currentIdx+1) + ' / ' + images.length;
+    }
+    document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target === this) closeLightbox(); });
+    document.addEventListener('keydown', function(e) {
+      if (!document.getElementById('lightbox').classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navLightbox(-1);
+      if (e.key === 'ArrowRight') navLightbox(1);
+    });
+
+    // Fade-in on scroll
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+
+    // BOQ report viewer (in-page, with Back button)
+    (function () {
+      var modal = document.getElementById('boqModal');
+      var body = document.getElementById('boqBody');
+      var openBtn = document.getElementById('boqView');
+      var backBtn = document.getElementById('boqBack');
+      if (!modal || !openBtn) return;
+      // Show the report as scrollable page images — an <iframe> PDF won't scroll
+      // on mobile. The Download button still serves the real PDF.
+      var PAGES = ['boq-page-1.jpg', 'boq-page-2.jpg', 'boq-page-3.jpg'];
+      var built = false;
+      function build() {
+        if (built) return;
+        body.innerHTML = PAGES.map(function (p, i) {
+          return '<img src="' + p + '" alt="BOQ & Cost Report — page ' + (i + 1) + '" decoding="async">';
+        }).join('');
+        built = true;
+      }
+      function openBoq() {
+        build();
+        modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        body.scrollTop = 0;
+      }
+      function closeBoq() {
+        modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+      openBtn.addEventListener('click', openBoq);
+      backBtn.addEventListener('click', closeBoq);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeBoq(); });
+    })();
+  </script>
+
+  <!-- ============ PLEDGE THE SLAB ============ -->
+  <script>
+  (function () {
+    var SLAB = {
+      totalSqft: 3000,
+      totalCost: 5694120,          // LKR — lowest estimate from the BOQ & cost report (July 2026)
+      cols: 40, rows: 75,          // 40 × 75 = 3,000 ft² (one cell = 1 ft²) — portrait
+      donate: "../../donate/",
+      // Google Apps Script /exec URL for the SHARED live list (its own Sheet +
+      // standalone web app). POST {action:"slab",name,sqft,message}; GET
+      // ?action=slab → {pledges:[...]}. Empty = local-only (localStorage).
+      endpoint: "https://script.google.com/macros/s/AKfycbwe53AZqvnt-oL7eTm0Ocx6GImCw54vJ_i-Ct5LQGheUARoAIeF7tPtToHLzaacrhM6wg/exec",
+      storeKey: "rk_slab_pledges_v1"
+    };
+    SLAB.costPerSqft = SLAB.totalCost / SLAB.totalSqft;   // ≈ 1,898 / ft²
+    var PALETTE = ["#2F4F3A","#B3502A","#3A6348","#C77D3A","#6B8E5A","#A8642B","#4E7C59","#D0993F","#556B4A","#7A4A6B"];
+
+    var grid = document.getElementById("slabGrid");
+    if (!grid) return;
+    var cardEl = document.getElementById("slabPledge");
+    var tip = document.getElementById("slabTip");
+
+    function fmt(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+    function byId(id) { return document.getElementById(id); }
+    function setText(id, v) { var e = byId(id); if (e) e.textContent = v; }
+
+    // Build the 3,000 cells once.
+    grid.style.gridTemplateColumns = "repeat(" + SLAB.cols + ",1fr)";
+    var cells = [], frag = document.createDocumentFragment();
+    for (var i = 0; i < SLAB.totalSqft; i++) { var d = document.createElement("div"); d.className = "scell"; frag.appendChild(d); cells.push(d); }
+    grid.appendChild(frag);
+
+    var state = { pledges: load(), justPledged: null };
+
+    function load() {
+      try { var raw = localStorage.getItem(SLAB.storeKey); if (raw) { var p = JSON.parse(raw); if (Array.isArray(p)) return p; } } catch (e) {}
+      return [];
+    }
+    function save() { try { localStorage.setItem(SLAB.storeKey, JSON.stringify(state.pledges)); } catch (e) {} }
+    function pledgedSqft() { return state.pledges.reduce(function (a, p) { return a + (+p.sqft || 0); }, 0); }
+    function remaining() { return Math.max(0, SLAB.totalSqft - pledgedSqft()); }
+
+    function post(p) {
+      if (!SLAB.endpoint) return;
+      try {
+        fetch(SLAB.endpoint, { method: "POST", mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "slab", name: p.name, sqft: p.sqft, message: p.message || "" }) }).catch(function () {});
+      } catch (e) {}
+    }
+    function fetchLive() {
+      if (!SLAB.endpoint) return;
+      fetch(SLAB.endpoint + "?action=slab").then(function (r) { return r.json(); }).then(function (d) {
+        if (d && Array.isArray(d.pledges)) {
+          state.pledges = d.pledges.map(function (x, i) {
+            return { id: x.id || ("live" + i), name: x.name, sqft: +x.sqft || +x.meters || 0, message: x.message || "", ts: x.ts };
+          }).filter(function (x) { return x.name && x.sqft > 0; });
+          save(); render();
+        }
+      }).catch(function () {});
+    }
+
+    /* ---------- render ---------- */
+    function render() {
+      var used = 0, labels = [];
+      for (var i = 0; i < cells.length; i++) { cells[i].className = "scell"; cells[i].style.background = ""; cells[i].removeAttribute("data-pid"); }
+      state.pledges.forEach(function (p, idx) {
+        var color = PALETTE[idx % PALETTE.length];
+        var n = Math.min(+p.sqft || 0, SLAB.totalSqft - used);
+        var sum = 0, count = 0;
+        for (var k = 0; k < n; k++) {
+          var ci = used + k, c = cells[ci]; if (!c) break;
+          c.classList.add("is-filled"); c.style.background = color; c.setAttribute("data-pid", idx);
+          sum += ci; count++;
+        }
+        if (n >= 50 && count) labels.push({ name: p.name, avg: sum / count });
+        used += n;
+      });
+
+      var pct = Math.min(100, used / SLAB.totalSqft * 100);
+      setText("slabPledgedFt", fmt(used) + " ft²");
+      setText("slabOpenFt", fmt(SLAB.totalSqft - used) + " ft²");
+      setText("slabPct", Math.round(pct) + "% pledged · " + fmt(used) + " / " + fmt(SLAB.totalSqft) + " ft²");
+      var bar = byId("slabBarFill"); if (bar) bar.style.width = pct + "%";
+      setText("slabGoal", "LKR " + fmt(SLAB.totalCost));
+
+      // floating quick-view panel
+      var ff = byId("fprogFill"); if (ff) ff.style.width = pct + "%";
+      setText("fprogPct", Math.round(pct) + "%");
+      setText("fprogFt", fmt(used) + " / " + fmt(SLAB.totalSqft) + " ft² pledged");
+
+      renderNames(labels);
+      renderDonors();
+      renderCard();
+    }
+
+    function renderNames(labels) {
+      var wrap = byId("slabLabels"); if (!wrap) return; wrap.innerHTML = "";
+      labels.forEach(function (L) {
+        var col = Math.floor(L.avg % SLAB.cols), row = Math.floor(L.avg / SLAB.cols);
+        var el = document.createElement("div"); el.className = "slab-name";
+        var lx = (col + 0.5) / SLAB.cols * 100;
+        el.style.left = Math.max(6, Math.min(94, lx)) + "%";
+        el.style.top = ((row + 0.5) / SLAB.rows * 100) + "%";
+        el.textContent = L.name;
+        wrap.appendChild(el);
+      });
+    }
+
+    function renderDonors() {
+      var sec = byId("slabDonors"), gridD = byId("slabDonorGrid");
+      if (!sec) return;
+      if (!state.pledges.length) { sec.hidden = true; return; }
+      sec.hidden = false;
+      setText("slabDonorCount", state.pledges.length + (state.pledges.length === 1 ? " contributor" : " contributors"));
+      gridD.innerHTML = "";
+      state.pledges.map(function (p, idx) { return { p: p, idx: idx }; }).reverse().forEach(function (o) {
+        var color = PALETTE[o.idx % PALETTE.length];
+        var d = document.createElement("div"); d.className = "slab-donor";
+        d.innerHTML = '<span class="sw" style="background:' + color + '"></span>' +
+          '<div><div class="dn">' + esc(o.p.name) + '</div>' +
+          '<div class="df">' + fmt(o.p.sqft) + ' ft² · LKR ' + fmt(o.p.sqft * SLAB.costPerSqft) + '</div></div>';
+        gridD.appendChild(d);
+      });
+    }
+
+    /* ---------- pledge card ---------- */
+    function renderCard() { if (state.justPledged) renderSuccess(); else renderForm(); }
+
+    function getSqft() { var el = byId("spSqft"); var v = el ? parseInt(el.value, 10) : 0; return isNaN(v) ? 0 : v; }
+    function setSqft(v) { var rem = remaining(); v = Math.max(1, Math.min(rem || 1, v)); var el = byId("spSqft"); if (el) el.value = v; updateCost(); }
+    function updateCost() {
+      var v = getSqft(), c = byId("spCost"); if (c) c.textContent = fmt(v * SLAB.costPerSqft);
+      var ft = byId("spSubmitFt"); if (ft) ft.textContent = v > 0 ? (v + " ft²") : "";
+    }
+
+    function renderForm() {
+      var rem = remaining(), full = rem <= 0;
+      cardEl.innerHTML =
+        '<h3>Pledge a square foot</h3>' +
+        '<p class="sp-hint">Give by the ft&sup2;. Your name will rest on the squares you help lay.</p>' +
+        '<div class="sp-field"><label>Your name</label>' +
+          '<input class="sp-input" id="spName" placeholder="e.g. The Silva Family" maxlength="120" autocomplete="name"></div>' +
+        '<div class="sp-field"><label>Square feet</label>' +
+          '<div class="sp-ftrow"><button type="button" id="spMinus" aria-label="Fewer square feet">&minus;</button>' +
+            '<input id="spSqft" type="number" min="1" value="1" inputmode="numeric" aria-label="Square feet to pledge">' +
+            '<span class="sp-suffix">ft&sup2;</span>' +
+            '<button type="button" id="spPlus" aria-label="More square feet">+</button></div>' +
+          '<div class="sp-quick" id="spQuick"></div></div>' +
+        '<div class="sp-cost"><span class="l">Your contribution</span>' +
+          '<span class="v"><span class="cur">LKR</span><span id="spCost">0</span></span></div>' +
+        '<button class="sp-submit" id="spSubmit"' + (full ? ' disabled' : '') + '>' +
+          (full ? 'Fully pledged 🙏' : 'Pledge <span id="spSubmitFt"></span> →') + '</button>' +
+        '<div class="sp-err" id="spErr" hidden></div>' +
+        '<p class="sp-rate">≈ LKR ' + fmt(SLAB.costPerSqft) + ' per ft² · ' + fmt(SLAB.totalSqft) + ' ft² total</p>' +
+        '<p class="sp-note">A pledge is a promise, not a payment &mdash; complete your dāna on the donation page. ' +
+          (full ? 'The slab is fully pledged &mdash; thank you!' : fmt(rem) + ' ft² still open.') + '</p>';
+
+      if (full) return;
+      [1, 5, 10, 25, 50, 100].forEach(function (v) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "sp-chip";
+        b.textContent = v + " ft²"; b.onclick = function () { setSqft(v); }; byId("spQuick").appendChild(b);
+      });
+      byId("spMinus").onclick = function () { setSqft(getSqft() - 1); };
+      byId("spPlus").onclick = function () { setSqft(getSqft() + 1); };
+      byId("spSqft").addEventListener("input", updateCost);
+      byId("spSubmit").onclick = submit;
+      setSqft(Math.min(1, rem));
+    }
+
+    function submit() {
+      var nameEl = byId("spName"), name = (nameEl.value || "").trim(), err = byId("spErr"), rem = remaining();
+      if (!name) { err.textContent = "Please add your name."; err.hidden = false; nameEl.focus(); return; }
+      if (rem <= 0) { err.textContent = "The slab is fully pledged — thank you!"; err.hidden = false; return; }
+      var sqft = Math.max(1, Math.min(rem, getSqft()));
+      var p = { id: "p" + Date.now(), name: name, sqft: sqft, message: "", ts: Date.now() };
+      state.pledges.push(p); save(); post(p);
+      state.justPledged = p; render();
+    }
+
+    function renderSuccess() {
+      var p = state.justPledged, cost = p.sqft * SLAB.costPerSqft;
+      cardEl.innerHTML =
+        '<div class="sp-ok"><div class="tick">✓</div>' +
+        '<h3>Thank you, ' + esc(p.name) + '</h3>' +
+        '<p class="sp-hint">You’ve pledged <b>' + fmt(p.sqft) + ' ft²</b> of the Floor&nbsp;01 slab.</p>' +
+        '<div class="sp-cost" style="justify-content:center;gap:8px;border-top:none;padding-top:0;margin-top:0;">' +
+          '<span class="v"><span class="cur">LKR</span> ' + fmt(cost) + '</span></div>' +
+        '<a class="sp-submit" style="text-decoration:none;" href="' + SLAB.donate + '">Complete your dāna →</a>' +
+        '<button class="sp-chip" id="spAnother" style="margin:14px auto 0;display:block;">Pledge another →</button>' +
+        '<p class="sp-note">Your name now rests on the slab above. A team member will be in touch to confirm your dāna.</p></div>';
+      byId("spAnother").onclick = function () { state.justPledged = null; renderCard(); };
+    }
+
+    /* ---------- hover tooltip ---------- */
+    grid.addEventListener("pointermove", function (e) {
+      var cell = e.target.closest && e.target.closest(".scell");
+      if (cell && cell.hasAttribute("data-pid")) {
+        var p = state.pledges[+cell.getAttribute("data-pid")];
+        if (p) {
+          var vr = grid.closest(".slab-visual").getBoundingClientRect();
+          tip.hidden = false;
+          tip.innerHTML = esc(p.name) + " · <b>" + fmt(p.sqft) + " ft²</b>";
+          tip.style.left = (e.clientX - vr.left) + "px";
+          tip.style.top = (e.clientY - vr.top) + "px";
+          return;
+        }
+      }
+      tip.hidden = true;
+    });
+    grid.addEventListener("pointerleave", function () { tip.hidden = true; });
+
+    render();
+    fetchLive();
+
+    /* ---- floating progress panel: show once past the hero, hide while the
+       pledge section itself is on screen (so it doesn't duplicate) ---- */
+    (function () {
+      var fp = byId("fprog"); var pledgeSec = document.getElementById("pledge");
+      if (!fp || !pledgeSec) return;
+      var ticking = false;
+      function update() {
+        ticking = false;
+        var r = pledgeSec.getBoundingClientRect();
+        var pledgeInView = r.top < window.innerHeight * 0.7 && r.bottom > 80;
+        fp.classList.toggle("show", window.scrollY > 520 && !pledgeInView);
+      }
+      window.addEventListener("scroll", function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      }, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    })();
+  })();
+  </script>
+<!-- eco-header -->
+  <link rel="stylesheet" href="../../eco-header.css?v=11">
+  <script id="eco-header" src="../../eco-header.js?v=10" data-root="../../" data-links='[{"label": "Vision", "href": "#vision"}, {"label": "3D Model", "href": "#model"}, {"label": "Progress", "href": "#progress"}, {"label": "Pledge the Slab", "href": "#pledge"}, {"label": "Support", "href": "../../donate/", "cta": true, "external": true}]' data-pad="true" defer></script>
+<!-- eco-nav -->
+  <link rel="stylesheet" href="../../eco-nav.css?v=21">
+  <script id="eco-nav" src="../../eco-nav.js?v=41" data-root="../../" data-current="threestory" defer></script>
+  <!-- eco-footer -->
+  <link rel="stylesheet" href="../../eco-footer.css?v=10">
+  <script id="eco-footer" src="../../eco-footer.js?v=10" data-root="../../" defer></script>
+</body>
+</html>

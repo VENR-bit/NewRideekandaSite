@@ -1,0 +1,47 @@
+/* Rideekanda — registration gate overlay (soft gate; eco-styled).
+   Loaded on Dhamma Talks / ධර්ම දේශනා / Audio Library. Uses the host
+   page's eco CSS variables, with safe fallbacks. */
+.rkgate{position:fixed;inset:0;z-index:100000;display:none;align-items:center;justify-content:center;
+  padding:22px;background:rgba(20,15,8,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  font-family:var(--body,"Lora",Georgia,serif)}
+.rkgate.is-on{display:flex}
+html.rkgate-lock,body.rkgate-lock{overflow:hidden}
+.rkgate__card{width:100%;max-width:440px;background:var(--paper,#faf6ea);color:var(--ink,#2a2418);
+  border:1px solid var(--line,rgba(42,36,24,.14));border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.45);
+  padding:30px 28px 24px;text-align:center;max-height:calc(100dvh - 44px);overflow:auto}
+.rkgate__lotus{width:46px;height:auto;margin:0 auto 12px;display:block}
+.rkgate__place{font-family:var(--display,"Cormorant Garamond",serif);text-transform:uppercase;
+  letter-spacing:.16em;font-size:11px;color:var(--muted,rgba(42,36,24,.6));margin:0 0 8px}
+.rkgate__title{font-family:var(--display,"Cormorant Garamond",serif);font-weight:600;font-size:25px;line-height:1.15;margin:0 0 8px}
+.rkgate__intro{color:var(--muted,rgba(42,36,24,.6));font-size:14.5px;margin:0 0 18px}
+.rkgate__form{display:flex;flex-direction:column;gap:11px;text-align:left}
+.rkgate__field label{display:block;font-family:var(--display,serif);text-transform:uppercase;
+  letter-spacing:.05em;font-size:11.5px;color:var(--muted,rgba(42,36,24,.6));margin:0 0 4px}
+.rkgate__field input{width:100%;font-family:var(--body,serif);font-size:15px;color:var(--ink,#2a2418);
+  background:var(--bg,#f3ecdc);border:1px solid var(--line,rgba(42,36,24,.14));border-radius:10px;padding:11px 14px}
+.rkgate__field input:focus{outline:none;border-color:var(--accent,#b07a2e);box-shadow:0 0 0 3px rgba(176,122,46,.15)}
+.rkgate__consent{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--muted,rgba(42,36,24,.6));margin-top:3px;cursor:pointer}
+.rkgate__consent input{margin-top:3px;flex:0 0 auto}
+.rkgate__hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+.rkgate__btn{width:100%;font-family:var(--display,serif);text-transform:uppercase;letter-spacing:.07em;font-size:13px;
+  border:1px solid var(--accent,#b07a2e);background:var(--accent,#b07a2e);color:#fff;border-radius:999px;
+  padding:13px 18px;cursor:pointer;margin-top:8px;transition:filter .15s}
+.rkgate__btn:hover{filter:brightness(1.07)}
+.rkgate__btn[disabled]{opacity:.6;cursor:default}
+.rkgate__alt{margin:16px 0 0;font-size:13.5px;color:var(--muted,rgba(42,36,24,.6))}
+.rkgate__link{color:var(--accent,#b07a2e);cursor:pointer;background:none;border:0;font:inherit;padding:0;text-decoration:underline}
+.rkgate__note{font-size:12px;color:var(--muted,rgba(42,36,24,.6));margin:16px 0 0;opacity:.85}
+.rkgate__msg{font-size:13px;margin:6px 0 0;min-height:1.1em}
+.rkgate__msg.err{color:#b23b2e}
+.rkgate__msg.ok{color:var(--forest,#586b49)}
+.rkgate--si .rkgate__title,.rkgate--si .rkgate__intro,.rkgate--si .rkgate__field label,
+.rkgate--si .rkgate__consent,.rkgate--si .rkgate__btn,.rkgate--si .rkgate__alt,
+.rkgate--si .rkgate__link,.rkgate--si .rkgate__note,.rkgate--si .rkgate__msg{font-family:"Noto Serif Sinhala","Cormorant Garamond",serif}
+
+/* bilingual: Latin font first, Noto Sinhala as fallback for the Sinhala glyphs */
+.rkgate--bi .rkgate__title,.rkgate--bi .rkgate__field label,.rkgate--bi .rkgate__btn,
+.rkgate--bi .rkgate__alt,.rkgate--bi .rkgate__link{font-family:"Cormorant Garamond","Noto Serif Sinhala",serif}
+.rkgate--bi .rkgate__intro,.rkgate--bi .rkgate__consent,.rkgate--bi .rkgate__note,.rkgate--bi .rkgate__msg{font-family:"Lora","Noto Serif Sinhala",serif}
+.rkgate__si2{display:block;font-family:"Noto Serif Sinhala","Cormorant Garamond",serif;font-size:.8em;
+  color:var(--accent,#b07a2e);font-weight:500;letter-spacing:0;margin-top:5px;line-height:1.35}
+.rkgate__intro .rkgate__si2{font-weight:400;color:var(--muted,rgba(42,36,24,.6));font-size:.92em}

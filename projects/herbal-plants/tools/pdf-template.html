@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="si"><head><meta charset="utf-8">
+<title>Rideekanda — Herbal Plant Lists</title>
+<style>
+  @page { size: A4; margin: 16mm 12mm 14mm; }
+  * { box-sizing: border-box; }
+  body { margin:0; color:#1f1a14;
+         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 8.6pt; }
+  .si, th { font-family: "Noto Serif Sinhala", "Sinhala Sangam MN", "Sinhala MN", serif; }
+
+  .cover { height: 248mm; display:flex; flex-direction:column; align-items:center;
+           justify-content:center; text-align:center; page-break-after: always; }
+  .cover .mark { font-size: 26pt; color:#2d4a32; margin-bottom: 12mm; }
+  .cover h1 { font-family:"Noto Serif Sinhala","Sinhala Sangam MN",serif;
+              font-size: 21pt; font-weight:600; margin:0 0 3mm; color:#2d4a32; line-height:1.6; }
+  .cover h2 { font-size: 13pt; font-weight:500; margin:0 0 8mm; color:#4a4034; letter-spacing:.02em; }
+  .cover .who { font-size: 10pt; color:#4a4034; line-height:2; }
+  .cover .who .si { font-size: 11.5pt; }
+  .cover .rule { width:36mm; height:1px; background:#c9bda2; margin:8mm auto; }
+  .cover .counts { font-size: 9pt; color:#6b6152; line-height:2.1; }
+  .cover .date { margin-top: 10mm; font-size: 7.6pt; color:#8a7d68; letter-spacing:.08em; }
+
+  h3.sec { font-family:"Noto Serif Sinhala","Sinhala Sangam MN",serif;
+           font-size: 13pt; color:#2d4a32; margin: 0 0 1mm; page-break-after: avoid; }
+  h3.sec .en { display:block; font-family:"Helvetica Neue",Arial,sans-serif;
+               font-size: 9pt; font-weight:500; color:#6b6152; margin-top:1.5mm; }
+  .secwrap { border-bottom:1.2px solid #2d4a32; padding-bottom:2.5mm; margin-bottom:4mm; }
+  .secwrap.next { page-break-before: always; }
+
+  table { width:100%; border-collapse:collapse; }
+  thead { display: table-header-group; }
+  tr { page-break-inside: avoid; }
+  th { text-align:left; font-size:8pt; font-weight:600; color:#2d4a32;
+       border-bottom:.8px solid #b9ad92; padding:1.6mm 1.6mm 1.6mm 0; line-height:1.5; }
+  th span { display:block; font-family:"Helvetica Neue",Arial,sans-serif;
+            font-size:6.4pt; font-weight:500; color:#8a7d68; letter-spacing:.04em; }
+  td { padding:1.3mm 1.6mm 1.3mm 0; border-bottom:.4px solid #e6dcc6; vertical-align:top; line-height:1.5; }
+  td.n { width:9mm; color:#8a7d68; font-size:7.4pt; }
+  td.si { width:33mm; font-size:10pt; }
+  td.sci { font-style:italic; color:#4a4034; width:50mm; }
+</style></head><body>
+
+<div class="cover">
+  <div class="mark">&#10047;</div>
+  <h1>ඖෂධ පැළ රෝපණ වැඩසටහන</h1>
+  <h2>Herbal Plant Planting Programme</h2>
+  <div class="rule"></div>
+  <div class="who">
+    <span class="si">රිදීකන්ද ආරණ්‍ය සේනාසනය</span><br>
+    Rideekanda Forest Monastery<br>
+    උඩස්ගිරිය, මාතලේ &middot; Udasgiriya, Matale
+  </div>
+  <div class="rule"></div>
+  <div class="counts">
+    රෝපණ ලැයිස්තුව &mdash; පැළ @@PROG_N@@ ක් &middot; Planting list &mdash; @@PROG_N@@ plants<br>
+    ඉතිරි ඖෂධශාක ලැයිස්තුව &mdash; පැළ @@REF_N@@ ක් &middot; Balance medicinal flora &mdash; @@REF_N@@ plants
+  </div>
+  <div class="date">rideekanda.com/projects/herbal-plants &middot; @@DATE@@</div>
+</div>
+
+<div class="secwrap"><h3 class="sec">1 &middot; රෝපණ ලැයිස්තුව<span class="en">This year&rsquo;s planting list &mdash; @@PROG_N@@ plants</span></h3></div>
+@@TABLE1@@
+
+<div class="secwrap next"><h3 class="sec">2 &middot; ඉතිරි ඖෂධශාක ලැයිස්තුව<span class="en">Balance medicinal flora reference &mdash; @@REF_N@@ plants</span></h3></div>
+@@TABLE2@@
+
+</body></html>
