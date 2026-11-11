@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library Cafe — Rideekanda Forest Monastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<style>
+:root{--bg:#f4ede0;--bg-deep:#ece3d1;--card:#fdfbf6;--ink:#1f1a14;--ink-soft:#4a4034;--muted:#8a7d68;--line:#e6dcc6;--accent:#2d4a32;--accent-soft:#5b7a5f;--gold:#c08a3e;--shadow-sm:0 1px 2px rgba(57,44,22,.04),0 0 0 1px rgba(57,44,22,.04);--shadow-md:0 12px 32px -16px rgba(57,44,22,.18),0 2px 6px -2px rgba(57,44,22,.06),0 0 0 1px rgba(57,44,22,.04);--shadow-lg:0 32px 64px -32px rgba(57,44,22,.25),0 8px 24px -12px rgba(57,44,22,.1),0 0 0 1px rgba(57,44,22,.05);--serif:"Cormorant Garamond",Georgia,serif;--sans:"Manrope",system-ui,-apple-system,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle at 18% 8%,rgba(192,138,62,.05),transparent 55%),radial-gradient(circle at 82% 92%,rgba(45,74,50,.05),transparent 55%),radial-gradient(circle at 70% 30%,rgba(192,138,62,.03),transparent 40%);z-index:0}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:var(--card)}
+section[id]{scroll-margin-top:92px}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:40;background:transparent;border-bottom:1px solid transparent;transition:background .35s,border-color .35s,backdrop-filter .35s}
+.nav.scrolled{background:rgba(244,237,224,.86);backdrop-filter:blur(14px) saturate(1.05);-webkit-backdrop-filter:blur(14px) saturate(1.05);border-bottom-color:var(--line)}
+.nav-inner{max-width:1280px;margin:0 auto;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-logo{display:flex;align-items:center;gap:12px}
+.nav-logo img{width:49px;height:32px;opacity:.95}
+.nav-logo-name{font-family:var(--serif);font-size:18px;font-weight:500;letter-spacing:-.005em}
+.nav-logo-sub{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:500;margin-top:1px}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:13px;font-weight:500;letter-spacing:.4px;color:var(--ink-soft);text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+.nav-home-link{color:var(--accent)!important;font-weight:600!important}
+.nav-right{display:flex;align-items:center;gap:10px}
+.btn-support{display:inline-flex;align-items:center;gap:8px;padding:9px 18px 9px 20px;background:var(--accent);color:#fdfbf6;border-radius:999px;font-size:13px;font-weight:600;letter-spacing:.3px;box-shadow:0 6px 16px -8px rgba(45,74,50,.5);transition:transform .2s,box-shadow .2s}
+.btn-support:hover{transform:translateY(-1px);box-shadow:0 10px 24px -8px rgba(45,74,50,.6)}
+.hamburger{display:none;width:40px;height:40px;border-radius:999px;background:var(--card);border:1px solid var(--line);cursor:pointer;align-items:center;justify-content:center}
+.eyebrow{font-family:var(--sans);font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600}
+
+/* HERO */
+.hero{padding:72px 28px 48px;max-width:1280px;margin:0 auto;position:relative;z-index:1}
+.hero-top{display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:22px;text-align:center}
+.hero-top img{width:98px;height:64px;opacity:.95}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(58px,8vw,112px);line-height:.98;letter-spacing:-.025em;text-align:center;max-width:1100px;margin:0 auto;text-wrap:balance}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--accent)}
+.hero-kicker{font-family:var(--serif);font-style:italic;font-size:clamp(19px,1.9vw,24px);color:var(--muted);font-weight:400;margin:28px auto 36px;text-align:center;max-width:640px;line-height:1.5}
+.hero-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:72px}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;padding:13px 24px 13px 26px;background:var(--accent);color:#fdfbf6;border-radius:999px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.3px;border:1px solid rgba(0,0,0,.05);box-shadow:0 8px 22px -10px rgba(45,74,50,.55);transition:transform .2s,box-shadow .2s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 28px -10px rgba(45,74,50,.6)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;background:transparent;color:var(--ink);border-radius:999px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.3px;border:1px solid var(--ink);transition:background .2s,color .2s}
+.btn-ghost:hover{background:var(--ink);color:var(--card)}
+.hero-image{position:relative;border-radius:28px;overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--line);background:var(--bg-deep)}
+.hero-image img{width:100%;height:auto;display:block}
+.hero-image .overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(31,26,20,0) 55%,rgba(31,26,20,.18));pointer-events:none}
+.hero-image .chip{position:absolute;left:24px;bottom:24px;padding:8px 14px;background:rgba(253,251,246,.86);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:999px;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.hero-image .chip span{color:var(--accent)}
+
+/* ABOUT */
+.about{padding:96px 28px;max-width:1280px;margin:0 auto;position:relative;z-index:1}
+.about-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:80px;align-items:start}
+.about h2{font-family:var(--serif);font-weight:500;font-size:clamp(40px,4.4vw,64px);line-height:1.02;letter-spacing:-.018em;margin:0 0 24px;text-wrap:balance}
+.about h2 em{font-style:italic;font-weight:400;color:var(--accent)}
+.about-text p{font-size:17px;line-height:1.7;color:var(--ink-soft);font-family:var(--serif);font-weight:400;max-width:560px;margin:0 0 18px}
+.qualities-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.quality-tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px 24px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:12px;min-height:200px}
+.quality-icon{width:52px;height:52px;border-radius:14px;background:color-mix(in oklab,var(--accent) 8%,var(--card));border:1px solid color-mix(in oklab,var(--accent) 16%,var(--line));display:grid;place-items:center;margin-bottom:4px}
+.quality-title{font-family:var(--serif);font-size:22px;font-weight:500;line-height:1.15;letter-spacing:-.005em}
+.quality-desc{font-size:14px;color:var(--ink-soft);line-height:1.6}
+
+/* 3D MODEL */
+.model-section{padding:96px 28px;max-width:1280px;margin:0 auto;position:relative;z-index:1}
+.section-heading{text-align:center;max-width:720px;margin:0 auto 56px}
+.section-heading h2{font-family:var(--serif);font-weight:500;font-size:clamp(38px,5vw,60px);line-height:1.05;letter-spacing:-.015em;margin:0 0 14px;text-wrap:balance}
+.section-heading h2 em{font-style:italic;font-weight:400;color:var(--accent)}
+.section-heading .kicker{font-family:var(--serif);font-style:italic;font-size:clamp(17px,1.6vw,21px);color:var(--muted);font-weight:400;margin:0 auto;max-width:640px;line-height:1.5}
+.model-card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:var(--shadow-lg)}
+.model-preview{position:relative;border-radius:20px;overflow:hidden;background:#1a1a1a}
+.model-preview model-viewer{width:100%;height:550px;border-radius:20px;--poster-color:#1a1a1a}
+.model-preview .badge{position:absolute;top:20px;left:20px;padding:7px 12px;background:rgba(31,26,20,.55);backdrop-filter:blur(8px);border-radius:999px;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#fdfbf6;font-weight:600;z-index:2;pointer-events:none}
+.model-affordances{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px;padding:10px 16px 4px}
+.afford-eyebrow{font-size:10.5px;letter-spacing:2.4px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:4px}
+.afford-label{font-family:var(--serif);font-size:17px;font-weight:500;line-height:1.2}
+.afford-desc{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:14px;margin-top:4px}
+
+/* GALLERY */
+.gallery{padding:96px 28px;max-width:1280px;margin:0 auto;position:relative;z-index:1}
+.gallery-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:22px}
+.gallery-grid figure{margin:0;cursor:zoom-in;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow-sm);transition:transform .35s,box-shadow .35s}
+.gallery-grid figure:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.gallery-grid .img-wrap{position:relative;overflow:hidden;background:var(--bg-deep)}
+.gallery-grid figure img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.gallery-grid figure:hover img{transform:scale(1.04)}
+.gallery-grid .img-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(31,26,20,0) 50%,rgba(31,26,20,.55));pointer-events:none}
+.gallery-grid .img-caption{position:absolute;bottom:18px;left:22px;right:22px;color:#fdfbf6}
+.gallery-grid .img-num{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;opacity:.78;font-weight:600;margin-bottom:6px}
+.gallery-grid .img-title{font-family:var(--serif);font-size:24px;font-weight:500;letter-spacing:-.005em;line-height:1.15}
+.g-span-8{grid-column:span 8}.g-span-4{grid-column:span 4}.g-span-6{grid-column:span 6}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(31,26,20,.86);backdrop-filter:blur(8px);z-index:100;display:grid;place-items:center;padding:48px 24px;animation:lbfade .35s ease}
+.lightbox.hidden{display:none}
+@keyframes lbfade{from{opacity:0}to{opacity:1}}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:999px;background:rgba(253,251,246,.1);border:1px solid rgba(253,251,246,.2);color:#fdfbf6;font-size:28px;line-height:1;font-family:var(--serif);display:grid;place-items:center;cursor:pointer;z-index:2}
+.lb-prev{left:20px}.lb-next{right:20px}
+.lb-close{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:999px;background:rgba(253,251,246,.1);border:1px solid rgba(253,251,246,.2);color:#fdfbf6;font-size:22px;line-height:1;cursor:pointer}
+.lb-figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:18px}
+.lb-figure img{max-width:min(1200px,92vw);max-height:78vh;object-fit:contain;border-radius:12px;box-shadow:0 40px 80px rgba(0,0,0,.4);background:var(--card)}
+.lb-title{font-family:var(--serif);font-size:22px;font-weight:500;color:#fdfbf6;margin-bottom:6px}
+.lb-desc{font-family:var(--serif);font-style:italic;font-size:15px;color:rgba(253,251,246,.7)}
+.lb-counter{margin-top:14px;font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(253,251,246,.5)}
+
+/* FURNITURE */
+.furniture{padding:96px 28px;max-width:1280px;margin:0 auto;position:relative;z-index:1}
+.furniture-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.furn-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 26px 24px;display:flex;flex-direction:column;box-shadow:var(--shadow-sm);transition:transform .3s,box-shadow .3s}
+.furn-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.furn-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.furn-tag{font-size:10.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--accent);font-weight:700}
+.furn-num{font-family:var(--serif);font-size:13px;color:var(--muted);font-style:italic}
+.furn-img{position:relative;aspect-ratio:4/3;border-radius:12px;background:linear-gradient(180deg,#f1ead9,#ece3d1);overflow:hidden;margin-bottom:18px;border:1px solid var(--line)}
+.furn-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:10%;display:block;mix-blend-mode:multiply;transition:transform .5s}
+.furn-card:hover .furn-img img{transform:scale(1.06)}
+.furn-card h3{font-family:var(--serif);font-size:26px;font-weight:500;letter-spacing:-.01em;line-height:1.1;margin:0 0 10px}
+.furn-card p{margin:0 0 18px;color:var(--ink-soft);font-size:14.5px;line-height:1.6;flex:1}
+.furn-pdf{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;background:transparent;color:var(--ink);border-radius:999px;font-size:12.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;border:1px solid var(--line);transition:background .2s,color .2s,border-color .2s}
+.furn-pdf:hover{background:var(--ink);color:var(--card);border-color:var(--ink)}
+
+/* EXPENDITURE */
+.expenditure-section{padding:96px 28px;max-width:1280px;margin:0 auto}
+.exp-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px}
+.exp-stat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px 24px;text-align:center;box-shadow:var(--shadow-sm)}
+.exp-stat-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+.exp-stat-value{font-family:var(--serif);font-size:clamp(28px,3.5vw,38px);font-weight:600;color:var(--ink);line-height:1.1}
+.exp-stat-value.accent{color:var(--accent)}
+.exp-stat-value.gold{color:var(--gold)}
+.exp-progress-wrap{margin-bottom:48px}
+.exp-progress-bar{height:18px;background:var(--bg-deep);border-radius:999px;overflow:hidden;border:1px solid var(--line);position:relative}
+.exp-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-soft));transition:width 1.2s ease}
+.exp-progress-labels{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--muted);font-weight:500}
+.exp-table-card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-md)}
+.exp-table{width:100%;border-collapse:collapse;font-size:14px}
+.exp-table thead{background:var(--accent);color:#fdfbf6}
+.exp-table th{padding:14px 18px;text-align:left;font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
+.exp-table th:last-child,.exp-table td:last-child{text-align:right}
+.exp-table td{padding:13px 18px;border-bottom:1px solid var(--line)}
+.exp-table tbody tr:last-child td{border-bottom:none}
+.exp-table tbody tr:hover{background:rgba(45,74,50,.03)}
+.exp-table .total-row td{font-weight:700;font-family:var(--serif);font-size:16px;background:var(--bg-deep);border-top:2px solid var(--line)}
+.exp-donors{margin-top:32px}
+.exp-donor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:20px}
+.exp-donor-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow-sm)}
+.exp-donor-icon{width:44px;height:44px;border-radius:999px;background:color-mix(in oklab,var(--gold) 12%,transparent);display:grid;place-items:center;flex-shrink:0}
+.exp-donor-name{font-weight:600;font-size:14px;color:var(--ink);margin-bottom:2px}
+.exp-donor-amount{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--gold)}
+.exp-loading{text-align:center;padding:64px 24px;color:var(--muted);font-family:var(--serif);font-style:italic;font-size:18px}
+.exp-updated{text-align:center;margin-top:18px;font-size:12px;color:var(--muted);font-style:italic}
+@media(max-width:768px){
+.exp-summary{grid-template-columns:1fr}
+.exp-table{font-size:13px}
+.exp-table th,.exp-table td{padding:10px 12px}
+.expenditure-section{padding:56px 18px}
+}
+
+/* VIDEO */
+.video-section{padding:112px 0;position:relative;overflow:hidden;background:var(--ink);color:#fdfbf6;margin-top:56px}
+.video-section::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 10%,rgba(192,138,62,.12),transparent 50%),radial-gradient(circle at 10% 90%,rgba(91,122,95,.16),transparent 55%);pointer-events:none}
+.video-inner{position:relative;max-width:1100px;margin:0 auto;padding:0 28px}
+.video-heading{text-align:center;max-width:720px;margin:0 auto 48px}
+.video-heading h2{font-family:var(--serif);font-weight:500;font-size:clamp(40px,5vw,60px);line-height:1.05;letter-spacing:-.018em;margin:0 0 14px;text-wrap:balance}
+.video-heading h2 em{font-style:italic;font-weight:400;color:var(--gold)}
+.video-heading .kicker{font-family:var(--serif);font-style:italic;font-size:20px;color:rgba(253,251,246,.65);margin:0;line-height:1.5}
+.video-frame{position:relative;aspect-ratio:16/9;border-radius:24px;overflow:hidden;box-shadow:0 40px 100px -30px rgba(0,0,0,.6),0 0 0 1px rgba(253,251,246,.06);border:1px solid rgba(253,251,246,.08);background:#000}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* DONATE */
+.donate{padding:96px 28px;max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.donate-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:72px 64px 80px;text-align:center;box-shadow:var(--shadow-md);overflow:hidden}
+.donate-watermark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.05;pointer-events:none}
+.donate-watermark img{width:460px;height:auto}
+.donate-content{position:relative}
+.donate-content h2{font-family:var(--serif);font-weight:500;font-size:clamp(44px,5.5vw,72px);line-height:1.02;letter-spacing:-.02em;margin:0 auto 18px;max-width:720px;text-wrap:balance}
+.donate-content h2 em{font-style:italic;font-weight:400;color:var(--accent)}
+.donate-desc{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--muted);margin:0 auto 32px;max-width:580px;line-height:1.55}
+.donate-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.donate-stats{margin-top:48px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding-top:40px;border-top:1px solid var(--line)}
+.stat{padding:0 18px}
+.stat+.stat{border-left:1px solid var(--line)}
+.stat-num{font-family:var(--serif);font-size:56px;font-weight:500;line-height:1;letter-spacing:-.02em;color:var(--accent)}
+.stat-label{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-top:8px}
+.stat-caption{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:14px;margin-top:4px}
+
+/* FOOTER */
+.footer{text-align:center;padding:72px 28px 56px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);margin-top:48px;position:relative;z-index:1}
+.footer img{width:55px;height:36px;opacity:.6;margin-bottom:14px}
+.footer-name{letter-spacing:2px;text-transform:uppercase;font-weight:600;color:var(--ink-soft)}
+.footer-blessing{margin-top:10px;font-family:var(--serif);font-style:italic;font-size:16px}
+.footer-copy{margin-top:24px;font-size:11.5px;letter-spacing:1.2px;opacity:.7}
+
+/* MOBILE */
+@media(max-width:719px){
+.nav-inner{padding:14px 18px}
+.nav-links{display:none!important}
+.btn-support-desktop{display:none!important}
+.hamburger{display:flex!important}
+.mobile-menu{padding:8px 18px 22px;border-top:1px solid var(--line);background:rgba(244,237,224,.95);backdrop-filter:blur(14px)}
+.mobile-menu ul{display:flex;flex-direction:column;gap:4px;list-style:none}
+.mobile-menu a{display:block;padding:12px 0;font-family:var(--serif);font-size:22px;border-bottom:1px solid var(--line)}
+.mobile-menu .support-link{color:var(--accent);font-style:italic;border:none}
+.hero{padding:48px 18px 28px}
+.hero h1{font-size:56px}
+.hero-kicker{font-size:19px}
+.hero-cta{margin-bottom:48px}
+.hero-image{border-radius:18px}
+.hero-image .chip{left:14px;bottom:14px}
+.about{padding:56px 18px}
+.about-grid{grid-template-columns:1fr;gap:36px}
+.about h2{font-size:40px}
+.qualities-grid{gap:12px}
+.quality-tile{padding:22px 20px;min-height:0}
+.model-section{padding:56px 18px}
+.model-card{border-radius:18px;padding:16px}
+.model-preview{border-radius:12px}
+.model-preview model-viewer{height:350px;border-radius:12px}
+.model-affordances{grid-template-columns:1fr;gap:10px}
+.model-preview .badge{top:12px;left:12px}
+.gallery{padding:56px 18px}
+.gallery-grid{grid-template-columns:1fr;gap:14px}
+.g-span-8,.g-span-4,.g-span-6{grid-column:span 1}
+.gallery-grid .img-wrap{aspect-ratio:4/3!important}
+.gallery-grid .img-caption{bottom:12px;left:14px;right:14px}
+.gallery-grid .img-title{font-size:20px}
+.furniture{padding:56px 18px}
+.furniture-grid{grid-template-columns:1fr;gap:16px}
+.furn-card{padding:20px}
+.furn-card h3{font-size:24px}
+.video-section{padding:64px 0;margin-top:32px}
+.video-inner{padding:0 18px}
+.video-heading{margin-bottom:32px}
+.video-heading h2{font-size:38px}
+.video-heading .kicker{font-size:17px}
+.video-frame{border-radius:18px}
+.donate{padding:56px 18px}
+.donate-card{padding:44px 26px 48px}
+.donate-content h2{font-size:40px}
+.donate-desc{font-size:17px}
+.donate-stats{grid-template-columns:1fr;gap:18px;padding-top:32px;margin-top:36px}
+.stat{padding:0}
+.stat+.stat{border-left:none}
+.stat-num{font-size:44px}
+.footer{padding:48px 18px 40px}
+.section-heading{margin-bottom:36px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo">
+      <img src="lotus.png" alt="">
+      <div><div class="nav-logo-name">Rideekanda</div><div class="nav-logo-sub">Forest Monastery</div></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../../index.html" class="nav-home-link">← Home</a></li>
+      <li><a href="#about">Vision</a></li>
+      <li><a href="#model">3D Model</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#furniture">Furnishings</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#expenditure">Budget</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="../../donate/" target="_blank" rel="noopener noreferrer" class="btn-support btn-support-desktop">Support <span style="opacity:.75">→</span></a>
+      <button class="hamburger" id="menuBtn" aria-label="Menu"><svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round"><path id="menuIcon" d="M2 2h14M2 7h14M2 12h14"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" style="display:none">
+    <ul>
+      <li><a href="../../index.html" class="nav-home-link" onclick="closeMenu()">← Home</a></li>
+      <li><a href="#about" onclick="closeMenu()">Vision</a></li>
+      <li><a href="#model" onclick="closeMenu()">3D Model</a></li>
+      <li><a href="#gallery" onclick="closeMenu()">Gallery</a></li>
+      <li><a href="#furniture" onclick="closeMenu()">Furnishings</a></li>
+      <li><a href="#video" onclick="closeMenu()">Video</a></li>
+      <li><a href="#expenditure" onclick="closeMenu()">Budget</a></li>
+      <li><a href="../../donate/" target="_blank" rel="noopener noreferrer" class="support-link" onclick="closeMenu()">Support →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="reveal hero-top"><img src="lotus.png" alt=""><div class="eyebrow">A place of peace &amp; learning</div></div>
+  <div class="reveal" style="transition-delay:.12s"><h1>A library cafe<br>in the <em>forest</em>.</h1></div>
+  <div class="reveal" style="transition-delay:.22s"><p class="hero-kicker">A serene space for reading, contemplation, and quiet community — nestled in the forest at Rideekanda Monastery. Your generous support brings this vision to life.</p></div>
+  <div class="reveal hero-cta" style="transition-delay:.32s">
+    <a href="#furniture" class="btn-primary">View furniture needs <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a href="#gallery" class="btn-ghost">Explore the design</a>
+  </div>
+  <div class="reveal" style="transition-delay:.42s">
+    <figure class="hero-image" style="margin:0">
+      <img src="Project%20Angle.png" alt="Full perspective view of the library cafe design">
+      <div class="overlay"></div>
+
+    </figure>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="reveal" style="margin-bottom:56px"><div class="eyebrow" style="text-align:left">The Vision</div></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="reveal" style="transition-delay:.06s"><h2>A forest library for <em>mindful learning</em>.</h2></div>
+      <div class="reveal" style="transition-delay:.14s"><p>The Rideekanda Library Cafe is envisioned as a tranquil haven where visitors and monastics can immerse themselves in Dhamma study, engage with Buddhist literature, and enjoy a cup of tea amidst the calm of the surrounding forest.</p></div>
+      <div class="reveal" style="transition-delay:.2s"><p style="margin:0">The design thoughtfully integrates indoor reading spaces with an open veranda and an outdoor timber deck — letting the architecture quietly recede into the canopy around it.</p></div>
+    </div>
+    <div class="qualities-grid">
+      <div class="reveal quality-tile"><div class="quality-icon"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5c3-1.2 6-1.2 9 0v17c-3-1.2-6-1.2-9 0v-17Z"/><path d="M27 7.5c-3-1.2-6-1.2-9 0v17c3-1.2 6-1.2 9 0v-17Z"/><path d="M14 7.5v17M18 7.5v17" opacity=".55"/></svg></div><div class="quality-title">Reading Library</div><div class="quality-desc">Wall-mounted racks, freestanding shelves, and quiet corners for Dhamma study.</div></div>
+      <div class="reveal quality-tile" style="transition-delay:.08s"><div class="quality-icon"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h17v6a7 7 0 0 1-7 7h-3a7 7 0 0 1-7-7v-6Z"/><path d="M23 14h2a3 3 0 0 1 0 6h-2"/><path d="M11 4.5c0 1.2-1 1.5-1 2.7s1 1.5 1 2.7" opacity=".7"/><path d="M15 4.5c0 1.2-1 1.5-1 2.7s1 1.5 1 2.7" opacity=".7"/><path d="M19 4.5c0 1.2-1 1.5-1 2.7s1 1.5 1 2.7" opacity=".7"/></svg></div><div class="quality-title">Tea &amp; Refreshments</div><div class="quality-desc">A small pantry and counter for simple offerings — tea, water, a moment to pause.</div></div>
+      <div class="reveal quality-tile" style="transition-delay:.16s"><div class="quality-icon"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3.5c3 3.2 6 5 6 9a6 6 0 0 1-3 5.2c2 .6 4 2.4 4 5a5 5 0 0 1-5 5h-4"/><path d="M16 3.5c-3 3.2-6 5-6 9a6 6 0 0 0 3 5.2c-2 .6-4 2.4-4 5a5 5 0 0 0 5 5h2"/><path d="M16 14v14.5"/></svg></div><div class="quality-title">Forest Setting</div><div class="quality-desc">Indoor reading rooms open onto a veranda and timber deck under the forest canopy.</div></div>
+      <div class="reveal quality-tile" style="transition-delay:.24s"><div class="quality-icon"><svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 7c2 3 3 6 3 9 0 3-1 5-3 6-2-1-3-3-3-6 0-3 1-6 3-9Z"/><path d="M9 13c.5 3 2 5.5 4 7-2.5.5-5 0-6.5-1.5C5 17 6 14 9 13Z"/><path d="M23 13c-.5 3-2 5.5-4 7 2.5.5 5 0 6.5-1.5C27 17 26 14 23 13Z"/><path d="M6 20.5c2 1.5 5 2.5 10 2.5s8-1 10-2.5" opacity=".7"/></svg></div><div class="quality-title">Contemplation Space</div><div class="quality-desc">Designed for stillness — natural light, gentle silence, room to sit with the breath.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3D MODEL -->
+<section class="model-section" id="model">
+  <div class="section-heading reveal"><div class="eyebrow" style="margin-bottom:16px">Interactive Experience</div><h2>Explore the <em>3D design</em></h2><p class="kicker">Rotate, zoom, and look around the full architectural model — every wall, every shelf, every line of the deck.</p></div>
+  <div class="reveal model-card">
+    <div class="model-preview">
+      <model-viewer
+        src="model-compressed.glb"
+        alt="Rideekanda Library Cafe 3D Model"
+        auto-rotate
+        camera-controls
+        shadow-intensity="1"
+        exposure="1"
+        poster="Project%20Angle.png"
+        loading="eager"
+      >
+        <div slot="progress-bar" style="display:none;"></div>
+      </model-viewer>
+      <div class="badge">● Live · 3D model</div>
+    </div>
+    <div class="model-affordances">
+      <div><div class="afford-eyebrow">Drag</div><div class="afford-label">Orbit around the cafe</div><div class="afford-desc">See every facade.</div></div>
+      <div><div class="afford-eyebrow">Pinch</div><div class="afford-label">Zoom into details</div><div class="afford-desc">From deck rail to shelf joint.</div></div>
+      <div><div class="afford-eyebrow">Tap</div><div class="afford-label">Inspect the interior</div><div class="afford-desc">Step inside the reading rooms.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section-heading reveal"><div class="eyebrow" style="margin-bottom:16px">Design Views</div><h2>Architectural <em>perspectives</em></h2><p class="kicker">Explore the library cafe from every angle — 3D renders, elevations, and detailed views of each space.</p></div>
+  <div class="gallery-grid">
+    <div class="reveal g-span-8"><figure onclick="openLightbox(0)"><div class="img-wrap" style="aspect-ratio:16/9"><img src="Project%20Angle.png" alt="Full Design — Perspective" loading="lazy"><div class="img-overlay"></div><div class="img-caption"><div class="img-num">No. 01</div><div class="img-title">Full Design — Perspective</div></div></div></figure></div>
+    <div class="reveal g-span-4" style="transition-delay:.08s"><figure onclick="openLightbox(1)"><div class="img-wrap" style="aspect-ratio:4/5"><img src="Project%20Left%203d.png" alt="Left Side — 3D View" loading="lazy"><div class="img-overlay"></div><div class="img-caption"><div class="img-num">No. 02</div><div class="img-title">Left Side — 3D View</div></div></div></figure></div>
+    <div class="reveal g-span-4" style="transition-delay:.08s"><figure onclick="openLightbox(2)"><div class="img-wrap" style="aspect-ratio:4/5"><img src="Project%20Front.png" alt="Front Elevation" loading="lazy"><div class="img-overlay"></div><div class="img-caption"><div class="img-num">No. 03</div><div class="img-title">Front Elevation</div></div></div></figure></div>
+    <div class="reveal g-span-8" style="transition-delay:.16s"><figure onclick="openLightbox(3)"><div class="img-wrap" style="aspect-ratio:16/9"><img src="Project%20Inside%20Right%20Side%20Angle.png" alt="Interior — Right Angle" loading="lazy"><div class="img-overlay"></div><div class="img-caption"><div class="img-num">No. 04</div><div class="img-title">Interior — Right Angle</div></div></div></figure></div>
+    <div class="reveal g-span-4"><figure onclick="openLightbox(4)"><div class="img-wrap" style="aspect-ratio:4/3"><img src="Project%20Inside%20Front.png" alt="Interior — Front View" loading="lazy"><div class="img-overlay"></div><div class="img-caption"><div class="img-num">No. 05</div><div class="img-title">Interior — Front View</div></div></div></figure></div>
+    <div class="reveal g-span-4" style="transition-delay:.08s"><figure onclick="openLightbox(5)"><div class="img-wrap" style="aspect-ratio:4/3"><img src="Project%20inside%20left.png" alt="Interior — Left View" loading="lazy"><div class="img-overlay"></div><div class="img-caption"><div class="img-num">No. 06</div><div class="img-title">Interior — Left View</div></div></div></figure></div>
+    <div class="reveal g-span-4" style="transition-delay:.16s"><figure onclick="openLightbox(6)"><div class="img-wrap" style="aspect-ratio:4/3"><img src="Project%20Top.png" alt="Top View — Floor Plan" loading="lazy"><div class="img-overlay"></div><div class="img-caption"><div class="img-num">No. 07</div><div class="img-title">Top View — Floor Plan</div></div></div></figure></div>
+    <div class="reveal g-span-6"><figure onclick="openLightbox(7)"><div class="img-wrap" style="aspect-ratio:4/3"><img src="Project%20Side%203d.png" alt="Side — 3D View" loading="lazy"><div class="img-overlay"></div><div class="img-caption"><div class="img-num">No. 08</div><div class="img-title">Side — 3D View</div></div></div></figure></div>
+    <div class="reveal g-span-6" style="transition-delay:.08s"><figure onclick="openLightbox(8)"><div class="img-wrap" style="aspect-ratio:4/3"><img src="Deck%20out%20door.png" alt="Outdoor Timber Deck" loading="lazy"><div class="img-overlay"></div><div class="img-caption"><div class="img-num">No. 09</div><div class="img-title">Outdoor Timber Deck</div></div></div></figure></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox hidden" id="lightbox">
+  <button class="lb-nav lb-prev" onclick="event.stopPropagation();lbPrev()">‹</button>
+  <button class="lb-nav lb-next" onclick="event.stopPropagation();lbNext()">›</button>
+  <button class="lb-close" onclick="event.stopPropagation();closeLightbox()">×</button>
+  <figure class="lb-figure" onclick="event.stopPropagation()">
+    <img id="lbImg" src="" alt="">
+    <figcaption style="text-align:center;max-width:600px"><div class="lb-title" id="lbTitle"></div><div class="lb-desc" id="lbDesc"></div><div class="lb-counter" id="lbCounter"></div></figcaption>
+  </figure>
+</div>
+
+<!-- FURNITURE -->
+<section class="furniture" id="furniture">
+  <div class="section-heading reveal"><div class="eyebrow" style="margin-bottom:16px">Items Needed</div><h2>Furnishings &amp; <em>furniture</em></h2><p class="kicker">Each piece has been thoughtfully designed to complement the forest setting. Your support can be directed to a single chair, a shelf, or the deck as a whole.</p></div>
+  <div class="furniture-grid">
+    <div class="reveal furn-card"><div class="furn-header"><div class="furn-tag">Joinery</div><div class="furn-num">№ 01</div></div><div class="furn-img"><img src="wall-mounted-book-rack.png" alt="Wall Mounted Book Rack" loading="lazy"></div><h3>Wall Mounted Book Rack</h3><p>Custom wall-mounted shelving for Dhamma books, Buddhist literature, and reference materials. Multiple tiers, optimized for the library wall.</p><a href="pdfs/Wall%20Mounted%20Book%20Rack.pdf" target="_blank" class="furn-pdf"><svg width="14" height="14" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11l5 5v17a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M20 5v5h5"/></svg> Design PDF</a></div>
+    <div class="reveal furn-card" style="transition-delay:.07s"><div class="furn-header"><div class="furn-tag">Joinery</div><div class="furn-num">№ 02</div></div><div class="furn-img"><img src="wall-mounted-table.png" alt="Wall Mounted Table" loading="lazy"></div><h3>Wall Mounted Table</h3><p>Counter-style wall-mounted reading table — space-efficient, perfect for focused study sessions by the window.</p><a href="pdfs/Wall%20Mounted%20Table.pdf" target="_blank" class="furn-pdf"><svg width="14" height="14" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11l5 5v17a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M20 5v5h5"/></svg> Design PDF</a></div>
+    <div class="reveal furn-card" style="transition-delay:.14s"><div class="furn-header"><div class="furn-tag">Seating</div><div class="furn-num">№ 03</div></div><div class="furn-img"><img src="bar-stool.png" alt="Bar Stool" loading="lazy"></div><h3>Bar Stool</h3><p>Ergonomic bar-height seating designed to pair with the wall-mounted reading table. Comfortable for extended reading.</p><a href="pdfs/Bar%20Stool.pdf" target="_blank" class="furn-pdf"><svg width="14" height="14" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11l5 5v17a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M20 5v5h5"/></svg> Design PDF</a></div>
+    <div class="reveal furn-card" style="transition-delay:.21s"><div class="furn-header"><div class="furn-tag">Seating</div><div class="furn-num">№ 04</div></div><div class="furn-img"><img src="dinning-chairs.png" alt="Dining Chairs" loading="lazy"></div><h3>Dining Chairs</h3><p>Sturdy timber dining chairs for the indoor cafe area. Designed for comfort during meals, tea, and community gathering.</p><a href="pdfs/Dinning%20Chairs.pdf" target="_blank" class="furn-pdf"><svg width="14" height="14" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11l5 5v17a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M20 5v5h5"/></svg> Design PDF</a></div>
+    <div class="reveal furn-card"><div class="furn-header"><div class="furn-tag">Outdoor</div><div class="furn-num">№ 05</div></div><div class="furn-img"><img src="varenda-chair-and-table.png" alt="Veranda Chair &amp; Table" loading="lazy"></div><h3>Veranda Chair &amp; Table</h3><p>Outdoor furniture with steel frames and timber tops — built to weather the elements while offering an open-air reading experience.</p><a href="pdfs/Varenda%20Chair%20and%20Table.pdf" target="_blank" class="furn-pdf"><svg width="14" height="14" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11l5 5v17a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M20 5v5h5"/></svg> Design PDF</a></div>
+    <div class="reveal furn-card" style="transition-delay:.07s"><div class="furn-header"><div class="furn-tag">Storage</div><div class="furn-num">№ 06</div></div><div class="furn-img"><img src="pantry-cupboard.png" alt="Pantry Cupboard" loading="lazy"></div><h3>Pantry Cupboard</h3><p>A compact pantry cabinet for storing tea, refreshments, and utensils. Positioned conveniently within the cafe for easy access.</p><a href="pdfs/Pantry%20Cupboard.pdf" target="_blank" class="furn-pdf"><svg width="14" height="14" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11l5 5v17a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M20 5v5h5"/></svg> Design PDF</a></div>
+    <div class="reveal furn-card" style="transition-delay:.14s"><div class="furn-header"><div class="furn-tag">Structure</div><div class="furn-num">№ 07</div></div><div class="furn-img"><img src="outdoor-deck.png" alt="Outdoor Deck" loading="lazy"></div><h3>Outdoor Deck</h3><p>A raised timber deck platform extending from the main building into the forest — a tranquil outdoor space for relaxation and gathering.</p><a href="pdfs/Outdoor%20Deck.pdf" target="_blank" class="furn-pdf"><svg width="14" height="14" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11l5 5v17a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M20 5v5h5"/></svg> Design PDF</a></div>
+    <div class="reveal furn-card" style="transition-delay:.21s"><div class="furn-header"><div class="furn-tag">Joinery</div><div class="furn-num">№ 08</div></div><div class="furn-img"><img src="book-shelves.png" alt="Book Shelves" loading="lazy"></div><h3>Book Shelves</h3><p>Freestanding timber bookshelves with multiple compartments — designed to organize Dhamma books and reference materials throughout the library.</p><a href="pdfs/Book%20Shelves.pdf" target="_blank" class="furn-pdf"><svg width="14" height="14" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11l5 5v17a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M20 5v5h5"/></svg> Design PDF</a></div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="video-section" id="video">
+  <div class="video-inner">
+    <div class="video-heading"><div class="eyebrow" style="color:var(--gold);margin-bottom:16px">Watch</div><h2>The vision, in <em>motion</em>.</h2><p class="kicker">A short video walkthrough of the library cafe — how it sits in the forest, and how it will be used.</p></div>
+    <div class="reveal video-frame"><iframe src="https://www.youtube.com/embed/XqUke1j7Pio" title="Library Cafe project video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+  </div>
+</section>
+
+<!-- EXPENDITURE -->
+<section class="expenditure-section" id="expenditure">
+  <div class="section-heading reveal"><div class="eyebrow" style="margin-bottom:16px">Transparency</div><h2>Project <em>budget</em></h2><p class="kicker">Every rupee is accounted for. This data updates live from our records — what we've spent, what's been donated, and what's still needed.</p></div>
+  <div id="expContent"><div class="exp-loading reveal">Loading project finances…</div></div>
+</section>
+
+<!-- DONATE -->
+<section class="donate" id="donate">
+  <div class="reveal donate-card">
+    <div class="donate-watermark"><img src="lotus.png" alt=""></div>
+    <div class="donate-content">
+      <div style="margin-bottom:16px"><img src="lotus.png" alt="" style="width:86px;height:56px;opacity:.95"></div>
+      <div class="eyebrow" style="margin-bottom:18px">Support this place</div>
+      <h2>An act of <em>generosity</em>,<br>an act of <em>practice</em>.</h2>
+      <p class="donate-desc">Whether you fund a single chair or the entire deck, every contribution — large or small — helps build a lasting space for learning, peace, and community at Rideekanda.</p>
+      <div class="donate-cta">
+        <a href="../../donate/" target="_blank" rel="noopener noreferrer" class="btn-primary">Make a donation <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#furniture" class="btn-ghost">See furniture needs</a>
+      </div>
+      <div class="donate-stats">
+        <div class="stat"><div class="stat-num">8</div><div class="stat-label">Furniture pieces</div><div class="stat-caption">designed and ready to fund</div></div>
+        <div class="stat"><div class="stat-num">1</div><div class="stat-label">Forest setting</div><div class="stat-caption">indoor, veranda, and timber deck</div></div>
+        <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Beings helped</div><div class="stat-caption">by your kind support</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <img src="lotus.png" alt="">
+  <div class="footer-name">Rideekanda Forest Monastery</div>
+  <div class="footer-blessing">May all beings be free from suffering.</div>
+  <div class="footer-copy">Library Cafe Design Plan · © 2026 · Built with mindfulness and care.</div>
+</footer>
+
+<script>
+var nav=document.getElementById('mainNav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>24)},{passive:true});
+var menuBtn=document.getElementById('menuBtn'),mobileMenu=document.getElementById('mobileMenu'),menuIcon=document.getElementById('menuIcon'),menuOpen=false;
+menuBtn.addEventListener('click',function(){menuOpen=!menuOpen;mobileMenu.style.display=menuOpen?'block':'none';menuIcon.setAttribute('d',menuOpen?'M3 3l12 8M3 11l12-8':'M2 2h14M2 7h14M2 12h14')});
+function closeMenu(){menuOpen=false;mobileMenu.style.display='none';menuIcon.setAttribute('d','M2 2h14M2 7h14M2 12h14')}
+var revealEls=document.querySelectorAll('.reveal');
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px',threshold:0.08});revealEls.forEach(function(el){var r=el.getBoundingClientRect();if(r.top<window.innerHeight*0.92)el.classList.add('in');else io.observe(el)});setTimeout(function(){revealEls.forEach(function(el){el.classList.add('in')})},4000)}else{revealEls.forEach(function(el){el.classList.add('in')})}
+var galleryItems=[{src:"Project%20Angle.png",title:"Full Design — Perspective",desc:"Complete layout with indoor space, veranda, and outdoor deck."},{src:"Project%20Left%203d.png",title:"Left Side — 3D View",desc:"Interior with bar seating, book racks, and pantry."},{src:"Project%20Front.png",title:"Front Elevation",desc:"Building facade with veranda chairs and deck."},{src:"Project%20Inside%20Right%20Side%20Angle.png",title:"Interior — Right Angle",desc:"Reading area with table, chairs, and book shelves."},{src:"Project%20Inside%20Front.png",title:"Interior — Front View",desc:"Dining table with chairs, pantry cupboard, and shelving."},{src:"Project%20inside%20left.png",title:"Interior — Left View",desc:"Window seating, reading table, and sofa area."},{src:"Project%20Top.png",title:"Top View — Floor Plan",desc:"Full layout with furniture placement from above."},{src:"Project%20Side%203d.png",title:"Side — 3D View",desc:"Side profile showing veranda table and deck."},{src:"Deck%20out%20door.png",title:"Outdoor Timber Deck",desc:"Raised deck platform with railings extending into the forest."}];
+var lbIndex=null,lightbox=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg'),lbTitle=document.getElementById('lbTitle'),lbDesc=document.getElementById('lbDesc'),lbCounter=document.getElementById('lbCounter');
+function showLb(){var it=galleryItems[lbIndex];lbImg.src=it.src;lbImg.alt=it.title;lbTitle.textContent=it.title;lbDesc.textContent=it.desc;lbCounter.textContent=(lbIndex+1)+' / '+galleryItems.length}
+function openLightbox(i){lbIndex=i;showLb();lightbox.classList.remove('hidden');document.body.style.overflow='hidden'}
+function closeLightbox(){lightbox.classList.add('hidden');document.body.style.overflow=''}
+function lbPrev(){lbIndex=(lbIndex-1+galleryItems.length)%galleryItems.length;showLb()}
+function lbNext(){lbIndex=(lbIndex+1)%galleryItems.length;showLb()}
+lightbox.addEventListener('click',function(e){if(e.target===lightbox)closeLightbox()});
+document.addEventListener('keydown',function(e){if(lbIndex==null||lightbox.classList.contains('hidden'))return;if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft')lbPrev();if(e.key==='ArrowRight')lbNext()});
+var touchStartX=null;lightbox.addEventListener('touchstart',function(e){touchStartX=e.changedTouches[0].screenX},{passive:true});lightbox.addEventListener('touchend',function(e){if(touchStartX===null)return;var dx=e.changedTouches[0].screenX-touchStartX;touchStartX=null;if(Math.abs(dx)>50){if(dx<0)lbNext();else lbPrev()}},{passive:true});
+
+/* GOOGLE SHEETS LIVE DATA */
+(function(){
+var SHEET_CSV='https://docs.google.com/spreadsheets/d/1A_S8aJV3_UKn9jD0atazr1elKibUfUmMQ3aJI1r6uRE/gviz/tq?tqx=out:csv';
+var container=document.getElementById('expContent');
+
+function parseCSV(text){
+  var rows=[],row=[],field='',inQuote=false;
+  for(var i=0;i<text.length;i++){
+    var c=text[i];
+    if(inQuote){if(c==='"'&&text[i+1]==='"'){field+='"';i++}else if(c==='"'){inQuote=false}else{field+=c}}
+    else{if(c==='"'){inQuote=true}else if(c===','){row.push(field.trim());field=''}else if(c==='\n'||c==='\r'){if(field||row.length){row.push(field.trim());rows.push(row);row=[];field=''}if(c==='\r'&&text[i+1]==='\n')i++}else{field+=c}}
+  }
+  if(field||row.length){row.push(field.trim());rows.push(row)}
+  return rows;
+}
+
+function parseNum(s){if(!s)return 0;return parseFloat(s.replace(/,/g,''))||0}
+function fmtNum(n){return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+
+function render(rows){
+  if(rows.length<3){container.innerHTML='<div class="exp-loading">No data available.</div>';return}
+  var headers=rows[0];
+  var items=[],donors=[],totalSpent=0,totalDonated=0,estimated=0,balance=0;
+  for(var i=1;i<rows.length;i++){
+    var r=rows[i];
+    var desc=r[0]||'';
+    var totalPrice=parseNum(r[3]);
+    var paidInfo=r[4]||'';
+    var donationAmt=parseNum(r[5]);
+    var donorName=r[6]||'';
+    var collectedDonation=parseNum(r[7]);
+    var balanceVal=parseNum(r[8]);
+    var estCost=parseNum(r[9]);
+    if(estCost>0)estimated=estCost;
+    if(balanceVal>0)balance=balanceVal;
+    if(collectedDonation>0)totalDonated=collectedDonation;
+    if(desc&&totalPrice>0){items.push({desc:desc,qty:r[1]||'',unit:r[2]||'',total:totalPrice,paid:paidInfo})}
+    else if(!desc&&totalPrice>0){totalSpent=totalPrice}
+    if(donationAmt>0&&donorName){donors.push({name:donorName,amount:donationAmt})}
+  }
+  if(totalSpent===0){items.forEach(function(it){totalSpent+=it.total})}
+  if(estimated===0)estimated=1500000;
+  if(balance===0)balance=estimated-totalDonated;
+  var pct=estimated>0?Math.min((totalDonated/estimated)*100,100):0;
+
+  var html='';
+  /* Summary cards */
+  html+='<div class="exp-summary reveal">';
+  html+='<div class="exp-stat"><div class="exp-stat-label">Estimated Cost</div><div class="exp-stat-value">Rs '+fmtNum(estimated)+'</div></div>';
+  html+='<div class="exp-stat"><div class="exp-stat-label">Donations Received</div><div class="exp-stat-value accent">Rs '+fmtNum(totalDonated)+'</div></div>';
+  html+='<div class="exp-stat"><div class="exp-stat-label">Still Needed</div><div class="exp-stat-value gold">Rs '+fmtNum(balance)+'</div></div>';
+  html+='</div>';
+
+  /* Progress bar */
+  html+='<div class="exp-progress-wrap reveal">';
+  html+='<div class="exp-progress-bar"><div class="exp-progress-fill" style="width:'+pct.toFixed(1)+'%"></div></div>';
+  html+='<div class="exp-progress-labels"><span>'+pct.toFixed(1)+'% funded</span><span>Goal: Rs '+fmtNum(estimated)+'</span></div>';
+  html+='</div>';
+
+  /* Donors */
+  if(donors.length>0){
+    html+='<div class="exp-donors reveal"><div class="eyebrow" style="margin-bottom:4px">With Gratitude</div><div class="exp-donor-grid">';
+    donors.forEach(function(d){
+      html+='<div class="exp-donor-card"><div class="exp-donor-icon"><svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 28s-9-5.5-9-13a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 7.5-9 13-9 13Z"/></svg></div><div><div class="exp-donor-name">'+d.name+'</div><div class="exp-donor-amount">Rs '+fmtNum(d.amount)+'</div></div></div>';
+    });
+    html+='</div></div>';
+  }
+
+  /* Expenditure table */
+  html+='<div class="exp-table-card reveal" style="margin-top:32px">';
+  html+='<table class="exp-table"><thead><tr><th>Description</th><th>Qty</th><th>Unit Price</th><th>Total (Rs)</th><th>Status</th></tr></thead><tbody>';
+  items.forEach(function(it){
+    var status=it.paid?'<span style="color:var(--accent);font-weight:600">'+it.paid+'</span>':'<span style="color:var(--muted)">pending</span>';
+    html+='<tr><td>'+it.desc+'</td><td style="text-align:center">'+(it.qty||'—')+'</td><td style="text-align:right">'+(it.unit?fmtNum(parseNum(it.unit)):'—')+'</td><td style="text-align:right">'+fmtNum(it.total)+'</td><td>'+status+'</td></tr>';
+  });
+  html+='<tr class="total-row"><td colspan="3">Total Expenditure to date</td><td style="text-align:right">Rs '+fmtNum(totalSpent)+'</td><td></td></tr>';
+  html+='</tbody></table></div>';
+  html+='<div class="exp-updated">Data synced live from project records · Last loaded: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})+'</div>';
+
+  container.innerHTML=html;
+  /* Re-observe new reveal elements */
+  container.querySelectorAll('.reveal').forEach(function(el){
+    if('IntersectionObserver' in window&&typeof io!=='undefined'){io.observe(el)}else{el.classList.add('in')}
+  });
+}
+
+fetch(SHEET_CSV).then(function(r){return r.text()}).then(function(csv){render(parseCSV(csv))}).catch(function(){container.innerHTML='<div class="exp-loading">Unable to load data. Please refresh the page.</div>'});
+})();
+</script>
+</body>
+</html>
