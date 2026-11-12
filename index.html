@@ -35,7 +35,7 @@
     } catch (e) { r.setAttribute('data-theme', 'dark'); }
   })();
 </script>
-<link rel="stylesheet" href="rk/rk.css?v=16" />
+<link rel="stylesheet" href="rk/rk.css?v=18" />
 <script src="/analytics.js?v=1"></script>
 </head>
 <body>
@@ -70,13 +70,13 @@
     <a href="retreat-center/">Retreats</a>
     <a href="news-and-events/">News</a>
     <a href="donate/">Dāna</a>
-    <a href="si/" lang="si" hreflang="si" style="letter-spacing:.02em;text-transform:none;font-size:.95rem">සිංහල</a>
   </nav>
   <div class="hd-tools">
     <button class="ic-btn" id="soundBtn" type="button" aria-pressed="false" aria-label="Forest ambience: off" title="Forest ambience">
       <span class="bars"><i></i><i></i><i></i><i></i></span>
     </button>
     <button class="ic-btn" id="themeBtn" type="button" aria-label="Toggle light / dark theme"></button>
+    <a class="ic-btn lang-btn" href="si/" lang="si" hreflang="si" aria-label="සිංහල — Sinhala version" title="සිංහල">සිං</a>
     <a class="pill hd-book" href="book-your-stay/" data-magnet><span>Book a stay</span></a>
     <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">
       <span class="menu-btn-t"><b>Menu</b><b>Close</b></span><span class="menu-btn-i"><i></i><i></i></span>
@@ -87,7 +87,7 @@
 <!-- ═════════ Full-screen menu ═════════ -->
 <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Site navigation" hidden>
   <div class="menu-bg"></div>
-  <div class="menu-in">
+  <div class="menu-in" data-lenis-prevent>
     <div class="menu-main">
       <p class="label">Explore the monastery</p>
       <ul class="menu-big">
@@ -528,7 +528,7 @@
 <script src="rk/vendor/SplitText.min.js"></script>
 <script src="rk/vendor/lenis.min.js"></script>
 <script src="rk/sky.js?v=7"></script>
-<script src="rk/rk.js?v=11"></script>
+<script src="rk/rk.js?v=12"></script>
 <script src="rk/dash.js?v=2" data-root="" data-after="0.6" defer></script>
 <script>
   /* Installable app / kiosk: keep the service worker registered from the home

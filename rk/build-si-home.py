@@ -108,11 +108,11 @@ out = '''<!DOCTYPE html>
     <a href="../monastery/si/">%(s_mon)s</a>
     <a href="../retreat-center/si/">%(s_ret)s</a>
     <a href="../donate/">%(s_don)s</a>
-    <a href="../" lang="en" style="font-family:var(--f-text);letter-spacing:.12em;text-transform:uppercase;font-size:.8rem">English</a>
   </nav>
   <div class="hd-tools">
     <button class="ic-btn" id="soundBtn" type="button" aria-pressed="false" aria-label="Forest ambience: off" title="Forest ambience"><span class="bars"><i></i><i></i><i></i><i></i></span></button>
     <button class="ic-btn" id="themeBtn" type="button" aria-label="Toggle light / dark theme"></button>
+    <a class="ic-btn lang-btn" href="../" lang="en" hreflang="en" aria-label="English version" title="English">EN</a>
     <a class="pill hd-book" href="../book-your-stay/" data-magnet><span>%(s_book)s</span></a>
     <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">
       <span class="menu-btn-t"><b>මෙනුව</b><b>වසන්න</b></span><span class="menu-btn-i"><i></i><i></i></span>
@@ -122,7 +122,7 @@ out = '''<!DOCTYPE html>
 
 <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Site navigation" hidden>
   <div class="menu-bg"></div>
-  <div class="menu-in">
+  <div class="menu-in" data-lenis-prevent>
     <div class="menu-main">
       <p class="label">රිදීකන්ද ආරණ්‍ය සේනාසනය</p>
       <ul class="menu-big">

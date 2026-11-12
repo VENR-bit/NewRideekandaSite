@@ -115,6 +115,9 @@ a:hover .arr::after, button:hover .arr::after { transform: none; }
 }
 .ic-btn:hover { background: var(--hd-hover, rgba(255,255,255,.14)); }
 .ic-btn svg { width: 18px; height: 18px; }
+.lang-btn { font-family: var(--f-si); font-size: .82rem; font-weight: 500; line-height: 1; text-decoration: none; padding-top: .1em; }
+.lang-btn[lang="en"] { font-family: var(--f-text); font-size: .7rem; letter-spacing: .1em; padding-top: 0; }
+.lang-btn:hover { background: var(--saffron); border-color: var(--saffron); color: #1a1208; }
 .ic-btn.lg { width: 56px; height: 56px; border-color: var(--line); }
 .ic-btn.lg:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
@@ -218,7 +221,7 @@ a:hover .arr::after, button:hover .arr::after { transform: none; }
 .menu { position: fixed; inset: 0; z-index: 110; color: #ebe6d6; overflow: hidden; }
 .menu-bg { position: absolute; inset: 0; background: #0a100c; clip-path: inset(0 0 100% 0); }
 .menu-in {
-  position: relative; height: 100%; overflow-y: auto; overscroll-behavior: contain;
+  position: relative; height: 100%; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; touch-action: pan-y;
   display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 6rem); align-items: end;
   padding: 120px var(--gut) clamp(28px, 5vh, 56px);
 }
@@ -537,6 +540,8 @@ a:hover .arr::after, button:hover .arr::after { transform: none; }
   .hd-book { display: none; }
   .hd-name small { display: none; }
   .hero-top span:last-child { display: none; }
+  html:not([lang="si"]) .hero-top { display: none; }
+  html:not([lang="si"]) .hero { grid-template-rows: 1fr auto; }
   .ht-1 { font-size: 18.6vw; }
   .hero::before { background: radial-gradient(90% 34% at 50% 44%, rgba(6, 10, 8, .36), transparent 78%), linear-gradient(rgba(6, 10, 8, .4), transparent 24%); }
   .ht-2 { font-size: 8.4vw; }
@@ -591,6 +596,8 @@ a:hover .arr::after, button:hover .arr::after { transform: none; }
 }
 @media (max-width: 480px) {
   .ic-btn { width: 38px; height: 38px; }
+  #soundBtn { display: none; }
+  .hd-tools { gap: .4rem; }
   .menu-btn-t { display: none; }
   .menu-btn { padding: 0; }
   .now { font-size: .72rem; padding: .6rem .9rem; }

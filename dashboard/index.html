@@ -581,6 +581,153 @@
       font-variant-numeric: lining-nums tabular-nums; }
     .m-foot { padding-bottom: 52px; line-height: 1.8; }
     @media (prefers-reduced-motion: reduce) { .m-tile, .m-tile svg, .libcard, .m-stat { transition: none; } }
+
+    /* ═════════ Kiosk redesign — the hill, right now ═════════
+       The first screen is a window onto the living sky (rk/sky.js, the same
+       scene as the home page, lit by the real hour at the monastery). The
+       clock, the weather and the day's arc float on it; the doors to the
+       site follow on paper. Motion lives in classes on <html> set by the
+       script at the end of the page, because the stage below is re-rendered
+       from scratch on every change:
+         d-intro     first seconds after load — things rise into place
+         d-scrolled  the page has moved — the header turns solid
+         d-idle      nobody has touched the screen for a while — attract mode
+         d-sheet-in  a sheet has just opened — it slides up once            */
+    .d-sky { position: fixed; inset: 0; z-index: 0; background: #0a100c; }
+    .d-sky canvas { width: 100%; height: 100%; display: block; }
+    .d-sky .sky-eagle { position: absolute; left: 0; top: 0; width: clamp(56px, 6vw, 110px); height: auto; fill: #080b09; opacity: 0; pointer-events: none; will-change: transform, opacity; }
+    .d-nosky .d-sky { background: linear-gradient(#0c1420, #2a3350 42%, #b0705a 64%, #1c2a22 65%, #060a08); }
+    .d-nosky .d-sky canvas { display: none; }
+    #fit { position: relative; z-index: 1; overflow-x: clip; }
+    html, body { overflow-x: clip; }
+
+    /* header: clear over the sky, solid once the page moves */
+    .m-head { position: fixed; left: 0; right: 0; top: 0; background: transparent; border-bottom-color: transparent;
+              -webkit-backdrop-filter: none; backdrop-filter: none; color: #f4efe2;
+              --ink: #f4efe2; --muted: rgba(244,239,226,.72); --line-soft: rgba(244,239,226,.34); --accent-ink: #e39a48;
+              transition: background-color .4s ease, border-color .4s ease, color .4s ease; }
+    .m-head .lotus-paper { display: none !important; } .m-head .lotus-night { display: block !important; }
+    .d-scrolled .m-head { background: rgba(10,16,12,.78); border-bottom-color: rgba(244,239,226,.14);
+                          -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3); }
+    .m-pill svg { transition: transform .5s var(--ease); }
+
+    /* the hero */
+    .d-hero { position: relative; min-height: clamp(560px, 66vh, 1180px); display: grid; grid-template-rows: 1fr auto; gap: clamp(18px, 3vh, 40px);
+              padding: calc(92px + env(safe-area-inset-top, 0px)) clamp(16px, 4vw, 48px) clamp(34px, 6vh, 90px); color: #f6f1e4; max-width: 1180px; margin: 0 auto; }
+    .d-hero::before { content: ""; position: absolute; inset: 0 -50vw; z-index: -1; pointer-events: none;
+                      background: linear-gradient(rgba(6,10,8,.5), rgba(6,10,8,.1) 30%, rgba(6,10,8,.16) 60%, rgba(6,10,8,.46)); }
+    .d-hero button { color: inherit; text-align: left; }
+    .d-kick { display: flex; align-items: center; gap: .8em; font-size: clamp(10.5px, 1.1vw, 13px); letter-spacing: .22em; text-transform: uppercase; font-weight: 500; color: #f3d9ad; }
+    .d-kick i { font-style: normal; letter-spacing: 0; text-transform: none; font-size: 1.1em; opacity: .8; }
+    .d-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; align-self: center;
+             transform: translate3d(0, calc(var(--sy, 0) * -0.18px), 0); opacity: calc(1 - var(--sp, 0) * 1.5); }
+    .d-clock { display: grid; gap: clamp(4px, 1vh, 12px); }
+    .d-clock b { font-family: var(--f-display); font-weight: 300; font-size: clamp(5.6rem, 25vw, 19rem); line-height: .82; letter-spacing: -.045em;
+                 font-variant-numeric: lining-nums tabular-nums; text-shadow: 0 4px 60px rgba(5,8,6,.4); }
+    .d-clock b i { font-style: normal; display: inline-block; margin: 0 -.03em; transform: translateY(-.07em); animation: dBlink 2s steps(1) infinite; }
+    @keyframes dBlink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: .25; } }
+    .d-date { font-family: var(--f-display); font-style: italic; font-size: clamp(1.2rem, 2.6vw, 2.2rem); line-height: 1.1; opacity: .95; }
+    .d-wx { display: grid; justify-items: end; gap: 6px; text-align: right !important; padding: clamp(14px, 1.6vw, 22px) clamp(16px, 2vw, 26px); border-radius: var(--r);
+            background: rgba(8,13,10,.3); border: 1px solid rgba(246,241,228,.2); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+            transition: background-color .4s ease, transform .5s var(--ease); }
+    .d-wx-main { display: flex; align-items: center; gap: 10px; }
+    .d-wx-main .ico { width: clamp(30px, 3.4vw, 46px); height: clamp(30px, 3.4vw, 46px); color: #e39a48; animation: dFloat 6s ease-in-out infinite; }
+    .d-wx-main b { font-family: var(--f-display); font-weight: 400; font-size: clamp(2.4rem, 5vw, 4.4rem); line-height: .9; font-variant-numeric: lining-nums; }
+    .d-wx .d-date { font-size: clamp(.95rem, 1.5vw, 1.3rem); }
+    @keyframes dFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+    /* the day as an arc, with the sun where the hour is */
+    .d-now { position: relative; display: block; width: 100%; padding: clamp(14px, 2vw, 26px) clamp(16px, 2.4vw, 32px) clamp(16px, 2vw, 26px); border-radius: var(--r);
+             background: rgba(8,13,10,.34); border: 1px solid rgba(246,241,228,.2); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+             transform: translate3d(0, calc(var(--sy, 0) * -0.08px), 0); transition: background-color .4s ease; }
+    .d-arc { display: block; width: 100%; height: auto; max-height: 30vh; overflow: visible; }
+    .d-arc path { fill: none; stroke-linecap: round; }
+    .d-arc-bg { stroke: rgba(246,241,228,.22); stroke-width: 2; stroke-dasharray: .004 .012; }
+    .d-arc-on { stroke: #e39a48; stroke-width: 3; }
+    .d-arc-ticks circle { fill: #0c120e; stroke: rgba(246,241,228,.5); stroke-width: 1.5; }
+    .d-arc-ticks circle.on { fill: #e39a48; stroke: #e39a48; }
+    .d-sun .disc { fill: #ffe9bf; filter: drop-shadow(0 0 14px rgba(255,205,130,.95)); }
+    .d-sun .halo { fill: none; stroke: rgba(255,214,150,.6); stroke-width: 1.5; transform-origin: center; transform-box: fill-box; animation: dHalo 3.6s ease-out infinite; }
+    .d-sun .h2 { animation-delay: -1.8s; }
+    .is-night .d-sun .disc { fill: #dfe6f5; filter: drop-shadow(0 0 12px rgba(200,215,255,.8)); }
+    .is-night .d-sun .halo { stroke: rgba(210,222,255,.45); }
+    @keyframes dHalo { 0% { transform: scale(.45); opacity: .9; } 100% { transform: scale(1.5); opacity: 0; } }
+    .d-arc text { fill: rgba(246,241,228,.7); font-family: var(--f-text); font-size: 20px; letter-spacing: .08em; }
+    .d-now-text { position: absolute; left: 0; right: 0; bottom: clamp(18px, 3.4vw, 46px); display: grid; justify-items: center; gap: clamp(4px, .8vh, 10px); text-align: center; padding: 0 16%; }
+    .d-now-text b { font-family: var(--f-display); font-weight: 400; font-style: italic; font-size: clamp(1.5rem, 4.2vw, 3.6rem); line-height: 1.04; letter-spacing: -.015em; text-wrap: balance; }
+    .d-now-text b i { display: inline-block; vertical-align: middle; margin-right: .7em; font-family: var(--f-text); font-style: normal; font-weight: 600; font-size: clamp(9px, 1vw, 12px);
+                      letter-spacing: .18em; text-transform: uppercase; padding: .4em .9em; border-radius: 99px; background: #e39a48; color: #1a1208; }
+    .d-next { font-size: clamp(.8rem, 1.3vw, 1.05rem); color: rgba(246,241,228,.78); letter-spacing: .04em; }
+    @media (hover: hover) { .d-wx:hover, .d-now:hover { background: rgba(8,13,10,.5); } .d-wx:hover { transform: translateY(-3px); } }
+    .d-hero button:active { transform: scale(.985); }
+
+    /* paper begins: a mist edge under the sky */
+    .m-wrap { position: relative; background: var(--bg); padding-top: 8px; max-width: none; }
+    .m-wrap::before { content: ""; position: absolute; left: 0; right: 0; bottom: calc(100% - 1px); height: 12vh; pointer-events: none;
+                      background: linear-gradient(to top, var(--bg), color-mix(in srgb, var(--bg) 55%, transparent) 40%, transparent); }
+    .m-wrap > * { max-width: 640px; margin-left: auto; margin-right: auto; }
+    @media (min-width: 700px) { .m-wrap > * { max-width: 1072px; } }
+    .m-hero { margin-top: 6px; aspect-ratio: 21 / 9; max-height: 40vh; }
+    .m-status, .m-now { display: none; }
+
+    /* the doors */
+    .m-tile { position: relative; overflow: hidden; align-items: flex-start; justify-content: flex-end; text-align: left; padding: 18px 16px 16px; min-height: 150px;
+              transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transform-style: preserve-3d; }
+    .m-tile > div { width: 100%; }
+    .m-tile svg { position: absolute; right: 14px; top: 14px; width: 42px; height: 42px; }
+    .m-tile .d-n { position: absolute; left: 16px; top: 14px; font-family: var(--f-display); font-style: italic; font-size: 17px; color: var(--accent-ink); }
+    .m-tile::after { content: ""; position: absolute; left: 16px; right: 16px; bottom: 0; height: 2px; background: #e39a48; transform: scaleX(0); transform-origin: 0 50%; transition: transform .6s var(--ease); }
+    .m-tile:active::after { transform: scaleX(1); }
+    @media (hover: hover) { .m-tile:hover::after { transform: scaleX(1); } .m-tile:hover .d-n { color: #e39a48; } }
+    .m-tile:active { transform: scale(.97); }
+    @media (min-width: 700px) { .m-tile { min-height: 190px; padding: 22px 20px 20px; } .m-tile svg { width: 52px; height: 52px; right: 18px; top: 18px; } .m-tile b { font-size: 24px; } }
+
+    /* first paint: things rise into place, icons draw themselves */
+    @keyframes dRise { from { opacity: 0; transform: translate3d(0, 34px, 0); } to { opacity: 1; transform: none; } }
+    @keyframes dDraw { from { stroke-dashoffset: 120; } to { stroke-dashoffset: 0; } }
+    @keyframes dArc { from { stroke-dasharray: 0 1; } }
+    .d-intro .d-clock, .d-intro .d-wx, .d-intro .d-now, .d-intro .m-hero, .d-intro .m-tile, .d-intro .libcard, .d-intro .m-takeus, .d-intro .m-sect-row {
+      animation: dRise 1.1s var(--ease) both; animation-delay: calc(var(--i, 0) * 70ms + var(--d, 0s)); }
+    .d-intro .d-clock { --d: .15s; } .d-intro .d-wx { --d: .35s; } .d-intro .d-now { --d: .55s; } .d-intro .m-hero { --d: .75s; }
+    .d-intro .m-tile { --d: .8s; } .d-intro .m-sect-row, .d-intro .libcard, .d-intro .m-takeus { --d: 1.5s; }
+    .d-intro .m-tile svg * { stroke-dasharray: 120; animation: dDraw 1.6s ease-out both; animation-delay: calc(var(--i, 0) * 70ms + 1.1s); }
+    .d-intro .d-arc-on { animation: dArc 2.2s var(--ease) .9s both; }
+
+    /* nobody at the screen: the doors breathe in turn, and a quiet invitation appears */
+    @keyframes dWave { 0%, 12%, 100% { border-color: var(--line); box-shadow: none; } 5% { border-color: #e39a48; box-shadow: 0 14px 40px -18px rgba(227,154,72,.7); } }
+    .d-idle .m-tile { animation: dWave 9s ease-in-out infinite; animation-delay: calc(var(--i, 0) * .45s); }
+    .d-hint { position: fixed; z-index: 40; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 30px); opacity: 0; pointer-events: none;
+              display: flex; align-items: center; gap: 12px; padding: 13px 22px 13px 16px; border-radius: 999px; white-space: nowrap;
+              background: rgba(10,16,12,.86); color: #ebe6d6; border: 1px solid rgba(235,230,214,.2); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+              font: 500 12px/1 var(--f-text); letter-spacing: .16em; text-transform: uppercase; transition: opacity .8s ease, transform .9s var(--ease); }
+    .d-hint i { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid #e39a48; position: relative; flex: none; }
+    .d-hint i::after { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: #e39a48; animation: dTap 1.8s ease-in-out infinite; }
+    @keyframes dTap { 0%, 100% { transform: scale(.5); opacity: .5; } 50% { transform: scale(1); opacity: 1; } }
+    .d-hint span { font-family: 'Noto Serif Sinhala', serif; letter-spacing: 0; text-transform: none; font-size: 13px; opacity: .8; }
+    .d-idle:not(.d-has-sheet) .d-hint { opacity: 1; transform: translate(-50%, 0); }
+
+    /* a touch leaves a ring */
+    .d-ripples { position: fixed; inset: 0; z-index: 90; pointer-events: none; overflow: hidden; }
+    .d-ripples i { position: absolute; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; border: 1.5px solid #e39a48; animation: dRing .7s ease-out forwards; }
+    @keyframes dRing { from { transform: scale(.4); opacity: .9; } to { transform: scale(5.5); opacity: 0; } }
+
+    /* sheets slide up, once */
+    @keyframes dSheet { from { transform: translate3d(0, 6%, 0); opacity: 0; } to { transform: none; opacity: 1; } }
+    .d-sheet-in .m-sheet { animation: dSheet .55s var(--ease) both; }
+    .d-sheet-in .m-sheet-in > * { animation: dRise .8s var(--ease) both; animation-delay: .12s; }
+
+    @media (max-width: 699px) {
+      .d-top { flex-direction: column; align-items: stretch; gap: 16px; }
+      .d-wx { justify-items: start; text-align: left !important; grid-template-columns: auto 1fr; align-items: center; column-gap: 14px; }
+      .d-wx .d-kick { grid-column: 1 / -1; }
+      .d-now-text { position: static; padding: 6px 0 0; }
+      .d-arc text { font-size: 30px; }
+      .m-tile { min-height: 132px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .d-intro *, .d-idle .m-tile, .d-sheet-in .m-sheet, .d-clock b i, .d-sun .halo, .d-wx-main .ico { animation: none !important; }
+      .d-top, .d-now { transform: none; opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -816,10 +963,13 @@ function viewMobile(V, H) {
 
   /* ── the home screen ────────────────────────────────────── */
 
+  var tileN = 0;
   var tile = function (o) {
     var tag = o.href ? 'a' : 'button';
     var attrs = o.href ? ' href="' + o.href + '"' : ' data-h="' + H(o.on) + '"';
-    return '<' + tag + ' class="m-tile ' + (o.cls || '') + '"' + attrs + '>' +
+    tileN++;
+    return '<' + tag + ' class="m-tile ' + (o.cls || '') + '"' + attrs + ' style="--i:' + tileN + '">' +
+      '<i class="d-n" aria-hidden="true">' + (tileN < 10 ? '0' : '') + tileN + '</i>' +
       S32(ico[o.i]) +
       '<div><b>' + o.en + '</b><span class="si">' + o.si + '</span></div></' + tag + '>';
   };
@@ -838,6 +988,50 @@ function viewMobile(V, H) {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><path d="M10 19v-5h4v5"/></svg><span class="m-home-t">Home</span></a>' +
   '</div></div>' +
 
+  (function () {
+    // Where the day stands on its arc: 5.30 on the left, 22.00 on the right.
+    var hm = clock.split(':'), nowMin = (+hm[0]) * 60 + (+hm[1]);
+    var D0 = 330, D1 = 1320, f = Math.max(0, Math.min(1, (nowMin - D0) / (D1 - D0)));
+    var night = nowMin < D0 || nowMin >= D1;
+    var pt = function (k) { return [500 - 460 * Math.cos(Math.PI * k), 262 - 226 * Math.sin(Math.PI * k)]; };
+    var sun = pt(f);
+    var ticks = (segs || []).map(function (sg) {
+      var p = sg[0].split(':'), m = (+p[0]) * 60 + (+p[1]), k = (m - D0) / (D1 - D0);
+      if (k < 0 || k > 1) return '';
+      var q = pt(k);
+      return '<circle class="' + (m <= nowMin ? 'on' : '') + '" cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="5"/>';
+    }).join('');
+    return '' +
+  '<section class="d-hero' + (night ? ' is-night' : '') + '">' +
+    '<div class="d-top">' +
+      '<button class="d-clock" data-h="' + H(openCal) + '" aria-label="Monastery calendar">' +
+        '<span class="d-kick">Today<i class="si">අද</i></span>' +
+        '<b>' + hm[0] + '<i>:</i>' + hm[1] + '</b>' +
+        '<span class="d-date">' + esc(dateLabel) + '</span>' +
+      '</button>' +
+      '<button class="d-wx" data-h="' + H(openWx) + '" aria-label="Weather report">' +
+        '<span class="d-kick">Weather<i class="si">කාලගුණය</i></span>' +
+        '<span class="d-wx-main"><span class="ico m-ico" aria-hidden="true">' + wx.ico + '</span><b>' + wx.temp + '°</b></span>' +
+        '<span class="d-date">' + esc(wx.cond) + '</span>' +
+      '</button>' +
+    '</div>' +
+    '<button class="d-now" data-h="' + H(openRoutine) + '" aria-label="Daily routine">' +
+      '<svg class="d-arc" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMax meet" aria-hidden="true">' +
+        '<path class="d-arc-bg" d="M40 262A460 226 0 0 1 960 262" pathLength="1"/>' +
+        '<path class="d-arc-on" d="M40 262A460 226 0 0 1 960 262" pathLength="1" style="stroke-dasharray:' + f.toFixed(4) + ' 1"/>' +
+        '<g class="d-arc-ticks">' + ticks + '</g>' +
+        '<g class="d-sun" transform="translate(' + sun[0].toFixed(1) + ' ' + sun[1].toFixed(1) + ')"><circle class="halo" r="34"/><circle class="halo h2" r="34"/><circle class="disc" r="15"/></g>' +
+        '<text x="40" y="294" text-anchor="middle">5.30</text><text x="960" y="294" text-anchor="middle">22.00</text>' +
+      '</svg>' +
+      '<span class="d-now-text">' +
+        '<span class="d-kick">Daily Routine<i class="si">දින චරියාව</i></span>' +
+        '<b><i>Now</i>' + esc(nowLabel) + '</b>' +
+        '<span class="d-next">Next · ' + esc(nextLabel) + ' · ' + nextTime + '</span>' +
+      '</span>' +
+    '</button>' +
+  '</section>';
+  })() +
+
   '<div class="m-wrap">' +
     '<div class="m-hero">' +
       slides.map(function (sl, i) {
@@ -845,31 +1039,6 @@ function viewMobile(V, H) {
                ' decoding="async" alt="" style="opacity:' + sl.op + ';transform:scale(' + sl.scale + ')">';
       }).join('') +
     '</div>' +
-
-    '<div class="m-status">' +
-      '<button class="m-stat" data-h="' + H(openWx) + '" aria-label="Weather report">' +
-        '<span class="m-stat-head">Weather<i class="si">කාලගුණය</i></span>' +
-        '<span class="m-stat-main"><span class="ico m-ico" aria-hidden="true">' + wx.ico + '</span>' +
-          '<b>' + wx.temp + '°</b></span>' +
-        '<span class="m-stat-sub">' + esc(wx.cond) + '</span>' +
-      '</button>' +
-      '<button class="m-stat" data-h="' + H(openCal) + '" aria-label="Monastery calendar">' +
-        '<span class="m-stat-head">Today<i class="si">අද</i></span>' +
-        '<span class="m-stat-main"><b>' + clock + '</b></span>' +
-        '<span class="m-stat-sub">' + esc(dateLabel) + '</span>' +
-      '</button>' +
-    '</div>' +
-
-    '<button class="m-now" data-h="' + H(openRoutine) + '">' +
-      '<div class="m-now-top">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:17px;height:17px"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>' +
-        '<b>Daily Routine</b><i class="si">දින චරියාව</i></div>' +
-      '<div class="m-now-main"><b><i>Now</i>' + esc(nowLabel) + '</b>' +
-        '<span>Next: ' + esc(nextLabel) + '<br>' + nextTime + '</span></div>' +
-      '<div class="m-bars">' + timeline.map(function (s) {
-        return '<i class="' + s.cls + '" style="background:' + s.bg + '"></i>';
-      }).join('') + '</div>' +
-    '</button>' +
 
     '<div class="m-grid">' +
       tile({ i: 'retreat',   en: 'Retreat Program', si: 'භාවනා වැඩසටහන', href: '../retreat-center/' }) +
@@ -1392,7 +1561,7 @@ function viewMobile(V, H) {
       routine: routine, hasRoutine: sel != null && !cur,
       openRoutine: function () { setState({ routine: idx, touched: Date.now() }); },
       closeRoutine: function () { setState({ routine: null }); },
-      idleSeconds: IDLE, clock: clock, dateLabel: dateLabel, timeline: timeline,
+      idleSeconds: IDLE, clock: clock, dateLabel: dateLabel, timeline: timeline, segs: S,
       nowLabel: S[idx][1], nextLabel: nxt[1], nextTime: nxt[0]
     };
   }
@@ -1551,6 +1720,136 @@ function viewMobile(V, H) {
   </script>
 
 
+
+  <!-- ═════════ Kiosk motion layer (2026 redesign) ═════════
+       Everything here sits outside #stage, which is rebuilt on every change,
+       so the sky, the eagle, the touch rings and the idle invitation persist. -->
+  <div class="d-sky" aria-hidden="true"><canvas id="sky"></canvas>
+    <svg class="sky-eagle" id="skyEagle" viewBox="0 0 200 90" focusable="false"><path d="M100 30.5C103.4 30.5 105.2 34 105.2 38.5C118 35.5 136 33.5 152 33.6C161 33.6 168 32.9 174 31.2L174.9 30.4L191.2 25.3Q193.9 24.4 194.4 25.6Q194.9 26.7 192.3 28L178.6 35L177.2 34.8L197.5 31.9Q200.4 31.5 200.6 32.7Q200.9 34 198.2 34.8L180 40.1L178.3 39.5L200.3 39.7Q203.2 39.7 203.2 41Q203.3 42.3 200.4 42.6L180.1 45.1L178.1 44.2L198.8 48.1Q201.6 48.7 201.5 49.9Q201.3 51.2 198.5 51L179 50L176.9 48.9L193.6 55.8Q196.2 56.9 195.8 58Q195.4 59.2 192.7 58.6L176.6 54.8L174.5 53.4L185.3 61.5Q187.7 63.1 187 64.2Q186.4 65.3 183.8 64L172.9 59.1C160 62.5 141 61.5 126 59.6C117 58.4 110 55.6 106.4 52.6C107 60.5 110.2 70.5 116.5 80.5Q108.5 85 100 83Q91.5 85 83.5 80.5C89.8 70.5 93 60.5 93.6 52.6C90 55.6 83 58.4 74 59.6C59 61.5 40 62.5 27.1 59.1L16.2 64Q13.6 65.3 13 64.2Q12.3 63.1 14.7 61.5L25.5 53.4L23.4 54.8L7.3 58.6Q4.6 59.2 4.2 58Q3.8 56.9 6.4 55.8L23.1 48.9L21 50L1.5 51Q-1.3 51.2 -1.5 49.9Q-1.6 48.7 1.2 48.1L21.9 44.2L19.9 45.1L-0.4 42.6Q-3.3 42.3 -3.2 41Q-3.2 39.7 -0.3 39.7L21.7 39.5L20 40.1L1.8 34.8Q-0.9 34 -0.6 32.7Q-0.4 31.5 2.5 31.9L22.8 34.8L21.4 35L7.7 28Q5.1 26.7 5.6 25.6Q6.1 24.4 8.8 25.3L25.1 30.4L26 31.2C32 32.9 39 33.6 48 33.6C64 33.5 82 35.5 94.8 38.5C94.8 34 96.6 30.5 100 30.5z"/></svg></div>
+  <div class="d-ripples" id="dRipples" aria-hidden="true"></div>
+  <div class="d-hint" aria-hidden="true"><i></i>Touch a card to explore<span>ස්පර්ශ කර බලන්න</span></div>
+  <script src="../rk/sky.js?v=1"></script>
+  <script>
+  (function () {
+    "use strict";
+    var root = document.documentElement, stage = document.getElementById("stage");
+    var RM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+    var Sky = window.RKSky, skyOK = !!(Sky && Sky.init(document.getElementById("sky")));
+    if (!skyOK) root.classList.add("d-nosky");
+
+    // first seconds: the page assembles itself
+    root.classList.add("d-intro");
+    setTimeout(function () { root.classList.remove("d-intro"); }, 3800);
+
+    // sheets: know when one is open, and let a newly opened one slide up once
+    var hadSheet = false, sheetTimer;
+    function sheetCheck() {
+      var has = !!stage.querySelector(".m-sheet");
+      root.classList.toggle("d-has-sheet", has);
+      if (has && !hadSheet) {
+        root.classList.add("d-sheet-in");
+        clearTimeout(sheetTimer); sheetTimer = setTimeout(function () { root.classList.remove("d-sheet-in"); }, 900);
+      }
+      hadSheet = has;
+      onScroll();
+    }
+    new MutationObserver(sheetCheck).observe(stage, { childList: true });
+
+    // scroll: the sky lifts, the hour drifts up and fades, the header turns solid
+    var ticking = false;
+    function apply() {
+      ticking = false;
+      var y = window.scrollY, hero = stage.querySelector(".d-hero"), h = hero ? hero.offsetHeight : window.innerHeight;
+      var p = Math.max(0, Math.min(1, y / h));
+      root.style.setProperty("--sy", RM ? 0 : y.toFixed(0));
+      root.style.setProperty("--sp", RM ? 0 : p.toFixed(3));
+      root.classList.toggle("d-scrolled", y > 24);
+      if (skyOK) { Sky.setScroll(p * 0.5); Sky.setActive(!root.classList.contains("d-has-sheet") && y < h + 40); }
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(apply); } }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    onScroll();
+    if (skyOK) setInterval(function () { Sky.setHour(Sky.colomboHour()); }, 20000);
+
+    // attract mode: after a quiet while on the home screen
+    var idleTimer, IDLE_MS = 28000;
+    function wake() {
+      root.classList.remove("d-idle");
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(function () { if (!root.classList.contains("d-has-sheet")) root.classList.add("d-idle"); }, IDLE_MS);
+    }
+    ["pointerdown", "keydown", "wheel", "touchstart", "scroll"].forEach(function (ev) { window.addEventListener(ev, wake, { passive: true }); });
+    wake();
+
+    // a touch leaves a ring where it landed
+    var rip = document.getElementById("dRipples");
+    window.addEventListener("pointerdown", function (e) {
+      if (RM) return;
+      var r = document.createElement("i");
+      r.style.left = e.clientX + "px"; r.style.top = e.clientY + "px";
+      rip.appendChild(r);
+      setTimeout(function () { r.remove(); }, 750);
+    }, { passive: true });
+
+    // with a mouse, the doors lean a little toward the pointer
+    if (window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches && !RM) {
+      var last = null;
+      stage.addEventListener("pointermove", function (e) {
+        var t = e.target.closest && e.target.closest(".m-tile");
+        if (last && last !== t) { last.style.removeProperty("--rx"); last.style.removeProperty("--ry"); }
+        last = t;
+        if (!t) return;
+        var r = t.getBoundingClientRect();
+        t.style.setProperty("--ry", (((e.clientX - r.left) / r.width - 0.5) * 9).toFixed(2) + "deg");
+        t.style.setProperty("--rx", ((0.5 - (e.clientY - r.top) / r.height) * 9).toFixed(2) + "deg");
+      });
+      stage.addEventListener("pointerleave", function () { if (last) { last.style.removeProperty("--rx"); last.style.removeProperty("--ry"); last = null; } });
+    }
+
+    // the eagle: now and then it glides across the sky above the clock
+    (function eagle() {
+      var el = document.getElementById("skyEagle"); if (!el || !skyOK || RM) return;
+      var rnd = function (a, b) { return a + Math.random() * (b - a); };
+      var pass = null, nextAt = performance.now() + rnd(6000, 14000), head = 0, bank = 0;
+      function plan(now) {
+        return { t0: now, dur: rnd(30, 44) * 1000, dir: Math.random() < 0.5 ? 1 : -1, y0: rnd(0.1, 0.3), y1: rnd(0.1, 0.32), arc: rnd(-0.06, 0.06),
+                 loop: Math.random() < 0.5 ? rnd(0.05, 0.08) : 0, loopAt: rnd(0.34, 0.5), loopDir: Math.random() < 0.5 ? 1 : -1, size: rnd(0.8, 1.15), first: true };
+      }
+      function at(p, u) {
+        var x = p.dir > 0 ? -0.12 + u * 1.24 : 1.12 - u * 1.24;
+        var y = p.y0 + (p.y1 - p.y0) * u + Math.sin(u * Math.PI) * p.arc + Math.sin(u * 9) * 0.006;
+        if (p.loop) {
+          var k = (u - p.loopAt) / 0.3;
+          if (k > 0 && k < 1) { var e = k * k * (3 - 2 * k), ang = e * Math.PI * 2 * p.loopDir;
+            x += Math.sin(ang) * p.loop * (p.dir > 0 ? 1 : -1); y += (1 - Math.cos(ang)) * p.loop * 0.72 * (p.loopDir > 0 ? 1 : -1); }
+        }
+        return [x, y];
+      }
+      function frame(now) {
+        requestAnimationFrame(frame);
+        var st = Sky.state();
+        if (!st.active) { el.style.opacity = 0; return; }
+        if (!pass) {
+          if (now < nextAt) return;
+          if (Sky.sample(st.hour).night > 0.45) { nextAt = now + 20000; return; }
+          pass = plan(now);
+        }
+        var u = (now - pass.t0) / pass.dur;
+        if (u >= 1) { pass = null; el.style.opacity = 0; nextAt = now + rnd(22000, 75000); return; }
+        var W = window.innerWidth, H = window.innerHeight, a = at(pass, u), b = at(pass, Math.min(1, u + 0.004));
+        var h = Math.atan2((b[1] - a[1]) * H, (b[0] - a[0]) * W) * 180 / Math.PI + 90;
+        if (pass.first) { head = h; pass.first = false; }
+        var dh = ((h - head + 540) % 360) - 180;
+        head += dh * 0.12; bank += (Math.max(-1, Math.min(1, dh / 2.2)) - bank) * 0.05;
+        el.style.opacity = (0.88 * (1 - Sky.sample(st.hour).night) * Math.min(1, u / 0.05, (1 - u) / 0.05)).toFixed(3);
+        el.style.transform = "translate3d(" + (a[0] * W).toFixed(1) + "px," + (a[1] * H - st.scroll * H * 0.16).toFixed(1) + "px,0) translate(-50%,-50%) rotate(" + head.toFixed(2) +
+          "deg) scale(" + (pass.size * (1 - Math.abs(bank) * 0.34)).toFixed(3) + "," + pass.size.toFixed(3) + ")";
+      }
+      requestAnimationFrame(frame);
+    })();
+  })();
+  </script>
   <!-- eco-theme: the same day/night toggle the rest of the site uses -->
   <link rel="stylesheet" href="../eco-theme.css?v=12">
   <script id="eco-theme" src="../eco-theme.js?v=4" data-light="paper" data-dark="night" defer></script>

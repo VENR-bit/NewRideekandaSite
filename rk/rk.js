@@ -376,7 +376,8 @@
 
   /* ═════════ Smooth scroll ═════════ */
   if (window.Lenis && !RM) {
-    lenis = new window.Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
+    lenis = new window.Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true,
+      prevent: function (node) { return !!(node.closest && node.closest(".menu-in")); } });
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
