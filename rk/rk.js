@@ -787,7 +787,7 @@
     else tl.from(".ht-1", { y: 60, opacity: 0, duration: 1.6 }, 0);
     tl.from(".ht-2", { y: 40, opacity: 0, filter: "blur(8px)", duration: 1.3 }, 0.3)
       .from(".hero-si", { y: 20, opacity: 0, duration: 1.1 }, 0.2)
-      .from(".hero-lead", { y: 24, opacity: 0, duration: 1.1 }, 0.5)
+      .from(".hero-lead, .hero-meta", { y: 24, opacity: 0, duration: 1.1, stagger: 0.08 }, 0.5)
       .from(".hero-cta > *", { y: 24, opacity: 0, duration: 1, stagger: 0.08 }, 0.6)
       .from(".hero-top > *, .hero-foot > *", { opacity: 0, duration: 1.2, stagger: 0.06 }, 0.7)
       .from("#hd", { opacity: 0, duration: 1.2 }, 0.4);

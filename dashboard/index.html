@@ -717,14 +717,27 @@
     .d-sheet-in .m-sheet-in > * { animation: dRise .8s var(--ease) both; animation-delay: .12s; }
 
     @media (max-width: 699px) {
-      .d-top { flex-direction: column; align-items: stretch; gap: 16px; }
-      .d-wx { justify-items: start; text-align: left !important; grid-template-columns: auto 1fr; align-items: center; column-gap: 14px; }
-      .d-wx .d-kick { grid-column: 1 / -1; }
+      .d-top { flex-direction: column; align-items: center; gap: 18px; }
+      .d-clock { justify-items: center; text-align: center !important; }
+      .d-clock .d-kick, .d-wx .d-kick { justify-content: center; }
+      .d-wx { justify-items: center; text-align: center !important; width: 100%; }
       .d-now-text { position: static; padding: 6px 0 0; }
       .d-arc text { font-size: 30px; }
       .m-tile { min-height: 132px; }
     }
+    /* menu on the right, home on the left */
+    .m-head-row .m-pill:not(.m-home) { left: auto; right: 0; }
+    .m-head-row .m-pill.m-home { right: auto; left: 0; }
+
+    /* the photograph line */
+    .d-ribbon { display: block; overflow: hidden; margin: 6px 0 16px; max-width: none !important; }
+    .d-track { display: flex; gap: clamp(8px, 1.2vw, 16px); width: max-content; animation: dMarq 120s linear infinite; will-change: transform; }
+    .d-track img { flex: none; height: clamp(170px, 26vh, 440px); aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r); background: var(--card); }
+    @keyframes dMarq { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+    .d-intro .d-ribbon { animation: dRise 1.1s var(--ease) .75s both; }
+
     @media (prefers-reduced-motion: reduce) {
+      .d-track { animation: none !important; }
       .d-intro *, .d-idle .m-tile, .d-sheet-in .m-sheet, .d-clock b i, .d-sun .halo, .d-wx-main .ico { animation: none !important; }
       .d-top, .d-now { transform: none; opacity: 1; }
     }
@@ -993,7 +1006,10 @@ function viewMobile(V, H) {
     var hm = clock.split(':'), nowMin = (+hm[0]) * 60 + (+hm[1]);
     var D0 = 330, D1 = 1320, f = Math.max(0, Math.min(1, (nowMin - D0) / (D1 - D0)));
     var night = nowMin < D0 || nowMin >= D1;
-    var pt = function (k) { return [500 - 460 * Math.cos(Math.PI * k), 262 - 226 * Math.sin(Math.PI * k)]; };
+    // A true arc of one circle: radius 531, a third of the way round (120°),
+    // from the left foot to the right. Nothing is stretched.
+    var R = 531.2, TH = Math.PI / 3, CY = 22 + R;
+    var pt = function (k) { var a = -TH + 2 * TH * k; return [500 + R * Math.sin(a), CY - R * Math.cos(a)]; };
     var sun = pt(f);
     var ticks = (segs || []).map(function (sg) {
       var p = sg[0].split(':'), m = (+p[0]) * 60 + (+p[1]), k = (m - D0) / (D1 - D0);
@@ -1016,12 +1032,12 @@ function viewMobile(V, H) {
       '</button>' +
     '</div>' +
     '<button class="d-now" data-h="' + H(openRoutine) + '" aria-label="Daily routine">' +
-      '<svg class="d-arc" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMax meet" aria-hidden="true">' +
-        '<path class="d-arc-bg" d="M40 262A460 226 0 0 1 960 262" pathLength="1"/>' +
-        '<path class="d-arc-on" d="M40 262A460 226 0 0 1 960 262" pathLength="1" style="stroke-dasharray:' + f.toFixed(4) + ' 1"/>' +
+      '<svg class="d-arc" viewBox="0 0 1000 330" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
+        '<path class="d-arc-bg" d="M40 287.6A531.2 531.2 0 0 1 960 287.6" pathLength="1"/>' +
+        '<path class="d-arc-on" d="M40 287.6A531.2 531.2 0 0 1 960 287.6" pathLength="1" style="stroke-dasharray:' + f.toFixed(4) + ' 1"/>' +
         '<g class="d-arc-ticks">' + ticks + '</g>' +
         '<g class="d-sun" transform="translate(' + sun[0].toFixed(1) + ' ' + sun[1].toFixed(1) + ')"><circle class="halo" r="34"/><circle class="halo h2" r="34"/><circle class="disc" r="15"/></g>' +
-        '<text x="40" y="294" text-anchor="middle">5.30</text><text x="960" y="294" text-anchor="middle">22.00</text>' +
+        '<text x="40" y="324" text-anchor="middle">5.30</text><text x="960" y="324" text-anchor="middle">22.00</text>' +
       '</svg>' +
       '<span class="d-now-text">' +
         '<span class="d-kick">Daily Routine<i class="si">දින චරියාව</i></span>' +
@@ -1033,12 +1049,17 @@ function viewMobile(V, H) {
   })() +
 
   '<div class="m-wrap">' +
-    '<div class="m-hero">' +
-      slides.map(function (sl, i) {
-        return '<img class="slide" data-layer="' + i + '"' + (sl.src ? ' src="' + sl.src + '"' : '') +
-               ' decoding="async" alt="" style="opacity:' + sl.op + ';transform:scale(' + sl.scale + ')">';
-      }).join('') +
-    '</div>' +
+    // Photographs drift sideways in one unbroken line, as on the home page.
+    // The stage is rebuilt every minute, so the line's place is taken from the
+    // clock (a negative delay): a rebuild carries on exactly where it was.
+    (function () {
+      var list = (photos || []).length ? photos : slides.map(function (sl) { return sl.src; }).filter(Boolean);
+      if (!list.length) return '<div class="d-ribbon"></div>';
+      var dur = list.length * 9, at = (Date.now() / 1000) % dur;
+      var row = list.map(function (src) { return '<img src="' + src + '" alt="" decoding="async" loading="lazy" draggable="false">'; }).join('');
+      return '<a class="d-ribbon" href="../gallery/" aria-label="Gallery · ඡායාරූප">' +
+        '<span class="d-track" style="animation-duration:' + dur + 's;animation-delay:-' + at.toFixed(2) + 's">' + row + row + '</span></a>';
+    })() +
 
     '<div class="m-grid">' +
       tile({ i: 'retreat',   en: 'Retreat Program', si: 'භාවනා වැඩසටහන', href: '../retreat-center/' }) +
@@ -1561,7 +1582,7 @@ function viewMobile(V, H) {
       routine: routine, hasRoutine: sel != null && !cur,
       openRoutine: function () { setState({ routine: idx, touched: Date.now() }); },
       closeRoutine: function () { setState({ routine: null }); },
-      idleSeconds: IDLE, clock: clock, dateLabel: dateLabel, timeline: timeline, segs: S,
+      idleSeconds: IDLE, clock: clock, dateLabel: dateLabel, timeline: timeline, segs: S, photos: SLIDES.slice(0, 14),
       nowLabel: S[idx][1], nextLabel: nxt[1], nextTime: nxt[0]
     };
   }

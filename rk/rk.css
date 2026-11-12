@@ -262,6 +262,8 @@ a:hover .arr::after, button:hover .arr::after { transform: none; }
 .ht-2 { text-shadow: 0 1px 22px rgba(5, 8, 6, .55); }
 .hero-title .char { display: inline-block; will-change: transform; }
 .hero-lead { margin-top: clamp(1.2rem, 3vh, 2rem); max-width: 30em; font-size: clamp(1rem, 1.25vw, 1.2rem); font-weight: 300; opacity: .92; }
+.hero-meta { display: grid; justify-items: center; gap: .55em; margin-top: clamp(1.2rem, 3vh, 2rem); font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; opacity: .86; text-align: center; }
+html:not([lang="si"]) .hero { grid-template-rows: 1fr auto; }
 .hero-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: clamp(1.4rem, 3.4vh, 2.4rem); }
 .hero-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
 .now {
@@ -540,8 +542,7 @@ a:hover .arr::after, button:hover .arr::after { transform: none; }
   .hd-book { display: none; }
   .hd-name small { display: none; }
   .hero-top span:last-child { display: none; }
-  html:not([lang="si"]) .hero-top { display: none; }
-  html:not([lang="si"]) .hero { grid-template-rows: 1fr auto; }
+  .hero-meta { font-size: .62rem; letter-spacing: .18em; }
   .ht-1 { font-size: 18.6vw; }
   .hero::before { background: radial-gradient(90% 34% at 50% 44%, rgba(6, 10, 8, .36), transparent 78%), linear-gradient(rgba(6, 10, 8, .4), transparent 24%); }
   .ht-2 { font-size: 8.4vw; }
