@@ -1,6 +1,4 @@
 .claude/
 .DS_Store
-# The domain file is added when this repository takes over www.rideekanda.com
-CNAME
 # Pre-redesign copies of the changed files (kept locally only)
 rk/_orig/
