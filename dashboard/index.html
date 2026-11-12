@@ -747,6 +747,24 @@
     .d-track img { pointer-events: none; -webkit-user-drag: none; }
     .d-js-ribbon .d-track { animation: none !important; }
 
+    /* the hour and the weather ride high, above the far ridge; the day's arc
+       sits low, its two feet level with the line that names the present period */
+    .d-hero { min-height: clamp(600px, 74vh, 1320px); padding-bottom: clamp(20px, 3.4vh, 56px); }
+    .d-top { align-self: start; margin-top: clamp(0px, 1.5vh, 30px); }
+    .d-now { container-type: inline-size; --nl: clamp(1.5rem, 4.2vw, 3.6rem); touch-action: pan-y; }
+    .d-arc { touch-action: none; cursor: grab; }
+    .d-now-text { position: relative; padding: 0 17%; margin-top: calc(-4.94cqw - var(--nl) * .56); }
+    .d-now-text b { font-size: var(--nl); }
+    .d-now-text .d-kick { position: absolute; left: 0; right: 0; bottom: calc(100% + .5em); justify-content: center; }
+    .d-next { margin-top: .5em; }
+    .d-sun { cursor: grab; }
+    .d-sun .disc { transition: r .3s ease; }
+    .d-now.is-scrub .d-arc { cursor: grabbing; }
+    .d-now.is-scrub .d-sun .disc { r: 20px; }
+    .d-now.is-scrub .d-tag { background: #f6ead4; }
+    .d-tag { font-variant-numeric: lining-nums tabular-nums; transition: background-color .3s ease; }
+    @media (max-width: 699px) { .d-now-text { padding: 0 15%; } .d-now-text b { line-height: 1.1; } .d-now-text .d-kick { display: none; } }
+
     /* menu on the right, home on the left */
     .m-head-row .m-pill:not(.m-home) { left: auto; right: 0; }
     .m-head-row .m-pill.m-home { right: auto; left: 0; }
@@ -1036,7 +1054,7 @@ function viewMobile(V, H) {
       var p = sg[0].split(':'), m = (+p[0]) * 60 + (+p[1]), k = (m - D0) / (D1 - D0);
       if (k < 0 || k > 1) return '';
       var q = pt(k);
-      return '<circle class="' + (m <= nowMin ? 'on' : '') + '" cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="5"/>';
+      return '<circle class="' + (m <= nowMin ? 'on' : '') + '" data-m="' + m + '" cx="' + q[0].toFixed(1) + '" cy="' + q[1].toFixed(1) + '" r="5"/>';
     }).join('');
     return '' +
   '<section class="d-hero' + (night ? ' is-night' : '') + '">' +
@@ -1052,7 +1070,8 @@ function viewMobile(V, H) {
         '<span class="d-date">' + esc(wx.cond) + '</span>' +
       '</button>' +
     '</div>' +
-    '<button class="d-now" data-h="' + H(openRoutine) + '" aria-label="Daily routine">' +
+    '<button class="d-now" data-h="' + H(openRoutine) + '" aria-label="Daily routine" data-now="' + nowMin + '" data-segs="' +
+      esc(JSON.stringify((segs || []).map(function (sg) { return [sg[0], sg[1]]; }))) + '">' +
       '<svg class="d-arc" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
         '<path class="d-arc-bg" d="' + ARC + '" pathLength="1"/>' +
         '<path class="d-arc-on" d="' + ARC + '" pathLength="1" style="stroke-dasharray:' + f.toFixed(4) + ' 1"/>' +
@@ -1062,7 +1081,7 @@ function viewMobile(V, H) {
       '</svg>' +
       '<span class="d-now-text">' +
         '<span class="d-kick">Daily Routine<i class="si">දින චරියාව</i></span>' +
-        '<b><i>Now</i>' + esc(nowLabel) + '</b>' +
+        '<b><i class="d-tag">Now</i><span class="d-lab">' + esc(nowLabel) + '</span></b>' +
         '<span class="d-next">Next · ' + esc(nextLabel) + ' · ' + nextTime + '</span>' +
       '</span>' +
     '</button>' +
@@ -1812,7 +1831,7 @@ function viewMobile(V, H) {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     onScroll();
-    if (skyOK) setInterval(function () { Sky.setHour(Sky.colomboHour()); }, 20000);
+    if (skyOK) setInterval(function () { if (!scrubbing) Sky.setHour(Sky.colomboHour()); }, 20000);
 
     // attract mode: after a quiet while on the home screen
     var idleTimer, IDLE_MS = 28000;
@@ -1833,6 +1852,79 @@ function viewMobile(V, H) {
       rip.appendChild(r);
       setTimeout(function () { r.remove(); }, 750);
     }, { passive: true });
+
+    // the day's arc: drag the sun along it to look at any hour — the period,
+    // the arc and the whole sky follow — and a few seconds after letting go it
+    // glides back to the present moment.
+    var scrubbing = false;
+    (function scrub() {
+      var D0 = 330, D1 = 1320, R = 960, TH = Math.PI / 6, CY = 22 + R, BACK_MS = 4000;
+      var moved = 0, k = null, backTimer, backRaf = 0;
+      var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
+      function nowMin() { var d = new Date(); return d.getHours() * 60 + d.getMinutes(); }
+      function kOf(m) { return Math.max(0, Math.min(1, (m - D0) / (D1 - D0))); }
+      function paint(kk, live) {
+        var box = stage.querySelector(".d-now"); if (!box) return;
+        var m = Math.round(D0 + kk * (D1 - D0)), a = -TH + 2 * TH * kk;
+        var sun = box.querySelector(".d-sun"), on = box.querySelector(".d-arc-on");
+        if (sun) sun.setAttribute("transform", "translate(" + (500 + R * Math.sin(a)).toFixed(1) + " " + (CY - R * Math.cos(a)).toFixed(1) + ")");
+        if (on) on.style.strokeDasharray = kk.toFixed(4) + " 1";
+        [].forEach.call(box.querySelectorAll(".d-arc-ticks circle"), function (c) { c.classList.toggle("on", +c.getAttribute("data-m") <= m); });
+        var segs = []; try { segs = JSON.parse(box.getAttribute("data-segs") || "[]"); } catch (e) {}
+        var idx = segs.length - 1;
+        for (var i = 0; i < segs.length; i++) { var p = segs[i][0].split(":"); if ((+p[0]) * 60 + (+p[1]) <= m) idx = i; }
+        var tag = box.querySelector(".d-tag"), lab = box.querySelector(".d-lab"), nx = box.querySelector(".d-next");
+        if (segs.length) {
+          var nxt = segs[(idx + 1) % segs.length];
+          if (lab) lab.textContent = segs[idx][1];
+          if (nx) nx.textContent = "Next · " + nxt[1] + " · " + nxt[0];
+        }
+        if (tag) tag.textContent = live ? "Now" : pad2(Math.floor(m / 60)) + ":" + pad2(m % 60);
+        box.classList.toggle("is-scrub", !live);
+        if (skyOK) Sky.setHour(live ? Sky.colomboHour() : m / 60);
+      }
+      function fromEvent(e) {
+        var svg = stage.querySelector(".d-arc"); if (!svg) return null;
+        var r = svg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * 1000;
+        var s = Math.max(-0.5, Math.min(0.5, (x - 500) / R));
+        return (Math.asin(s) + TH) / (2 * TH);
+      }
+      function goBack() {
+        var from = k, to = kOf(nowMin()), t0 = performance.now();
+        cancelAnimationFrame(backRaf);
+        (function step(now) {
+          var u = Math.min(1, (now - t0) / 1400), e = u * u * (3 - 2 * u);
+          k = from + (to - from) * e;
+          if (u < 1) { paint(k, false); backRaf = requestAnimationFrame(step); }
+          else { k = null; scrubbing = false; paint(to, true); }
+        })(t0);
+      }
+      stage.addEventListener("pointerdown", function (e) {
+        if (!(e.target.closest && e.target.closest(".d-arc")) || e.button) return;
+        var kk = fromEvent(e); if (kk == null) return;
+        scrubbing = true; moved = 0; k = kk; clearTimeout(backTimer); cancelAnimationFrame(backRaf);
+        stage._sx = e.clientX; stage._drag = true;
+      });
+      window.addEventListener("pointermove", function (e) {
+        if (!stage._drag) return;
+        moved = Math.max(moved, Math.abs(e.clientX - stage._sx));
+        if (moved < 4) return;
+        var kk = fromEvent(e); if (kk == null) return;
+        k = kk; paint(k, false);
+      }, { passive: true });
+      function end() {
+        if (!stage._drag) return; stage._drag = false;
+        if (moved < 4) { scrubbing = false; k = null; return; }     // a tap, not a drag: the sheet opens as before
+        clearTimeout(backTimer); backTimer = setTimeout(goBack, BACK_MS);
+      }
+      window.addEventListener("pointerup", end); window.addEventListener("pointercancel", end);
+      stage.addEventListener("click", function (e) {
+        if (moved >= 4 && e.target.closest && e.target.closest(".d-now")) { e.preventDefault(); e.stopPropagation(); }
+        moved = 0;
+      }, true);
+      // the stage is rebuilt every minute: if that happens mid-look, keep showing the chosen hour
+      new MutationObserver(function () { if (k != null) paint(k, false); }).observe(stage, { childList: true });
+    })();
 
     // the photograph line: it drifts slowly on its own; a finger (or the mouse)
     // drags it as fast as it moves, and a flick lets it coast before it settles
