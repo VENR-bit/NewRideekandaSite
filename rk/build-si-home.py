@@ -169,7 +169,6 @@ out = '''<!DOCTYPE html>
     </div>
   </div>
   <div class="hero-foot">
-    <div class="now" id="now"><i class="now-dot"></i><span class="now-k"></span><span class="now-t" id="nowTime">—</span><span class="now-a" id="nowAct"></span></div>
     <a class="scroll-cue" href="#about" aria-label="Scroll"><span>Scroll</span><i></i></a>
   </div>
 </section>

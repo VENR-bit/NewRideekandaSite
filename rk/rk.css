@@ -265,7 +265,7 @@ a:hover .arr::after, button:hover .arr::after { transform: none; }
 .hero-meta { display: grid; justify-items: center; gap: .55em; margin-top: clamp(1.2rem, 3vh, 2rem); font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; opacity: .86; text-align: center; }
 html:not([lang="si"]) .hero { grid-template-rows: 1fr auto; }
 .hero-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: clamp(1.4rem, 3.4vh, 2.4rem); }
-.hero-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+.hero-foot { display: flex; align-items: flex-end; justify-content: flex-end; gap: 1rem; min-height: 1px; }
 .now {
   display: inline-flex; align-items: center; gap: .7rem; padding: .7rem 1.1rem .7rem .9rem; border-radius: 999px; text-align: left;
   background: rgba(8, 13, 10, .34); border: 1px solid rgba(246, 241, 228, .2); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);

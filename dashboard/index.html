@@ -725,6 +725,28 @@
       .d-arc text { font-size: 30px; }
       .m-tile { min-height: 132px; }
     }
+    /* 2 — weather and the day's arc sit straight on the sky, no card behind them */
+    .d-wx, .d-now { background: none !important; border: 0; -webkit-backdrop-filter: none; backdrop-filter: none; padding-left: 0; padding-right: 0; }
+    .d-wx { padding-top: 0; padding-bottom: 0; text-shadow: 0 2px 30px rgba(5,8,6,.45); }
+    .d-now { padding-bottom: 0; text-shadow: 0 2px 24px rgba(5,8,6,.5); }
+    .d-arc { max-height: none; }
+    .d-now-text { position: static; padding: clamp(6px, 1.4vh, 18px) 0 0; }
+
+    /* 1 — the title alone, centred */
+    .m-brand { justify-content: center; }
+
+    /* 5 — tiles: a large icon over the name, everything centred */
+    .m-tile { align-items: center; justify-content: center; text-align: center; gap: 16px; }
+    .m-tile svg { position: static; width: 62px; height: 62px; }
+    .m-tile::after { left: 22%; right: 22%; transform-origin: 50% 50%; }
+    @media (min-width: 700px) { .m-tile svg { position: static; width: 78px; height: 78px; } .m-tile { gap: 20px; } }
+
+    /* 4 — the photograph line can be dragged */
+    .d-ribbon { touch-action: pan-y; cursor: grab; -webkit-user-select: none; user-select: none; }
+    .d-ribbon.is-drag { cursor: grabbing; }
+    .d-track img { pointer-events: none; -webkit-user-drag: none; }
+    .d-js-ribbon .d-track { animation: none !important; }
+
     /* menu on the right, home on the left */
     .m-head-row .m-pill:not(.m-home) { left: auto; right: 0; }
     .m-head-row .m-pill.m-home { right: auto; left: 0; }
@@ -982,7 +1004,6 @@ function viewMobile(V, H) {
     var attrs = o.href ? ' href="' + o.href + '"' : ' data-h="' + H(o.on) + '"';
     tileN++;
     return '<' + tag + ' class="m-tile ' + (o.cls || '') + '"' + attrs + ' style="--i:' + tileN + '">' +
-      '<i class="d-n" aria-hidden="true">' + (tileN < 10 ? '0' : '') + tileN + '</i>' +
       S32(ico[o.i]) +
       '<div><b>' + o.en + '</b><span class="si">' + o.si + '</span></div></' + tag + '>';
   };
@@ -993,7 +1014,6 @@ function viewMobile(V, H) {
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>' +
     // The brand, and the house on the right, both lead to the home page.
     '<a class="m-brand" href="../" aria-label="Rideekanda Forest Monastery — home page">' +
-      '<img class="m-logo lotus-night" src="kiosk/7f193d9120a7243f62e2c416768bb75d.png" alt=""><img class="m-logo lotus-paper" src="kiosk/lotus-dark.png" alt="">' +
       '<div class="m-name"><b>Rideekanda Forest Monastery</b>' +
         '<span class="si">රිදීකන්ද ආරණ්‍ය සේනාසනය<span class="m-loc"> · Udasgiriya, Matale</span></span></div>' +
     '</a>' +
@@ -1008,8 +1028,9 @@ function viewMobile(V, H) {
     var night = nowMin < D0 || nowMin >= D1;
     // A true arc of one circle: radius 531, a third of the way round (120°),
     // from the left foot to the right. Nothing is stretched.
-    var R = 531.2, TH = Math.PI / 3, CY = 22 + R;
+    var R = 960, TH = Math.PI / 6, CY = 22 + R;   // radius 960, 60° of the circle: wide and shallow
     var pt = function (k) { var a = -TH + 2 * TH * k; return [500 + R * Math.sin(a), CY - R * Math.cos(a)]; };
+    var ARC = 'M20 150.6A960 960 0 0 1 980 150.6';
     var sun = pt(f);
     var ticks = (segs || []).map(function (sg) {
       var p = sg[0].split(':'), m = (+p[0]) * 60 + (+p[1]), k = (m - D0) / (D1 - D0);
@@ -1032,12 +1053,12 @@ function viewMobile(V, H) {
       '</button>' +
     '</div>' +
     '<button class="d-now" data-h="' + H(openRoutine) + '" aria-label="Daily routine">' +
-      '<svg class="d-arc" viewBox="0 0 1000 330" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
-        '<path class="d-arc-bg" d="M40 287.6A531.2 531.2 0 0 1 960 287.6" pathLength="1"/>' +
-        '<path class="d-arc-on" d="M40 287.6A531.2 531.2 0 0 1 960 287.6" pathLength="1" style="stroke-dasharray:' + f.toFixed(4) + ' 1"/>' +
+      '<svg class="d-arc" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">' +
+        '<path class="d-arc-bg" d="' + ARC + '" pathLength="1"/>' +
+        '<path class="d-arc-on" d="' + ARC + '" pathLength="1" style="stroke-dasharray:' + f.toFixed(4) + ' 1"/>' +
         '<g class="d-arc-ticks">' + ticks + '</g>' +
         '<g class="d-sun" transform="translate(' + sun[0].toFixed(1) + ' ' + sun[1].toFixed(1) + ')"><circle class="halo" r="34"/><circle class="halo h2" r="34"/><circle class="disc" r="15"/></g>' +
-        '<text x="40" y="324" text-anchor="middle">5.30</text><text x="960" y="324" text-anchor="middle">22.00</text>' +
+        '<text x="20" y="190" text-anchor="start">5.30</text><text x="980" y="190" text-anchor="end">22.00</text>' +
       '</svg>' +
       '<span class="d-now-text">' +
         '<span class="d-kick">Daily Routine<i class="si">දින චරියාව</i></span>' +
@@ -1812,6 +1833,55 @@ function viewMobile(V, H) {
       rip.appendChild(r);
       setTimeout(function () { r.remove(); }, 750);
     }, { passive: true });
+
+    // the photograph line: it drifts slowly on its own; a finger (or the mouse)
+    // drags it as fast as it moves, and a flick lets it coast before it settles
+    // back to the slow drift. The line is rebuilt with the stage every minute,
+    // so its place is kept here and re-applied to whichever element is current.
+    (function ribbon() {
+      if (RM) return;
+      root.classList.add("d-js-ribbon");
+      var DRIFT = -26;                 // px per second when left alone (leftwards)
+      var x = 0, v = DRIFT, track = null, half = 0, drag = false, lastX = 0, lastT = 0, moved = 0, prev = performance.now();
+      function current() {
+        if (!track || !track.isConnected) { track = stage.querySelector(".d-track"); half = 0; }
+        if (track && !half) half = track.scrollWidth / 2;
+        return track;
+      }
+      function frame(now) {
+        requestAnimationFrame(frame);
+        var dt = Math.min(0.05, (now - prev) / 1000); prev = now;
+        if (!current() || !half) return;
+        if (!drag) { v += (DRIFT - v) * Math.min(1, dt * 1.6); x += v * dt; }
+        if (x <= -half) x += half; else if (x > 0) x -= half;
+        track.style.transform = "translate3d(" + x.toFixed(1) + "px,0,0)";
+      }
+      requestAnimationFrame(frame);
+      window.addEventListener("resize", function () { half = 0; });
+      stage.addEventListener("pointerdown", function (e) {
+        var r = e.target.closest && e.target.closest(".d-ribbon"); if (!r || e.button) return;
+        drag = true; moved = 0; lastX = e.clientX; lastT = performance.now(); v = 0; r.classList.add("is-drag");
+      });
+      window.addEventListener("pointermove", function (e) {
+        if (!drag) return;
+        var now = performance.now(), dx = e.clientX - lastX, dt = Math.max(1, now - lastT);
+        x += dx; moved += Math.abs(dx);
+        v = v * 0.6 + (dx / dt * 1000) * 0.4;        // smoothed finger speed, px per second
+        lastX = e.clientX; lastT = now;
+      }, { passive: true });
+      function end() {
+        if (!drag) return; drag = false;
+        if (performance.now() - lastT > 120) v = DRIFT;   // held still before letting go: no flick
+        v = Math.max(-4200, Math.min(4200, v));
+        var r = stage.querySelector(".d-ribbon"); if (r) r.classList.remove("is-drag");
+      }
+      window.addEventListener("pointerup", end); window.addEventListener("pointercancel", end);
+      // a drag is not a tap: only a still touch opens the gallery
+      stage.addEventListener("click", function (e) {
+        if (moved > 8 && e.target.closest && e.target.closest(".d-ribbon")) { e.preventDefault(); e.stopPropagation(); }
+        moved = 0;
+      }, true);
+    })();
 
     // with a mouse, the doors lean a little toward the pointer
     if (window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches && !RM) {
