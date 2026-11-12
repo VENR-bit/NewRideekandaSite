@@ -7,6 +7,9 @@
   "use strict";
 
   var root = document.documentElement;
+  // The Sinhala home page (si/index.html) runs this same script: <html lang="si" data-root="../">.
+  var SI = (root.getAttribute("lang") || "").toLowerCase() === "si";
+  var ROOT = root.getAttribute("data-root") || "";
   var $ = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return [].slice.call((c || document).querySelectorAll(s)); };
   var RM = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -70,6 +73,10 @@
   /* ═════════ Content built from the site's shared data ═════════ */
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var MONTHS_L = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var MONTHS_SI = ["ජන", "පෙබ", "මාර්තු", "අප්‍රේල්", "මැයි", "ජූනි", "ජූලි", "අගෝ", "සැප්", "ඔක්", "නොවැ", "දෙසැ"];
+  var MONTHS_SI_L = ["ජනවාරි", "පෙබරවාරි", "මාර්තු", "අප්‍රේල්", "මැයි", "ජූනි", "ජූලි", "අගෝස්තු", "සැප්තැම්බර්", "ඔක්තෝබර්", "නොවැම්බර්", "දෙසැම්බර්"];
+  var POYA_SI = { Duruthu: "දුරුතු", Navam: "නවම්", Madin: "මැදින්", Bak: "බක්", Vesak: "වෙසක්", Poson: "පොසොන්",
+                  Esala: "ඇසළ", Nikini: "නිකිණි", Binara: "බිනර", Vap: "වප්", Ill: "ඉල්", Unduvap: "උඳුවප්" };
   var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   function ymd(s) { var p = s.split("-"); return { y: +p[0], m: +p[1] - 1, d: +p[2], t: Date.UTC(+p[0], +p[1] - 1, +p[2]) }; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -81,24 +88,29 @@
     var up = (cal.retreats || []).filter(function (r) { return ymd(r.end).t >= today.t; })
       .sort(function (a, b) { return ymd(a.start).t - ymd(b.start).t; }).slice(0, 5);
     if (up.length) {
-      var href = cal.bookingUrl || "book-your-stay/";
+      var href = ROOT + (cal.bookingUrl || "book-your-stay/");
       list.innerHTML = up.map(function (r, i) {
         var a = ymd(r.start), b = ymd(r.end);
         var days = Math.round((a.t - today.t) / 864e5);
+        var MN = SI ? MONTHS_SI : MONTHS;
         var range = a.m === b.m
-          ? a.d + " — " + b.d + " " + MONTHS[b.m]
-          : a.d + " " + MONTHS[a.m] + " — " + b.d + " " + MONTHS[b.m];
-        var chip = days <= 0 ? '<span class="rt-in soon">Under way</span>'
-          : '<span class="rt-in' + (days <= 30 ? " soon" : "") + '">' + (days === 1 ? "Tomorrow" : "In " + days + " days") + "</span>";
+          ? a.d + " — " + b.d + " " + MN[b.m]
+          : a.d + " " + MN[a.m] + " — " + b.d + " " + MN[b.m];
+        var chip = days <= 0 ? '<span class="rt-in soon">' + (SI ? "දැන් පැවැත්වේ" : "Under way") + '</span>'
+          : '<span class="rt-in' + (days <= 30 ? " soon" : "") + '">' + (SI ? (days === 1 ? "හෙට" : "දින " + days + "කින්") : (days === 1 ? "Tomorrow" : "In " + days + " days")) + "</span>";
         return '<li><a href="' + esc(href) + '" data-cursor="Book">' +
           '<span class="rt-n">' + ("0" + (i + 1)).slice(-2) + "</span>" +
           '<span class="rt-date">' + range + "<small>" + b.y + "</small></span>" +
-          '<span class="rt-name">' + esc(r.name) + "</span>" + chip + '<i class="arr"></i></a></li>';
+          '<span class="rt-name">' + (SI ? "නේවාසික භාවනා වැඩසටහන" : esc(r.name)) + "</span>" + chip + '<i class="arr"></i></a></li>';
       }).join("");
     }
     var next = (cal.poya || []).filter(function (p) { return ymd(p.date).t >= today.t; })[0];
     if (next) {
       var p = ymd(next.date), wd = DAYS[new Date(p.t).getUTCDay()];
+      if (SI) {
+        var pn = POYA_SI[next.name.split(" ")[0]];
+        $("#poyaText").innerHTML = "ඊළඟ පෝය — <strong>" + (pn ? pn + " පෝය" : esc(next.name)) + "</strong>, " + MONTHS_SI_L[p.m] + " " + p.d;
+      } else
       $("#poyaText").innerHTML = "Next full moon — <strong>" + esc(next.name) + "</strong>, " + wd + " " + p.d + " " + MONTHS_L[p.m];
       $("#poya").hidden = false;
     }
@@ -111,11 +123,11 @@
     grid.innerHTML = top.map(function (p) {
       var d = ymd(p.date);
       // The news page keeps a light thumbnail of every lead photo; fall back to the full one.
-      var full = p.image ? "news-and-events/assets/" + esc(p.image) : "";
-      var thumb = p.image ? "news-and-events/assets/thumbs/" + esc(p.image.replace(/\.\w+$/, ".jpg")) : "";
+      var full = p.image ? ROOT + "news-and-events/assets/" + esc(p.image) : "";
+      var thumb = p.image ? ROOT + "news-and-events/assets/thumbs/" + esc(p.image.replace(/\.\w+$/, ".jpg")) : "";
       var img = p.image ? '<figure><img src="' + thumb + '" data-full="' + full + '" alt="" loading="lazy" decoding="async" ' +
         'onerror="if(this.src.indexOf(this.dataset.full)<0)this.src=this.dataset.full" /></figure>' : "";
-      return '<a class="nw-card reveal" href="news-and-events/">' + img +
+      return '<a class="nw-card reveal" href="' + ROOT + 'news-and-events/">' + img +
         '<p class="nw-meta"><b>' + esc(p.type || "News") + "</b><span>" + d.d + " " + MONTHS_L[d.m] + " " + d.y + "</span></p>" +
         "<h3>" + esc(p.title) + "</h3><p>" + esc(p.excerpt || "") + "</p></a>";
     }).join("");
@@ -157,8 +169,8 @@
     var v = V[Math.floor(Math.random() * V.length)];
     var pali = $("#versePali"), en = $("#verseEn"), cite = $("#verseCite");
     if (pali) pali.innerHTML = v[1].map(esc).join("<br>");
-    if (en) en.textContent = v[2];
-    if (cite) cite.textContent = "Dhammapada · Citta Vagga · Verse " + v[0];
+    if (en) { if (SI) en.hidden = true; else en.textContent = v[2]; }
+    if (cite) cite.textContent = SI ? "ධම්මපදය · චිත්ත වග්ගය · " + v[0] + " වන ගාථාව" : "Dhammapada · Citta Vagga · Verse " + v[0];
   })();
 
   /* Gallery ribbon — two rows drifting in opposite directions. */
@@ -168,7 +180,7 @@
     rows.forEach(function (row, r) {
       var h = "";
       for (var i = r; i < 20; i += 2) {
-        h += '<figure class="' + (shape[i] || "") + '"><img src="rk/img/m' + ("0" + i).slice(-2) + '.webp" alt="" loading="lazy" decoding="async" /></figure>';
+        h += '<figure class="' + (shape[i] || "") + '"><img src="' + ROOT + 'rk/img/m' + ("0" + i).slice(-2) + '.webp" alt="" loading="lazy" decoding="async" /></figure>';
       }
       row.innerHTML = h + h;   // doubled so the loop is seamless
     });
@@ -178,7 +190,7 @@
   var dayTicks = $("#dayTicks");
   if (dayTicks && ROWS.length) {
     dayTicks.innerHTML = ROWS.map(function (r, i) {
-      return '<li data-i="' + i + '" title="' + esc(r.t.en + " — " + r.a.en) + '">' + clock(hm(r.from)) + "</li>";
+      return '<li data-i="' + i + '" title="' + esc(SI ? r.t.si + " — " + r.a.si : r.t.en + " — " + r.a.en) + '">' + clock(hm(r.from)) + "</li>";
     }).join("");
   }
 
@@ -188,7 +200,7 @@
     function tick() {
       var h = colomboHour(), i = rowAt(h);
       t.textContent = clock(h);
-      if (a) a.textContent = i >= 0 ? ROWS[i].a.en : "";
+      if (a) a.textContent = i >= 0 ? ROWS[i].a[SI ? "si" : "en"] : "";
       $$("#dayTicks li").forEach(function (li, k) { li.classList.toggle("is-now", k === i); });
     }
     tick(); setInterval(tick, 15000);
@@ -291,7 +303,7 @@
     try { remembered = localStorage.getItem("rk-kiosk") === "1"; } catch (e) {}
     if (!(kp === "1" || (kp !== "0" && (standalone || remembered)))) return;
     var timer;
-    function reset() { clearTimeout(timer); timer = setTimeout(function () { location.href = "dashboard/"; }, 120000); }
+    function reset() { clearTimeout(timer); timer = setTimeout(function () { location.href = ROOT + "dashboard/"; }, 120000); }
     ["pointerdown", "touchstart", "mousemove", "keydown", "scroll", "wheel", "click"].forEach(function (ev) {
       window.addEventListener(ev, reset, { passive: true });
     });
@@ -600,7 +612,7 @@
     /* — 03 · a day on the hill: scroll turns the sky — */
     (function day() {
       var sec = $("#day"); if (!sec || !ROWS.length) return;
-      var H0 = 5.5, H1 = 22.5, cur = -1, lastClock = "";
+      var H0 = 5.5, H1 = 22.5, cur = -1, lastClock = "", L1 = SI ? "si" : "en", L2 = SI ? "en" : "si";
       var tEl = $("#dayTime"), aEl = $("#dayAct"), sEl = $("#daySi"), ticks = $$("#dayTicks li");
       function show(p) {
         var h = H0 + (H1 - H0) * p, i = rowAt(h), c = clock(h, 5);
@@ -608,10 +620,10 @@
         if (i !== cur && i >= 0) {
           cur = i;
           ticks.forEach(function (li, k) { li.classList.toggle("is-on", k <= i); });
-          if (RM) { aEl.textContent = ROWS[i].a.en; sEl.textContent = ROWS[i].a.si; }
+          if (RM) { aEl.textContent = ROWS[i].a[L1]; sEl.textContent = ROWS[i].a[L2]; }
           else gsap.timeline({ overwrite: true })
             .to([aEl, sEl], { y: -14, opacity: 0, duration: 0.25, ease: "power2.in" })
-            .add(function () { aEl.textContent = ROWS[i].a.en; sEl.textContent = ROWS[i].a.si; })
+            .add(function () { aEl.textContent = ROWS[i].a[L1]; sEl.textContent = ROWS[i].a[L2]; })
             .fromTo([aEl, sEl], { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.06, ease: EASE });
         }
         if (skyOK && skyMode === "day") Sky.setHour(h);
@@ -721,7 +733,7 @@
     (function breath() {
       var word = $("#breathWord"), ring = $(".breath i"); if (!word || !ring || RM) return;
       var t;
-      function cycle() { word.textContent = "Breathe in"; clearTimeout(t); t = setTimeout(function () { word.textContent = "Breathe out"; }, 4000); }
+      function cycle() { word.textContent = SI ? "හුස්ම ගන්න" : "Breathe in"; clearTimeout(t); t = setTimeout(function () { word.textContent = SI ? "හුස්ම හෙළන්න" : "Breathe out"; }, 4000); }
       ring.addEventListener("animationiteration", cycle); cycle();
       gsap.from(".verse-in > *", { y: 40, opacity: 0, duration: 1.4, stagger: 0.18, ease: EASE, scrollTrigger: { trigger: "#verse", start: "top 55%", once: true } });
       gsap.fromTo(".breath", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, ease: "none", scrollTrigger: { trigger: "#verse", start: "top bottom", end: "top 20%", scrub: true } });
@@ -768,7 +780,7 @@
     if (lenis) lenis.start();
     if (RM) { gsap.set(".hero-mid > *, .hero-top, .hero-foot", { opacity: 1 }); return; }
     var chars = [];
-    if (SplitText) chars = SplitText.create(".ht-1", { type: "chars", charsClass: "char" }).chars;
+    if (SplitText && !SI) chars = SplitText.create(".ht-1", { type: "chars", charsClass: "char" }).chars;
     var tl = gsap.timeline({ defaults: { ease: EASE } });
     if (chars.length) tl.from(chars, { yPercent: 55, opacity: 0, filter: "blur(14px)", duration: 1.5, stagger: { each: 0.04, from: "center" } }, 0);
     else tl.from(".ht-1", { y: 60, opacity: 0, duration: 1.6 }, 0);

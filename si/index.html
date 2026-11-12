@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="si" data-root="../">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0c120e" />
+<title>රිදීකන්ද ආරණ්‍ය සේනාසනය</title>
+<meta name="description" content="රිදීකන්ද ආරණ්‍ය සේනාසනය — මාතලේ උඩස්ගිරියේ පිහිටි ථෙරවාද බෞද්ධ භාවනා ආරණ්‍ය සේනාසනය පිළිබඳ විස්තරය." />
+<link rel="alternate" hreflang="en" href="../" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="64x64" href="../app/favicon-64.png?v=3" />
+<link rel="apple-touch-icon" href="../app/apple-touch-icon.png?v=2" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Hanken+Grotesk:wght@300..600&family=Noto+Serif+Sinhala:wght@300..600&display=swap" rel="stylesheet" />
+<script>
+  /* Theme before first paint. Same rule and storage key as the rest of the
+     site: "auto" follows the clock (light 06:00–18:00), a tap on the toggle
+     pins light or dark. */
+  (function () {
+    var r = document.documentElement;
+    r.className += " js";
+    try {
+      var m = localStorage.getItem('rk-home-theme');
+      if (m !== 'light' && m !== 'dark') m = 'auto';
+      var h = new Date().getHours();
+      r.setAttribute('data-theme', m === 'auto' ? ((h >= 6 && h < 18) ? 'light' : 'dark') : m);
+      r.setAttribute('data-theme-mode', m);
+    } catch (e) { r.setAttribute('data-theme', 'dark'); }
+  })();
+</script>
+<link rel="stylesheet" href="../rk/rk.css?v=16" />
+<script src="/analytics.js?v=1"></script>
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-in">
+    <span class="logo loader-logo"></span>
+    <p class="loader-word">රිදීකන්ද<span>උඩස්ගිරිය &middot; මාතලේ &middot; ශ්‍රී ලංකා</span></p>
+  </div>
+  <div class="loader-bar"><i id="loaderBar"></i></div>
+  <span class="loader-num" id="loaderNum">0</span>
+</div>
+
+<div class="sky" aria-hidden="true"><canvas id="sky"></canvas><div class="sky-fallback"></div>
+  <svg class="sky-eagle" id="skyEagle" viewBox="0 0 200 90" focusable="false"><path d="M100 30.5C103.4 30.5 105.2 34 105.2 38.5C118 35.5 136 33.5 152 33.6C161 33.6 168 32.9 174 31.2L174.9 30.4L191.2 25.3Q193.9 24.4 194.4 25.6Q194.9 26.7 192.3 28L178.6 35L177.2 34.8L197.5 31.9Q200.4 31.5 200.6 32.7Q200.9 34 198.2 34.8L180 40.1L178.3 39.5L200.3 39.7Q203.2 39.7 203.2 41Q203.3 42.3 200.4 42.6L180.1 45.1L178.1 44.2L198.8 48.1Q201.6 48.7 201.5 49.9Q201.3 51.2 198.5 51L179 50L176.9 48.9L193.6 55.8Q196.2 56.9 195.8 58Q195.4 59.2 192.7 58.6L176.6 54.8L174.5 53.4L185.3 61.5Q187.7 63.1 187 64.2Q186.4 65.3 183.8 64L172.9 59.1C160 62.5 141 61.5 126 59.6C117 58.4 110 55.6 106.4 52.6C107 60.5 110.2 70.5 116.5 80.5Q108.5 85 100 83Q91.5 85 83.5 80.5C89.8 70.5 93 60.5 93.6 52.6C90 55.6 83 58.4 74 59.6C59 61.5 40 62.5 27.1 59.1L16.2 64Q13.6 65.3 13 64.2Q12.3 63.1 14.7 61.5L25.5 53.4L23.4 54.8L7.3 58.6Q4.6 59.2 4.2 58Q3.8 56.9 6.4 55.8L23.1 48.9L21 50L1.5 51Q-1.3 51.2 -1.5 49.9Q-1.6 48.7 1.2 48.1L21.9 44.2L19.9 45.1L-0.4 42.6Q-3.3 42.3 -3.2 41Q-3.2 39.7 -0.3 39.7L21.7 39.5L20 40.1L1.8 34.8Q-0.9 34 -0.6 32.7Q-0.4 31.5 2.5 31.9L22.8 34.8L21.4 35L7.7 28Q5.1 26.7 5.6 25.6Q6.1 24.4 8.8 25.3L25.1 30.4L26 31.2C32 32.9 39 33.6 48 33.6C64 33.5 82 35.5 94.8 38.5C94.8 34 96.6 30.5 100 30.5z"/></svg></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><i></i><span></span></div>
+<div class="veil" id="veil" aria-hidden="true"></div>
+
+<header class="hd" id="hd">
+  <a class="hd-brand" href="./" aria-label="රිදීකන්ද ආරණ්‍ය සේනාසනය">
+    <span class="logo"></span>
+    <span class="hd-name">රිදීකන්ද<small>ආරණ්‍ය සේනාසනය</small></span>
+  </a>
+  <nav class="hd-links" aria-label="Primary">
+    <a href="../monastery/si/">ආරණ්‍ය සේනාසනය</a>
+    <a href="../retreat-center/si/">භාවනා වැඩසටහන</a>
+    <a href="../donate/">පරිත්‍යාග</a>
+    <a href="../" lang="en" style="font-family:var(--f-text);letter-spacing:.12em;text-transform:uppercase;font-size:.8rem">English</a>
+  </nav>
+  <div class="hd-tools">
+    <button class="ic-btn" id="soundBtn" type="button" aria-pressed="false" aria-label="Forest ambience: off" title="Forest ambience"><span class="bars"><i></i><i></i><i></i><i></i></span></button>
+    <button class="ic-btn" id="themeBtn" type="button" aria-label="Toggle light / dark theme"></button>
+    <a class="pill hd-book" href="../book-your-stay/" data-magnet><span>වෙන් කරවා ගැනීම</span></a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">
+      <span class="menu-btn-t"><b>මෙනුව</b><b>වසන්න</b></span><span class="menu-btn-i"><i></i><i></i></span>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Site navigation" hidden>
+  <div class="menu-bg"></div>
+  <div class="menu-in">
+    <div class="menu-main">
+      <p class="label">රිදීකන්ද ආරණ්‍ය සේනාසනය</p>
+      <ul class="menu-big">
+        <li><a href="../monastery/si/" data-img="../rk/img/x-monastery.webp"><span>ආරණ්‍ය සේනාසනය</span><small lang="en">Monastery</small></a></li>
+        <li><a href="../retreat-center/si/" data-img="../rk/img/x-retreat.webp"><span>භාවනා වැඩසටහන</span><small lang="en">Retreat Program</small></a></li>
+        <li><a href="../book-your-stay/" data-img="../rk/img/x-booking.webp"><span>වෙන් කරවා ගැනීම</span><small lang="en">Book Your Stay</small></a></li>
+        <li><a href="../news-and-events/" data-img="../rk/img/x-news.webp"><span>ප්‍රවෘත්ති සහ සිදුවීම්</span><small lang="en">News & Events</small></a></li>
+        <li><a href="../gallery/" data-img="../rk/img/x-gallery.webp"><span>ඡායාරූප</span><small lang="en">Gallery</small></a></li>
+        <li><a href="../donate/" data-img="../rk/img/x-donate.webp"><span>පරිත්‍යාග</span><small lang="en">Donate</small></a></li>
+        <li><a href="../contact/" data-img="../rk/img/x-contact.webp"><span>සම්බන්ධ වන්න</span><small lang="en">Contact</small></a></li>
+      </ul>
+    </div>
+    <div class="menu-side">
+      <div class="menu-col"><p class="label">තවත්</p><ul>
+        <li><a href="../videos/">වීඩියෝ</a></li><li><a href="../reviews/">ඇගයීම්</a></li><li><a href="../daily-routine/">ආරණ්‍යයේ දින චර්යාව</a></li>
+        <li><a href="../" lang="en" style="font-family:var(--f-text)">English</a></li>
+      </ul></div>
+      <div class="menu-col"><p class="label">ව්‍යාපෘති</p><ul>
+        <li><a href="../projects/">ව්‍යාපෘති</a></li><li><a href="../projects/road-project/">මාර්ග ව්‍යාපෘතිය</a></li><li><a href="../projects/herbal-plants/">ඖෂධ පැළ රෝපණය</a></li><li><a href="../projects/threestory/">තෙමහල් ගොඩනැගිල්ල</a></li><li><a href="../requirements/">ආරණ්‍ය අවශ්‍යතා</a></li><li><a href="../projects/library-cafe/">පුස්තකාල කැෆේ</a></li>
+      </ul></div>
+      <div class="menu-col"><p class="label">පුස්තකාල</p><ul>
+        <li><a href="../ebooks/">ඊ-පොත් පුස්තකාලය</a></li><li><a href="../dhamma-talks/si/">ධර්ම දේශනා (ඉංග්‍රීසි)</a></li><li><a href="../dhamma-talks/si/">ධර්ම දේශනා (සිංහල)</a></li><li><a href="../audio-library/">ශ්‍රව්‍ය පුස්තකාලය</a></li><li><a href="../retreat-docs/">වැඩසටහන් ලේඛන</a></li>
+      </ul></div>
+      <div class="menu-foot" style="font-family:var(--f-text)">
+        <a href="https://wa.me/94742252980" target="_blank" rel="noopener">WhatsApp +94 74 225 2980</a>
+        <a href="mailto:rideekanda@gmail.com">rideekanda@gmail.com</a>
+        <span class="menu-social">
+          <a href="https://www.facebook.com/rideekandaforest" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.instagram.com/rideekanda.monastery/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://youtube.com/c/RideekandaForestMonastery" target="_blank" rel="noopener">YouTube</a>
+        </span>
+      </div>
+    </div>
+    <div class="menu-preview" aria-hidden="true"><img alt="" /></div>
+  </div>
+</div>
+
+<main id="main">
+
+<section class="hero" id="top" data-sky>
+  <div class="hero-top"><span>උඩස්ගිරිය &middot; මාතලේ &middot; ශ්‍රී ලංකා</span><span lang="en" style="font-family:var(--f-text);letter-spacing:.22em;text-transform:uppercase;font-size:.7rem">Rideekanda Forest Monastery</span></div>
+  <div class="hero-mid">
+    <h1 class="hero-title" aria-label="රිදීකන්ද ආරණ්‍ය සේනාසනය">
+      <span class="ht-1" aria-hidden="true">රිදීකන්ද</span>
+      <span class="ht-2" aria-hidden="true">ආරණ්‍ය සේනාසනය</span>
+    </h1>
+    <div class="hero-cta">
+      <a class="pill pill-solid" href="../book-your-stay/" data-magnet><span>වෙන් කරවා ගැනීම</span><i class="arr"></i></a>
+      <a class="pill pill-glass" href="#about" data-magnet><span>ආරණ්‍ය සේනාසනය</span></a>
+    </div>
+  </div>
+  <div class="hero-foot">
+    <div class="now" id="now"><i class="now-dot"></i><span class="now-k"></span><span class="now-t" id="nowTime">—</span><span class="now-a" id="nowAct"></span></div>
+    <a class="scroll-cue" href="#about" aria-label="Scroll"><span>Scroll</span><i></i></a>
+  </div>
+</section>
+
+<section class="sec about" id="about">
+  <div class="mist-edge" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="label reveal"><b>01</b>ආරණ්‍ය සේනාසනය</p>
+    <p class="statement" id="statement">රිදීකන්ද ආරණ්‍යය සේනාසනය, මාතලේ දිස්ත්‍රික්කයේ යටවත්ත ප්‍රාදේශීය ලේකම් කාර්යාලට අයත් උඩස්ගිරිය ග්‍රාමයට යාබදව ඉතා මනරම් කඳු මුදුනක පිහිටියා වූ භාවනා යෝගීන්ගේ තෝතැන්නකි. එහි වූ සෞම්‍ය දේශගුණය, සීතල සහ සෙවණ, භාවනා යෝගී භික්ෂුන් වහන්සේලා මෙන්ම, උපාසක උපාසිකාවන්ගේ සිත මෙන්ම කයටද ගෙන දෙන්නේ සුවපත් භාවයකි.</p>
+    <div class="about-grid">
+      <figure class="about-fig-a clip" data-speed="0.12"><img src="../rk/img/monk-view.webp" width="1280" height="880" alt="" loading="lazy" decoding="async" /></figure>
+      <div class="about-copy">
+        <p class="reveal">මිහිඳු මහ රහතන් වහන්සේගෙන් ඇරඹුණු ලක්දිව ථෙරවාද බුදුසසුන අද දක්වා නොනැසී පවත්වා ගෙන එන ගමනේදී, වළගම්බා රජ සමයේ බැමිණිටියා සාය නම් අතිශය දරුණු සාගතය නිසා එතෙක් වාචෝද්ගතව පවත්වාගෙන ආ තෙවළා බුදුවදන අභාවයට යා නොදී, කඳු රටට වැඩම කොට පෙළ දහම වාචෝද්ගත කොට අස්වසමින් රැක ගැනීමට දිරි දැරූ ඒ මහා සංඝරත්නය, මාතලේ අළු විහාරයේ දී ධර්මයේ චිරස්ථිතිය පිණිස ත්‍රිපිටකය ග්‍රන්ථාරූඪ කළහ. එවන් සංඝ පරපුරකින් පෝෂණය වූ භික්ෂු පරම්පරාවක් ලෙස උත්තම ශාසනයේ ප්‍රතිපත්තිගරුකව කටයුතු කරමින් ආරණ්‍යය වාසීව වැඩසිටින භික්ෂුන් වහන්සේලා මෙම රිදීකන්ද ආරණ්‍යය සේනාසනය තුළ වැඩසිටියි. තමන් වහන්සේලාගේ අධ්‍යාත්මික ගුණ වගාවන් වර්ධනය කරගනිමින්, ධර්ම මාර්ගය තුළ ගමන් කරන භාවනායෝගීන්ටත් මාර්ගෝපදේශනය ලබා දෙමින්, බුද්ධ දර්ශනය මෙරට මෙන්ම ජාත්‍යන්තරය තුළද ප්‍රචලිත කිරීමේ වටිනා ශාසන මෙහෙවරයක වර්තමානය තුළ කටයුතු කරමින් වැඩ වාසය කරයි.</p>
+        <p class="reveal">ත්‍රිපිටක ගත ධර්ම විනය මනාකොට අධ්‍යයනය කොට එය ප්‍රායෝගිකව ක්‍රියාත්මක කරමින්, බුද්ධ දර්ශනයේ ඉදිරිපත් කරන උතුම් ඵල නෙළාගැනීමේ ක්‍රමානුකූල මාර්ගයක ගමන් කිරීම පිණිස රිදීකන්ද ආරණ්‍යය සේනාසනය ධර්මකාමීන්ට මාර්ගෝපදේශනය ලබා දෙයි. බුද්ධ දර්ශනයේ හර ධර්මතා, සිද්ධාන්ත මනා කොට විවරණය කොට ලබා දෙන්නා වූ ධර්ම දැනුම, ප්‍රායෝගිකව භාවනා කර්මස්ථානයන් නිර්දේශ කරමින් ප්‍රත්‍යක්ෂ අවබෝධයන් කරා කෙනෙකු ගෙන ඒම රිදීකන්ද ආරණ්‍යය සේනාසනයෙහි සුවිශේෂීත්වයයි. ප්‍රත්‍යක්ෂ අවබෝධයන් සඳහා උපකාරක ධර්මතා වූ සමථ සහ විදර්ශනා භාවනා දර්ශනයන්ගෙන් සමන්විතව එක් එක් භාවනායෝගියාගේ වර්ධනය මත පදනම් වූ ඉගැන්වීම් සහ මාර්ගෝපදේශයන් ලබා දීමෙන්, නිවැරදිව පියවරෙන් පියවර කෙනෙකුට ආර්ය මාර්ගයේ ගමන් කිරීමට අවකාශ සලස්වයි.</p>
+        <div class="row-cta reveal">
+          <a class="link-arrow" href="../monastery/si/"><span>ආරණ්‍ය සේනාසනය</span><i class="arr"></i></a>
+          <a class="link-arrow" href="../retreat-center/si/"><span>භාවනා වැඩසටහන</span><i class="arr"></i></a>
+        </div>
+      </div>
+      <figure class="about-fig-b clip" data-speed="-0.1"><img src="../rk/img/steps.webp" width="1280" height="960" alt="" loading="lazy" decoding="async" /></figure>
+    </div>
+  </div>
+</section>
+
+<section class="path dark" id="practice">
+  <div class="path-track" id="pathTrack">
+    <article class="path-panel path-intro">
+      <p class="label"><b>02</b>වැඩසටහන</p>
+      <h2 class="h1">වැඩසටහන පිළිබඳව හැඳින්වීම</h2>
+      <p class="path-lead">ථෙරවාද බුද්ධ දර්ශනයෙහි කෙළවර දර්ශනය වූ නිර්වාණය අරමුණු කරගත්, ඒ සඳහා සැකසූ ක්‍රමානුකූල මාර්ගයක භාවනා යෝගීන් ගමන් කරවීම පිණිස නේවාසික භාවනා වැඩසටහන් තුළ පුහුණු කරවයි.</p>
+    </article>
+    <article class="path-panel path-step">
+      <figure class="path-img"><img src="../rk/img/sit-hall.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <div class="path-copy"><span class="path-num">01</span><p>මූලික අදියර ලෙස භාවනා යෝගියාගේ චිත්ත ඒකාග්‍රතාවය වර්ධනය කරවීම සඳහා විවිධ සමථ භාවනා කර්මස්ථානයන් නිර්දේශ කරමින්, ඒ ඔස්සේ විදර්ශනාව සඳහා අවශ්‍ය මූලික චිත්ත ඒකාග්‍රතාවය තහවුරු කරවීම සිදුකරයි.</p></div>
+    </article>
+    <article class="path-panel path-step">
+      <figure class="path-img"><img src="../rk/img/sit-wall.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <div class="path-copy"><span class="path-num">02</span><p>ඉන්පසු ආර්ය මාර්ගයේ පිළිවෙළින් උදය-වය, භංගය, ආදීනවානුපස්සනා ආදී වූ ඥානයන් ප්‍රත්‍යක්ෂ කිරීම උදෙසා අවශ්‍ය ධර්ම දර්ශන ඉගැන්වීම සහ ඊට අදාළ වූ පෞද්ගලික කර්මස්ථානයන් නිර්දේශ කරමින්, එය ප්‍රායෝගිකව වැඩීම පිණිස මාර්ග උපදේශනය විදර්ශනා භාවනා වැඩසටහනේ සිදුකරයි. ක්‍රමයෙන් ධර්ම මාර්ගය ඔස්සේ පරිණත වන භාවනා යෝගියා ගැඹුරු ධර්ම දර්ශන අධ්‍යයනය කරමින් සම්මා ඥානයන්ගේ ප්‍රත්‍යක්ෂතාවයත් එමගින් අත්දකින ජීවිත අවබෝධයත් මෙම විදර්ශනා භාවනා වැඩසටහන තුළින් ළඟා කරගනියි.</p></div>
+    </article>
+    <article class="path-panel path-step">
+      <figure class="path-img"><img src="../rk/img/sit-view.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <div class="path-copy"><span class="path-num">03</span><p>ඒ සඳහා මුල සිට අද දක්වා ශ්‍රී සද්ධර්මය, ත්‍රිපිටක ගත සූත්‍ර, අභිධර්මය සහ විනය තුළින් උගන්වමින්, එහි ප්‍රායෝගික දර්ශනයන් කර්මස්ථාන මඟින් වැඩීම සඳහා මාර්ගෝපදේශයන් ලබා දීම සිදුකරයි. ගුරුවරයා සමඟ ළඟින් ඇසුරු කිරීමටත් ඒ තුළින් ධර්ම ගැටළු සහ ප්‍රායෝගික ගැටළු නිරාකරණය කර ගැනීමටත් නේවාසික භාවනා වැඩසටහන සම්බන්ධ වන භාවනායෝගීන්ට අවස්ථාව හිමිවේ.</p></div>
+    </article>
+    <article class="path-panel path-end">
+      <h2 class="h1">නේවාසික භාවනා වැඩසටහන</h2>
+      <a class="pill pill-line" href="../retreat-center/si/" data-magnet><span>භාවනා වැඩසටහන</span><i class="arr"></i></a>
+    </article>
+  </div>
+  <div class="path-bar" aria-hidden="true"><i id="pathBar"></i></div>
+</section>
+
+<section class="day" id="day" data-sky>
+  <div class="day-pin">
+    <div class="day-shade" aria-hidden="true"></div>
+    <div class="day-head">
+      <p class="label on-sky"><b>03</b>දින චරියාව</p>
+      <h2 class="h2 on-sky">දෛනික වැඩසටහන</h2>
+    </div>
+    <div class="day-read" aria-live="off">
+      <p class="day-time" id="dayTime">5.30 AM</p>
+      <p class="day-act" id="dayAct"></p>
+      <p class="day-si" id="daySi" lang="en"></p>
+    </div>
+    <ol class="day-ticks" id="dayTicks"></ol>
+    <a class="link-arrow on-sky day-link" href="../daily-routine/"><span>ආරණ්‍යයේ දින චර්යාව</span><i class="arr"></i></a>
+  </div>
+</section>
+
+<section class="sec retreats" id="retreats">
+  <div class="mist-edge" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="label reveal"><b>04</b>වෙන්කරවා ගැනීම</p>
+      <h2 class="h1 split">වෙන්කරවා ගන්නේ කෙසේද?</h2>
+      <p class="sec-lead reveal">අපි ප්‍රධාන වශයෙන් සෑම මසකම කලින් සැලසුම් කළ දිනවල සත් දින සමථ සහ විදර්ශනා භාවනා වැඩසටහන පවත්වනු ලබයි. තෝරාගත් දිනවල කෙටි කාලීන වැඩසටහන් වලට ද සම්බන්ධ විය හැක. ඉඩකඩ සීමිත බැවින් කලින් දින වෙන්කරවා ගැනීම සුදුසුය.</p>
+    </div>
+    <ol class="rt-list" id="rtList"><li class="rt-fallback"><a href="../book-your-stay/">මාර්ගගතව වෙන්කරවා ගන්න →</a></li></ol>
+    <div class="rt-foot reveal">
+      <p class="poya" id="poya" hidden><span class="moon" aria-hidden="true"></span><span id="poyaText"></span></p>
+      <a class="pill pill-solid" href="../book-your-stay/" data-magnet><span>මාර්ගගතව වෙන්කරවා ගන්න</span><i class="arr"></i></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec life" id="life">
+  <div class="wrap">
+    <div class="sec-head"><p class="label reveal"><b>05</b>නවාතැන් සහ දෛනික ජීවිතය</p></div>
+    <div class="life-grid">
+      <article class="life-card" data-speed="0.06">
+        <figure class="clip"><img src="../rk/img/dining.webp" alt="" loading="lazy" decoding="async" /></figure>
+        <h3>ආහාර වේලාවන්</h3><p>ආරාම සංස්කෘතියට අනුකූලව, ආරාමය මගින් පූර්ණ උදෑසන සහ දහවල් දානය ලබා දෙන අතර, සවස් කාලය සඳහා සැහැල්ලු සුප් වර්ගයක් හෝ කැඳ වර්ගයක් ලබා දෙනු ඇත.</p>
+      </article>
+      <article class="life-card" data-speed="-0.06">
+        <figure class="clip"><img src="../rk/img/accommodation.webp" alt="" loading="lazy" decoding="async" /></figure>
+        <h3>අත්‍යවශ්‍ය ද්‍රව්‍ය</h3><p>සහභාගිවන්නන් තමන්ට අවශ්‍ය දෑ පිළිබඳව ස්වයංපෝෂිත විය යුතු අතර, තමන්ගේම තුවා සහ පිරිසිදු කිරීමේ ද්‍රව්‍ය (සබන්, ශැම්පු, දත් බෙහෙත්) රැගෙන ඒමට කාරුණික වන්න.</p>
+      </article>
+      <article class="life-card" data-speed="0.1">
+        <figure class="clip"><img src="../rk/img/hall.webp" alt="" loading="lazy" decoding="async" /></figure>
+        <h3>නිශ්ශබ්දතාවය</h3><p>නිශ්ශබ්දතාවය රැකීම මෙම වැඩසටහනේ මූලික අංගයකි. නියමිත නිශ්ශබ්ද වේලාවන්හිදී සහ භාවනා වාරයන්හිදී නිශ්ශබ්දතාවය අනිවාර්යයෙන්ම සුරැකිය යුතුය.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec teachers dark" id="teachers">
+  <div class="wrap">
+    <div class="sec-head"><p class="label reveal"><b>06</b>ආචාර්ය</p></div>
+    <div class="t-grid">
+      <article class="t-card">
+        <figure class="clip" data-tilt><img src="../rk/img/ariyajeewa.webp" alt="අති පූජ්‍ය අනුරාධපුර අරියජීව ස්වාමීන් වහන්සේ" loading="lazy" decoding="async" /></figure>
+        <p class="t-role">සේනාධිපති &middot; ප්‍රධාන කම්මට්ඨානාචාර්‍ය</p>
+        <h3>අති පූජ්‍ය විද්‍යාවේදී රාජකීය පණ්ඩිත අනුරාධපුර අරියජීව ස්වාමීන් වහන්සේ</h3>
+        <p>අති පූජ්‍ය විද්‍යාවේදී රාජකීය පණ්ඩිත කම්මට්ඨානාචාර්‍ය අනුරාධපුර අරියජීව ස්වාමීන් වහන්සේ, අස්ගිරි මහා විහාරයේ දී අස්ගිරි මහා විහාර පාර්ශවයේ අනුනායක ආණමඩුවේ සද්ධර්මකීර්ති ශ්‍රී රතනපාල බුද්ධ රක්ඛිත ධම්මදස්සනාභිධාන නාහිමිපාණන් වහන්සේගේ ශිෂ්‍යයකු ලෙස උපසම්පදාධූරයට සපැමිණ, වර්තමානයේ කුරුණෑගල කොන්පොල ශ්‍රී අභිනවාරාමය පුරාණ ටැම්පිට විහාරය, කහහේන ශ්‍රී අභිනවාරාමය විහාරය සහ උඩස්ගිරිය රිදීකන්ද ආරණ්‍යයෙහි අධිපතීත්වය හොබවමින් ශාසන මෙහෙවර සිදුකරයි.</p>
+      </article>
+      <article class="t-card">
+        <figure class="clip" data-tilt><img src="../rk/img/rewatha.webp" alt="පූජ්‍ය හෝමාගම රේවත ස්වාමීන් වහන්සේ" loading="lazy" decoding="async" /></figure>
+        <p class="t-role">භාවනා උපදේශක</p>
+        <h3>පූජ්‍ය හෝමාගම රේවත ස්වාමීන් වහන්සේ</h3>
+        <p>දශකයකට ආසන්න කාලයක භාවනා පුහුණුවක් සහ පළපුරුද්දක් ඇති පූජ්‍ය හෝමාගම රේවත ස්වාමීන් වහන්සේ, සිතේ ගැඹුරු ස්වභාවය, සංඥාව (හැඟීම් දැනීම්) සහ භාවනාව පිළිබඳ ගවේෂණය කිරීම සඳහා තම ජීවිතය කැප කර ඇත. ස්‍යාමෝපාලි මහා නිකායේ කෝට්ටේ ශ්‍රී කල්‍යාණි සාමග්‍රීධර්ම මහා සංඝ සභාව යටතේ උපසම්පදාව ලැබූ උන්වහන්සේ, පූජ්‍ය අලකොලගල ඥාණරතන ස්වාමීන් වහන්සේ සහ පූජ්‍ය අනුරාධපුර අරියජීව ස්වාමීන් වහන්සේගේ මඟපෙන්වීම සහ ශික්ෂණය යටතේ පුහුණුව ලබා ඇත.</p>
+      </article>
+    </div>
+    <a class="link-arrow reveal" href="../monastery/si/#teachers"><span>ආරණ්‍ය සේනාසනය</span><i class="arr"></i></a>
+  </div>
+</section>
+
+<section class="sec explore" id="explore">
+  <div class="wrap">
+    <div class="sec-head"><p class="label reveal"><b>07</b>ගවේෂණය</p></div>
+    <ul class="x-list" id="xList">
+      <li><a href="../monastery/si/"><i>01</i><h3>ආරණ්‍ය සේනාසනය</h3><span lang="en">The Monastery</span><b class="arr"></b></a></li>
+      <li><a href="../retreat-center/si/"><i>02</i><h3>භාවනා වැඩසටහන</h3><span lang="en">Retreat Program</span><b class="arr"></b></a></li>
+      <li><a href="../book-your-stay/"><i>03</i><h3>වෙන් කරවා ගැනීම</h3><span lang="en">Book Your Stay</span><b class="arr"></b></a></li>
+      <li><a href="../gallery/"><i>04</i><h3>ඡායාරූප</h3><span lang="en">Gallery</span><b class="arr"></b></a></li>
+      <li><a href="../videos/"><i>05</i><h3>වීඩියෝ</h3><span lang="en">Video Gallery</span><b class="arr"></b></a></li>
+      <li><a href="../dhamma-talks/si/"><i>06</i><h3>ධර්ම දේශනා</h3><span lang="en">Dhamma Talks</span><b class="arr"></b></a></li>
+      <li><a href="../ebooks/"><i>07</i><h3>ඊ-පොත් පුස්තකාලය</h3><span lang="en">E-Book Library</span><b class="arr"></b></a></li>
+      <li><a href="../reviews/"><i>08</i><h3>ඇගයීම්</h3><span lang="en">Reviews</span><b class="arr"></b></a></li>
+      <li><a href="../projects/"><i>09</i><h3>ව්‍යාපෘති</h3><span lang="en">Projects</span><b class="arr"></b></a></li>
+      <li><a href="../contact/"><i>10</i><h3>සම්බන්ධ වන්න</h3><span lang="en">Contact</span><b class="arr"></b></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="ribbon" id="ribbon" aria-label="ඡායාරූප">
+  <div class="rb-row" data-dir="-1"></div>
+  <div class="rb-row" data-dir="1"></div>
+  <a class="rb-link pill pill-solid" href="../gallery/" data-magnet><span>ඡායාරූප</span><i class="arr"></i></a>
+</section>
+
+<section class="verse dark" id="verse">
+  <div class="breath" id="breath" aria-hidden="true"><i></i><i></i><i></i><span id="breathWord">හුස්ම ගන්න</span></div>
+  <div class="wrap verse-in">
+    <blockquote><p class="verse-pali" id="versePali" lang="pi" style="font-family:var(--f-display);font-style:italic"></p><p class="verse-en" id="verseEn"></p></blockquote>
+    <cite id="verseCite"></cite>
+  </div>
+</section>
+
+<section class="sec projects" id="projects">
+  <div class="wrap">
+    <div class="sec-head"><p class="label reveal"><b>08</b>ව්‍යාපෘති</p></div>
+  </div>
+  <div class="pj-rail" id="pjRail" data-cursor="Drag">
+    <a class="pj-card" href="../projects/road-project/">
+      <figure><img src="../rk/img/p-road.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="en">Road Project</span><h3>මාර්ග ව්‍යාපෘතිය</h3>
+    </a>
+    <a class="pj-card" href="../projects/herbal-plants/">
+      <figure><img src="../rk/img/path.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="en">Herbal Plant Planting</span><h3>ඖෂධ පැළ රෝපණ වැඩසටහන</h3>
+    </a>
+    <a class="pj-card" href="../projects/threestory/">
+      <figure class="contain"><img src="../rk/img/p-three.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="en">ThreeStory Building</span><h3>තෙමහල් ගොඩනැගිල්ල</h3>
+    </a>
+    <a class="pj-card" href="../projects/library-cafe/">
+      <figure class="contain"><img src="../rk/img/p-cafe.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="en">Library Café</span><h3>පුස්තකාල කැෆේ</h3>
+    </a>
+    <a class="pj-card" href="../requirements/">
+      <figure><img src="../rk/img/x-projects.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="en">Monastery Requirements</span><h3>ආරණ්‍ය අවශ්‍යතා</h3>
+    </a>
+    <a class="pj-card pj-dana" href="../donate/">
+      <span lang="en">Dāna · Donation</span><h3>පරිත්‍යාග</h3>
+      <b class="pill pill-line"><span>පරිත්‍යාග</span><i class="arr"></i></b>
+    </a>
+  </div>
+</section>
+
+<section class="visit dark" id="visit">
+  <div class="visit-bg" aria-hidden="true"><img src="../rk/img/dusk.webp" alt="" loading="lazy" decoding="async" /></div>
+  <div class="wrap visit-in">
+    <p class="label on-sky reveal">සම්බන්ධවීම</p>
+    <h2 class="h1 split">රිදීකන්ද ආරණ්‍ය සේනාසනය</h2>
+    <p class="visit-lead reveal">රිදීකන්ද ආරණ්‍ය සේනාසනය ආගන්තුක භික්ෂුන් වහන්සේලා, මෙහෙණින් වහන්සේලා, උපාසක, උපාසිකාවන් සඳහා පිළිගන්නා අතර, පහත අරමුණු සාක්ෂාත් කිරීම සඳහා ආරණ්‍යයට පැමිණිය හැක.</p>
+    <div class="visit-cta reveal">
+      <a class="pill pill-solid" href="../book-your-stay/" data-magnet><span>වෙන් කරවා ගැනීම</span><i class="arr"></i></a>
+      <a class="pill pill-glass" href="../contact/" data-magnet><span>සම්බන්ධ වන්න</span></a>
+    </div>
+    <dl class="visit-meta" style="font-family:var(--f-text)">
+      <div class="reveal"><dt style="font-family:var(--f-si);letter-spacing:.02em;text-transform:none;font-size:.9rem">උඩස්ගිරිය &middot; මාතලේ &middot; ශ්‍රී ලංකා</dt><dd><a href="https://maps.app.goo.gl/3Gb3nt8qaPqdSTgB9" target="_blank" rel="noopener">Google Maps ↗</a></dd></div>
+      <div class="reveal"><dt>WhatsApp</dt><dd><a href="https://wa.me/94742252980" target="_blank" rel="noopener">+94 74 225 2980</a></dd></div>
+      <div class="reveal"><dt>Email</dt><dd><a href="mailto:rideekanda@gmail.com">rideekanda@gmail.com</a></dd></div>
+    </dl>
+  </div>
+</section>
+
+</main>
+
+<footer class="ft dark" id="ft">
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-brand"><span class="logo"></span><p>රිදීකන්ද ආරණ්‍ය සේනාසනය<br />උඩස්ගිරිය &middot; මාතලේ &middot; ශ්‍රී ලංකා</p></div>
+      <div><h4>රිදීකන්ද</h4><ul><li><a href="../monastery/si/">ආරණ්‍ය සේනාසනය</a></li><li><a href="../retreat-center/si/">භාවනා වැඩසටහන</a></li><li><a href="../book-your-stay/">වෙන් කරවා ගැනීම</a></li><li><a href="../gallery/">ඡායාරූප</a></li><li><a href="../news-and-events/">ප්‍රවෘත්ති සහ සිදුවීම්</a></li><li><a href="../contact/">සම්බන්ධ වන්න</a></li></ul></div>
+      <div><h4>ව්‍යාපෘති</h4><ul><li><a href="../projects/">ව්‍යාපෘති</a></li><li><a href="../projects/road-project/">මාර්ග ව්‍යාපෘතිය</a></li><li><a href="../projects/herbal-plants/">ඖෂධ පැළ රෝපණය</a></li><li><a href="../projects/threestory/">තෙමහල් ගොඩනැගිල්ල</a></li><li><a href="../requirements/">ආරණ්‍ය අවශ්‍යතා</a></li></ul></div>
+      <div><h4>පුස්තකාල</h4><ul><li><a href="../ebooks/">ඊ-පොත් පුස්තකාලය</a></li><li><a href="../dhamma-talks/si/">ධර්ම දේශනා (ඉංග්‍රීසි)</a></li><li><a href="../dhamma-talks/si/">ධර්ම දේශනා (සිංහල)</a></li><li><a href="../audio-library/">ශ්‍රව්‍ය පුස්තකාලය</a></li><li><a href="../retreat-docs/">වැඩසටහන් ලේඛන</a></li></ul></div>
+    </div>
+    <div class="ft-word" aria-hidden="true"><span>රිදීකන්ද</span></div>
+    <div class="ft-base">
+      <span>© <span id="year">2026</span> රිදීකන්ද ආරණ්‍ය සේනාසනය · <a href="../terms/" lang="en" style="font-family:var(--f-text)">Terms &amp; Conditions</a></span>
+      <span lang="pi" style="font-family:var(--f-display)"><em style="font-style:italic">Sabbadānaṃ dhammadānaṃ jināti</em></span>
+      <a class="ft-top" href="#top" lang="en" style="font-family:var(--f-text)">↑</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../calendar-data.js?v=31"></script>
+<script src="../daily-routine/routine-data.js?v=1"></script>
+<script src="../rk/vendor/gsap.min.js"></script>
+<script src="../rk/vendor/ScrollTrigger.min.js"></script>
+<script src="../rk/vendor/SplitText.min.js"></script>
+<script src="../rk/vendor/lenis.min.js"></script>
+<script src="../rk/sky.js?v=7"></script>
+<script src="../rk/rk.js?v=11"></script>
+<script src="../rk/dash.js?v=2" data-root="../" data-after="0.6" defer></script>
+</body>
+</html>
