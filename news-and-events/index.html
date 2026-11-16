@@ -111,7 +111,7 @@
 </div>
 
 <!-- News data + render -->
-<script src="posts.js?v=17"></script>
+<script src="posts.js?v=18"></script>
 <script>
   (function(){ var y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear(); })();
 
@@ -195,6 +195,13 @@
       if (!current) return;
       setLangBtns(lang);
       var src = current.body || current.excerpt || '';
+      if (lang === 'si' && current.bodySi) {
+        renderBody(current, currentVid, current.bodySi);
+        var tk = (current.title || '') + '|si-title', who0 = current;
+        if (trCache[tk]) rTitle.textContent = trCache[tk];
+        else gtTranslate(current.title || '', 'si').then(function (t) { trCache[tk] = t || who0.title; if (current === who0) rTitle.textContent = trCache[tk]; });
+        return;
+      }
       if (lang === 'en') {
         rTitle.textContent = current.title;
         renderBody(current, currentVid, src);

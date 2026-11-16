@@ -28,6 +28,17 @@
    ────────────────────────────────────────────────────────────── */
 window.NEWS_POSTS = [
   {
+    title: "Kathina Robe Offering Ceremony 2026",
+    date: "2026-11-09",
+    type: "Event",
+    when: "8–9 November 2026",
+    excerpt: "The year's merit-making at Rideekanda — road repairs, planting herbs for robe dyeing, and regular meditation programmes — came to a close with Pirith chanting, an offering to the Mahā Sangha and the Kathina robe-offering ceremony.",
+    body: "Alongside the annual Vas Ārādhanā (Rains Retreat invitation) ceremony, several acts of merit were carried out at Rideekanda Forest Monastery this year: the damaged sections of the monastery's access road were repaired with concrete, a programme was held to plant the medicinal herbs and trees needed for dyeing the monks' robes, and weekly and monthly meditation programmes were conducted successfully.\n\nThe series of merit-making activities came to a close with the Pirith chanting held on 8 and 9 November, followed by the dakkhiṇā offered to the Mahā Sangha the next day and the Kathina Cīvara Pūjā — the Kathina robe-offering ceremony.\n\nTo all the meditators, villagers and every kind-hearted person who contributed to the success of these meritorious activities — may this merit be a condition for realising the Four Noble Truths!",
+    bodySi: "වාර්ෂිකව පැවැත්වෙන වස් ආරාධනා පින්කමට සමගාමීයව රිදීකන්ද ආරණ්‍ය සේනාසනයේ පැවැත්වූ විවිධ පිංකම් අතර මෙවර ආරණ්‍යයේ ප්‍රවේශ මාර්ගයේ අබලන් වූ කොටස් කොන්ක්‍රීට් දමා පිළිසකර කිරීමටත්, පඬු චීවර සැකසීමේ අවශ්‍ය වන ඖශධ සහ රුක් රෝපණ වැඩසටහනත් සහ සති සහ මාසික භාවනා වැඩසටහනුත්  සාර්ථකව සිදුකල අතර වූ අතර එම පින්කම් මාලාව නිමාවට පත් වුයේ නොවැම්බර් 8 සහ 9 වන දිනයන්හි පැවැත්වූ පිරිත් සජ්ඣායනය, පසුදින සංවිධානය කල මහා සංඝරත්නයට පිරිනැමූ දක්ෂිණාව සහ කඨින චීවර පූජෝත්සවය පැවැත්වීමෙන්ය.\n\nමෙම සියළු පිංකම් සාර්ථකව සිදුකිරීමට දායකත්වය ලබාදුන් සියළුම භාවනායෝගීන් සහ ග්‍රාමවාසීන් ඇතුළු පින්වත් සියලු දෙනාටම මෙම ආනිසංස ධර්ම චතුරාර්‍ය සත්‍ය අවබෝධවීම පිණිසම හේතුවාසනා වේවා!",
+    image: "post-43a.jpg",
+    images: ["post-43a.jpg", "post-43b.jpg", "post-43c.jpg", "post-43d.jpg", "post-43e.jpg", "post-43f.jpg", "post-43g.jpg", "post-43h.jpg", "post-43i.jpg", "post-43j.jpg"]
+  },
+  {
     title: "Inaugural Opening of the New Meditation Kuti",
     date: "2026-10-02",
     type: "Event",
