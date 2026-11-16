@@ -61,5 +61,23 @@ window.RK_SESSIONS = [
       { label: "Jhāna Guided Meditation (English · 40 min)", id: "19sgSv2udfmHHhZfWs8JtT8mKF9M15tqp" },
       { label: "Jhāna Guided Meditation (English · 60 min)", id: "1OY0Hk3ctsz5qM-N8q9hLcrBm2urMk397" }
     ]
+  },
+  {
+    n: 7,
+    title: "Five-Step Process of Actions (i)",
+    about: "Following one moment of seeing a flower through five stages — forming, initial feeling, perception, fabrication and consciousness — and how the mind pushes on to seek the next moment.",
+    video: "1TFt8hrSi8D8fy629-8K2EJLszs6MuyhH",
+    audio: "1rGpTyjkZ_ASYXJ4bmtp0_KQeWJyCHKgh",
+    pdf:   "1iPqjTnm8XhLNPaOesxVzge6GbXiHs21A",
+    guided: []
+  },
+  {
+    n: 8,
+    title: "Five-Step Process of Actions (ii)",
+    about: "The same five stages traced through hearing, touching, tasting, smelling and thinking — and how past experience shapes the initial feeling.",
+    video: "1XUN-65r4Soogu6Vc94QWD9UBr_TIqBuz",
+    audio: "1AHuiH3KvWQXdlI9s8-q3DhwBbdLx8P58",
+    pdf:   "1Rum-qxxSxIoz2JFhADvXViR_1U9mBU0s",
+    guided: []
   }
 ];

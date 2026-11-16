@@ -4,7 +4,7 @@
    Items render flexibly: Listen/Summary/guided appear only when present.
    UI strings come from window.RK_LABELS (English defaults below). */
 (function () {
-  var S = window.RK_SESSIONS || [];
+  var S = (window.RK_SESSIONS || []).filter(function (s) { return s.video; }); /* entries without a video id stay hidden */
   var L = Object.assign({
     session: "Session",
     watch: "Watch", listen: "Listen", summary: "Summary",
