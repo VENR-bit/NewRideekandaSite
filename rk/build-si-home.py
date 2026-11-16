@@ -14,7 +14,7 @@ def eyebrow(b): return one(b, r'<p class="eyebrow[^"]*">(.*?)</p>')
 def h2(b): return one(b, r'<h2 class="section-title[^"]*">(.*?)</h2>')
 
 home = read('index.html'); mon = read('rk/_orig/monastery/si/index.html'); ret = read('rk/_orig/retreat-center/si/index.html'); nav = read('eco-nav.js')
-SI_PAGE = {'monastery/': 'monastery/si/', 'retreat-center/': 'retreat-center/si/', 'dhamma-talks/': 'dhamma-talks/si/'}
+SI_PAGE = {'monastery/': 'monastery/si/', 'retreat-center/': 'retreat-center/si/'}
 def link(h): return h if re.match(r'https?:|mailto:|#', h) else '../' + SI_PAGE.get(h, h)
 
 # names in both languages, as the site menu already has them
@@ -44,7 +44,7 @@ xl = one(home, r'<ul class="x-list" id="xList">(.*?)</ul>')
 rows = re.findall(r'<a href="([^"]*)"[^>]*><i>(\d+)</i><h3>(.*?)</h3><span lang="si">(.*?)</span>', xl)
 pj = one(home, r'<div class="pj-rail"[^>]*>(.*?)</div>\s*</section>')
 pcards = re.findall(r'<a class="pj-card" href="([^"]*)">\s*<figure( class="contain")?><img src="([^"]*)"[^>]*></figure>\s*<span lang="si">(.*?)</span><h3>(.*?)</h3>', pj)
-assert len(rows) == 10 and len(pcards) == 5, (len(rows), len(pcards))
+assert len(rows) == 15 and len(pcards) == 5, (len(rows), len(pcards))
 
 def tch(b, img):
     return '''      <article class="t-card">
@@ -77,7 +77,8 @@ out = '''<!DOCTYPE html>
 <link rel="apple-touch-icon" href="../app/apple-touch-icon.png?v=2" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Hanken+Grotesk:wght@300..600&family=Noto+Serif+Sinhala:wght@300..600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../rk/fonts/fonts.css?v=1" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Sinhala:wght@300..600&display=swap" rel="stylesheet" />
 %(head_script)s
 <link rel="stylesheet" href="../rk/rk.css?v=%(vcss)s" />
 <script src="/analytics.js?v=1"></script>
@@ -279,7 +280,7 @@ out = '''<!DOCTYPE html>
 <section class="verse dark" id="verse">
   <div class="breath" id="breath" aria-hidden="true"><i></i><i></i><i></i><span id="breathWord">හුස්ම ගන්න</span></div>
   <div class="wrap verse-in">
-    <blockquote><p class="verse-pali" id="versePali" lang="pi" style="font-family:var(--f-display);font-style:italic"></p><p class="verse-en" id="verseEn"></p></blockquote>
+    <blockquote><p class="verse-pali" id="versePali" lang="pi"></p><p class="verse-en" id="verseEn"></p></blockquote>
     <cite id="verseCite"></cite>
   </div>
 </section>

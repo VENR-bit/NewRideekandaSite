@@ -1,7 +1,7 @@
 /* ──────────────────────────────────────────────────────────────
    Rideekanda Forest Monastery — home page  ·  rk/rk.css
    Paper & forest palette, saffron accent. Fraunces (display),
-   Hanken Grotesk (text), Noto Serif Sinhala.
+   Gentium Plus (text), Noto Serif Sinhala.
    ────────────────────────────────────────────────────────────── */
 :root {
   --bg: #ece7da; --bg-2: #e3dccb; --card: #f4f0e6;
@@ -9,8 +9,8 @@
   --line: rgba(23, 32, 26, .15); --accent: #b4601a; --accent-2: #d98a3a;
   --forest: #0d1510; --forest-2: #131e17; --forest-ink: #ebe6d6; --forest-mute: #97a08f; --forest-line: rgba(235, 230, 214, .16);
   --saffron: #e39a48;
-  --f-display: "Cormorant Garamond", "Cormorant", Georgia, serif;
-  --f-text: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-display: "Cardo", "Cormorant", Georgia, serif;
+  --f-text: "Gentium Plus", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-si: "Noto Serif Sinhala", "Iskoola Pota", serif;
   --gut: clamp(20px, 5vw, 72px);
   --maxw: 1440px;
@@ -464,7 +464,8 @@ html:not([lang="si"]) .hero { grid-template-rows: 1fr auto; }
 .projects { overflow: hidden; }
 .pj-rail { display: flex; gap: clamp(14px, 1.8vw, 28px); padding-inline: max(var(--gut), calc((100vw - var(--maxw)) / 2 + var(--gut))); overflow-x: auto; scrollbar-width: none; cursor: grab; scroll-snap-type: x proximity; scroll-padding-inline: max(var(--gut), calc((100vw - var(--maxw)) / 2 + var(--gut))); }
 .pj-rail::-webkit-scrollbar { display: none; }
-.pj-rail.is-drag { cursor: grabbing; scroll-snap-type: none; }
+.pj-rail.is-drag, .pj-rail.is-walk { scroll-snap-type: none; }
+.pj-rail.is-drag { cursor: grabbing; }
 .pj-rail.is-drag a { pointer-events: none; }
 .pj-card { flex: none; width: clamp(270px, 27vw, 400px); scroll-snap-align: start; display: grid; align-content: start; gap: .5rem; user-select: none; -webkit-user-drag: none; }
 .pj-card figure { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 3px; background: var(--bg-2); margin-bottom: .9rem; }
@@ -668,3 +669,7 @@ html[lang="si"] .now-k, html[lang="si"] .scroll-cue span { display: none; }
   html[lang="si"] .x-list a { grid-template-columns: 2rem minmax(0, 1fr) auto; }
   html[lang="si"] .x-list a span { display: block; grid-column: 2; grid-row: 2; }
 }
+
+/* the verse on the Sinhala page: Pali in Sinhala letters, then its meaning */
+html[lang="si"] .verse-pali { font-family: var(--f-si) !important; font-style: normal !important; font-weight: 400; font-size: clamp(1.15rem, 2.2vw, 1.9rem); line-height: 1.7; max-width: 34em; margin-inline: auto; }
+html[lang="si"] .verse-en { font-family: var(--f-si); font-weight: 400; font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.9; max-width: 36em; }

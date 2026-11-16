@@ -1,6 +1,6 @@
 /* ──────────────────────────────────────────────────────────────
    Rideekanda Forest Monastery — Home page
-   Family design: Cormorant Garamond (display) + Spectral (body),
+   Family design: Cardo (display) + Spectral (body),
    paper / night palette, reveal-on-scroll, hero + veil, footer.
    ────────────────────────────────────────────────────────────── */
 :root {
@@ -8,7 +8,7 @@
   --ink:#2b2620; --ink-soft:#5d5446; --muted:#8d8170;
   --line:rgba(43,38,32,0.14); --ring:rgba(43,38,32,0.22); --accent:#a3763c; --accent-soft:#c79a5c;
   --dark-bg:#221d17; --dark-ink:#ece3d4; --dark-muted:#b6a890;
-  --font-display:"Cormorant Garamond", Georgia, serif;
+  --font-display:"Cardo", Georgia, serif;
   --font-body:"Spectral", Georgia, serif;
   --maxw:1200px; --reveal-y:26px; --reveal-dur:1100ms;
 }

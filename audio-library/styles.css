@@ -2,7 +2,7 @@
   --bg:#f3ecdc; --paper:#faf6ea; --ink:#2a2418; --muted:rgba(42,36,24,.6);
   --line:rgba(42,36,24,.14); --accent:#b07a2e; --forest:#586b49;
   --shadow:0 14px 40px rgba(42,36,24,.16);
-  --display:"Cormorant Garamond",Georgia,serif; --body:"Lora",Georgia,serif;
+  --display:"Cardo",Georgia,serif; --body:"Lora",Georgia,serif;
 }
 [data-theme="dark"]{
   --bg:#1f1a14; --paper:#2a241c; --ink:#f3ecdb; --muted:rgba(243,236,219,.6);

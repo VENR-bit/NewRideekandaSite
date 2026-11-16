@@ -12,9 +12,9 @@
   --accent-2: #8a3920;
   --leaf: #3b4a2a;
   --gold: #a8854a;
-  /* Eco family fonts: Cormorant Garamond for headings / display values,
+  /* Eco family fonts: Cardo for headings / display values,
      Spectral for body copy — matching the rest of the OneSite pages. */
-  --serif: "Cormorant Garamond", Georgia, serif;
+  --serif: "Cardo", Georgia, serif;
   --body-font: "Spectral", Georgia, serif;
   --mono: "JetBrains Mono", ui-monospace, "Menlo", monospace;
 }

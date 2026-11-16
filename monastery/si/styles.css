@@ -9,7 +9,7 @@
   --line:rgba(43,38,32,0.14); --accent:#a3763c; --accent-soft:#c79a5c;
   --dark-bg:#221d17; --dark-ink:#ece3d4; --dark-muted:#b6a890;
   --font-si:"Noto Serif Sinhala", "Iskoola Pota", serif;
-  --font-display:"Cormorant Garamond", Georgia, serif;
+  --font-display:"Cardo", Georgia, serif;
   --maxw:1100px; --reveal-y:24px; --reveal-dur:1000ms;
 }
 @media (prefers-color-scheme: dark) {

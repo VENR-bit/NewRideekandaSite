@@ -85,7 +85,9 @@
     var cal = window.RK_CALENDAR, list = $("#rtList");
     if (!cal || !list) return;
     var today = ymd(colomboDate());
-    var up = (cal.retreats || []).filter(function (r) { return ymd(r.end).t >= today.t; })
+    // The Sinhala page lists the Sinhala-medium programmes (calendar-data.js → retreatsSi) when there are any.
+    var ownSi = SI && cal.retreatsSi && cal.retreatsSi.length;
+    var up = ((ownSi ? cal.retreatsSi : cal.retreats) || []).filter(function (r) { return ymd(r.end).t >= today.t; })
       .sort(function (a, b) { return ymd(a.start).t - ymd(b.start).t; }).slice(0, 5);
     if (up.length) {
       var href = ROOT + (cal.bookingUrl || "book-your-stay/");
@@ -101,7 +103,7 @@
         return '<li><a href="' + esc(href) + '" data-cursor="Book">' +
           '<span class="rt-n">' + ("0" + (i + 1)).slice(-2) + "</span>" +
           '<span class="rt-date">' + range + "<small>" + b.y + "</small></span>" +
-          '<span class="rt-name">' + (SI ? "නේවාසික භාවනා වැඩසටහන" : esc(r.name)) + "</span>" + chip + '<i class="arr"></i></a></li>';
+          '<span class="rt-name">' + (SI ? (ownSi && r.name ? esc(r.name) : "නේවාසික භාවනා වැඩසටහන") : esc(r.name)) + "</span>" + chip + '<i class="arr"></i></a></li>';
       }).join("");
     }
     var next = (cal.poya || []).filter(function (p) { return ymd(p.date).t >= today.t; })[0];
@@ -166,10 +168,44 @@
       [42, ["Diso disaṃ yaṃ taṃ kayirā, verī vā pana verinaṃ;", "Micchāpaṇihitaṃ cittaṃ, pāpiyo naṃ tato kare."], "Whatever harm a foe may do to a foe, or a hater to one he hates, a wrongly directed mind does to oneself far greater harm."],
       [43, ["Na taṃ mātā pitā kayirā, aññe vāpi ca ñātakā;", "Sammāpaṇihitaṃ cittaṃ, seyyaso naṃ tato kare."], "Neither mother, father, nor any other kin can do one the good that a rightly directed mind can do."]
     ];
+    // The same verses in Sinhala (meanings to be proof-read by the monastery).
+    var MEAN_SI = {
+      33: "චංචල වූ, සැලෙන සුලු වූ, රැකීමට දුෂ්කර වූ, වැළැක්වීමට අපහසු වූ සිත නුවණැත්තා ඍජු කරයි — හී වඩුවා හී දණ්ඩ ඍජු කරන්නාක් මෙනි.",
+      34: "දියෙන් ගොඩට ගෙන දමන ලද මාළුවා යම් සේ දඟලයි ද, මාරයාගේ විෂය හැර දැමීමට යන මේ සිත ද එසේ ම දඟලයි.",
+      35: "නිග්‍රහ කිරීමට දුෂ්කර වූ, වහා පෙරළෙන, කැමති කැමති අරමුණෙහි වැටෙන සිත දමනය කිරීම යහපති. දමනය කළ සිත සැප ගෙන දෙයි.",
+      36: "දැකීමට ඉතා දුෂ්කර වූ, ඉතා සියුම් වූ, කැමති කැමති අරමුණෙහි වැටෙන සිත නුවණැත්තා රකින්නේ ය. රකින ලද සිත සැප ගෙන දෙයි.",
+      37: "දුර ගමන් කරන, තනිව හැසිරෙන, ශරීරයක් නැති, ගුහාවෙහි වසන සිත යමෙක් සංවර කරගනිත් ද, ඔවුහු මාර බන්ධනයෙන් මිදෙති.",
+      38: "සිත නොපිහිටි, සද්ධර්මය නොදන්නා, සැලෙන ශ්‍රද්ධා ඇති තැනැත්තාගේ ප්‍රඥාව සම්පූර්ණ නොවේ.",
+      39: "රාගයෙන් නොතෙත් සිත් ඇති, ද්වේෂයෙන් නොපහරන ලද සිත් ඇති, පින් පව් දෙක ම පහ කළ, නිදි වරන තැනැත්තාට බියක් නැත.",
+      40: "මේ කය මැටි කළයක් වැනි යැයි දැන, මේ සිත නගරයක් මෙන් ස්ථිර කොට පිහිටුවා, ප්‍රඥා ආයුධයෙන් මාරයා සමඟ යුද්ධ කරන්න. දිනූ දෙය රැකගන්න; එහි නොඇලී වසන්න.",
+      41: "වැඩි කල් නොගොස් මේ කය, විඤ්ඤාණය පහව ගොස්, ඉවත දමන ලදුව, නිෂ්ඵල දර කොටයක් මෙන් පොළොව මත වැතිරෙන්නේ ය.",
+      42: "සතුරෙක් සතුරෙකුට හෝ වෛරක්කාරයෙක් වෛරක්කාරයෙකුට යම් විපතක් කරන්නේ ද, වැරදි ලෙස පිහිටුවන ලද සිත ඊටත් වඩා ලාමක බවට ඔහු පමුණුවයි.",
+      43: "මවක් හෝ පියෙක් හෝ අන් නෑයෝ හෝ යම් යහපතක් නොකරත් ද, මනා කොට පිහිටුවන ලද සිත ඊට වඩා උතුම් බවට ඔහු පමුණුවයි."
+    };
+    // Pali in Sinhala letters, written out from the romanised line letter by letter.
+    function paliSi(str) {
+      var C = { kh: "ඛ", gh: "ඝ", ch: "ඡ", jh: "ඣ", "ṭh": "ඨ", "ḍh": "ඪ", th: "ථ", dh: "ධ", ph: "ඵ", bh: "භ",
+                k: "ක", g: "ග", "ṅ": "ඞ", c: "ච", j: "ජ", "ñ": "ඤ", "ṭ": "ට", "ḍ": "ඩ", "ṇ": "ණ", t: "ත", d: "ද", n: "න",
+                p: "ප", b: "බ", m: "ම", y: "ය", r: "ර", l: "ල", v: "ව", s: "ස", h: "හ", "ḷ": "ළ" };
+      var VI = { a: "අ", "ā": "ආ", i: "ඉ", "ī": "ඊ", u: "උ", "ū": "ඌ", e: "එ", o: "ඔ" };
+      var VS = { a: "", "ā": "ා", i: "ි", "ī": "ී", u: "ු", "ū": "ූ", e: "ෙ", o: "ො" };
+      var t = str.toLowerCase(), out = "", i = 0;
+      while (i < t.length) {
+        var two = t.substr(i, 2), one = t.charAt(i), con = C[two] ? two : (C[one] ? one : "");
+        if (con) {
+          i += con.length;
+          var nx = t.charAt(i);
+          if (nx in VS) { out += C[con] + VS[nx]; i++; } else out += C[con] + "්";
+        } else if (one === "ṃ") { out += "ං"; i++; }
+        else if (one in VI) { out += VI[one]; i++; }
+        else { out += one; i++; }
+      }
+      return out;
+    }
     var v = V[Math.floor(Math.random() * V.length)];
     var pali = $("#versePali"), en = $("#verseEn"), cite = $("#verseCite");
-    if (pali) pali.innerHTML = v[1].map(esc).join("<br>");
-    if (en) { if (SI) en.hidden = true; else en.textContent = v[2]; }
+    if (pali) pali.innerHTML = v[1].map(function (l) { return esc(SI ? paliSi(l) : l); }).join("<br>");
+    if (en) en.textContent = SI ? MEAN_SI[v[0]] : v[2];
     if (cite) cite.textContent = SI ? "ධම්මපදය · චිත්ත වග්ගය · " + v[0] + " වන ගාථාව" : "Dhammapada · Citta Vagga · Verse " + v[0];
   })();
 
@@ -743,7 +779,21 @@
     /* — 09 · projects rail: drag to browse — */
     (function rail() {
       var el = $("#pjRail"); if (!el) return;
-      if (!RM) gsap.from(".pj-card", { x: 80, opacity: 0, duration: 1.2, stagger: 0.08, ease: EASE, scrollTrigger: { trigger: el, start: "top 84%", once: true } });
+      if (!RM) gsap.from(".pj-card", { y: 60, opacity: 0, duration: 1.2, stagger: 0.08, ease: EASE, scrollTrigger: { trigger: el, start: "top 84%", once: true } });
+      // On a wide screen the section holds still while the whole row passes, as in chapter 02.
+      mm.add("(min-width: 821px) and (prefers-reduced-motion: no-preference)", function () {
+        var sec = $("#projects"), far = function () { return Math.max(0, el.scrollWidth - el.clientWidth); };
+        var o = { x: 0 };
+        el.classList.add("is-walk");
+        var tw = gsap.to(o, { x: 1, ease: "none", onUpdate: function () { el.scrollLeft = o.x * far(); },
+          scrollTrigger: { trigger: sec, pin: sec, start: function () {
+            // hold with the heading just under the header — or, on a short screen, with the cards wholly in view
+            var head = $(".sec-head", sec), sr = sec.getBoundingClientRect();
+            var a = (head ? head.getBoundingClientRect().top - sr.top : 0) - 96, b = el.getBoundingClientRect().bottom - sr.top - window.innerHeight + 28;
+            return "top+=" + Math.round(Math.max(a, b, 0)) + " top";
+          }, end: function () { return "+=" + far(); }, scrub: 0.8, invalidateOnRefresh: true, anticipatePin: 1 } });
+        return function () { el.classList.remove("is-walk"); tw.kill(); };
+      });
       var down = false, sx = 0, sl = 0, moved = 0, v = 0, lx = 0, raf;
       el.addEventListener("pointerdown", function (e) {
         if (e.pointerType !== "mouse" || e.button) return;

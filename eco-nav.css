@@ -9,8 +9,8 @@
   --rkc-bg: #ece7da; --rkc-ink: #17201a; --rkc-mute: #79816f; --rkc-line: rgba(23, 32, 26, .15);
   --rkc-accent: #b4601a; --rkc-saffron: #e39a48;
   --rkc-forest: #0a100c; --rkc-forest-ink: #ebe6d6; --rkc-forest-mute: #8f9889; --rkc-forest-line: rgba(235, 230, 214, .16);
-  --rkc-display: "Cormorant Garamond", "Cormorant", Georgia, serif;
-  --rkc-text: "Hanken Grotesk", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --rkc-display: "Cardo", "Cormorant", Georgia, serif;
+  --rkc-text: "Gentium Plus", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   --rkc-si: "Noto Serif Sinhala", "Iskoola Pota", serif;
   --rkc-ease: cubic-bezier(.2, .7, .1, 1);
   --rkc-gut: clamp(20px, 5vw, 72px);

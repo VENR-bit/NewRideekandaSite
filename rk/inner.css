@@ -23,8 +23,8 @@ html[data-rk]::after {
 @media print { html[data-rk]::after { display: none; } }
 
 html[data-rk] {
-  --rk-text: "Hanken Grotesk", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --rk-display: "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --rk-text: "Gentium Plus", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --rk-display: "Cardo", "Cormorant", Georgia, serif;
 }
 html[data-rk] ::selection { background: #b4601a; color: #fff; }
 

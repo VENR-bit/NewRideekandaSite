@@ -28,7 +28,7 @@
       "background:rgba(10,16,12,.84);color:#ebe6d6;border:1px solid rgba(235,230,214,.2);" +
       "-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);" +
       "box-shadow:0 10px 30px -12px rgba(0,0,0,.55);-webkit-tap-highlight-color:transparent;" +
-      "font:500 11px/1 'Hanken Grotesk','Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.16em;text-transform:uppercase;" +
+      "font:500 11px/1 'Gentium Plus','Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.16em;text-transform:uppercase;" +
       "opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.1,1),background-color .35s ease,color .35s ease,border-color .35s ease}" +
     ".rk-dash.is-in{opacity:1;transform:none}" +
     ".rk-dash.has-toggle{right:calc(18px + env(safe-area-inset-right,0px) + 42px + 8px)}" +

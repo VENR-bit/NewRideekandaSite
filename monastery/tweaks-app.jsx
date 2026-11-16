@@ -8,7 +8,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 const LETTERFORMS = {
-  classic:   { display: '"Cormorant Garamond", Georgia, serif', body: '"Hanken Grotesk", system-ui, sans-serif' },
+  classic:   { display: '"Cardo", Georgia, serif', body: '"Gentium Plus", system-ui, sans-serif' },
   editorial: { display: '"Newsreader", Georgia, serif',         body: '"Newsreader", Georgia, serif' }
 };
 

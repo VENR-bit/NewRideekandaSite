@@ -17,7 +17,7 @@ body.eco-h-pad { padding-top: calc(64px + env(safe-area-inset-top, 0px)); }
   position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
   padding-top: env(safe-area-inset-top, 0px);
   color: var(--rkc-ink, #17201a);
-  font-family: var(--rkc-text, "Hanken Grotesk", system-ui, sans-serif);
+  font-family: var(--rkc-text, "Gentium Plus", system-ui, sans-serif);
   transition: transform .6s cubic-bezier(.2, .7, .1, 1), color .4s ease;
 }
 .eco-header::before {
@@ -47,7 +47,7 @@ html.rkm-open .eco-header { transform: none; }
 .eco-h-brand .eco-h-mark { width: 42px; aspect-ratio: 593 / 388; color: var(--rkc-accent, #b4601a); flex: 0 0 auto; transition: transform .8s cubic-bezier(.2, .7, .1, 1); }
 .eco-h-brand:hover .eco-h-mark { transform: scale(1.08); }
 .eco-h-brandtext { display: flex; flex-direction: column; line-height: 1; }
-.eco-h-brandtext b { font-family: var(--rkc-display, "Cormorant Garamond", Georgia, serif); font-weight: 500; font-size: 1.42rem; letter-spacing: -.01em; }
+.eco-h-brandtext b { font-family: var(--rkc-display, "Cardo", Georgia, serif); font-weight: 500; font-size: 1.42rem; letter-spacing: -.01em; }
 .eco-h-brandtext small { margin-top: .42em; font-size: .54rem; letter-spacing: .26em; text-transform: uppercase; opacity: .72; }
 
 .eco-h-links { margin-left: auto; display: flex; align-items: center; gap: clamp(14px, 1.9vw, 28px); }
@@ -65,7 +65,7 @@ html.rkm-open .eco-header { transform: none; }
 
 .eco-h-menu {
   display: inline-flex; align-items: center; gap: .8rem; height: 42px; margin-left: 6px; padding: 0; background: none; border: 0; cursor: pointer;
-  color: inherit; font: 500 .76rem/1 var(--rkc-text, "Hanken Grotesk", system-ui, sans-serif); letter-spacing: .12em; text-transform: uppercase;
+  color: inherit; font: 500 .76rem/1 var(--rkc-text, "Gentium Plus", system-ui, sans-serif); letter-spacing: .12em; text-transform: uppercase;
 }
 .eco-h-links:empty + .eco-h-menu { margin-left: auto; }
 .eco-h-menu i { position: relative; width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--rkc-line, rgba(23, 32, 26, .22)); transition: background-color .3s; }

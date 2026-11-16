@@ -1,7 +1,7 @@
 /* ──────────────────────────────────────────────────────────────
    News & Events — Rideekanda Forest Monastery
    Design language matched to the monastery / retreat pages:
-   Cormorant Garamond display + Spectral body, paper palette,
+   Cardo display + Spectral body, paper palette,
    reveal-on-scroll, soft serif editorial feel.
    ────────────────────────────────────────────────────────────── */
 
@@ -19,7 +19,7 @@
   --dark-ink:  #ece3d4;
   --dark-muted:#b6a890;
 
-  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-display: "Cardo", Georgia, serif;
   --font-body:    "Spectral", Georgia, serif;
 
   --maxw: 1180px;
