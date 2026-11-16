@@ -22,21 +22,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Sinhala:wght@300..500&display=swap" rel="stylesheet" />
 <script>
   /* Theme before first paint. Same rule and storage key as the rest of the
-     site: "auto" follows the clock (light 06:00–18:00), a tap on the toggle
-     pins light or dark. */
+     site: it follows the clock (light 06:00–18:00); a tap on the toggle holds
+     the other one only until the next change of day and night. */
   (function () {
     var r = document.documentElement;
     r.className += " js";
     try {
-      var m = localStorage.getItem('rk-home-theme');
-      if (m !== 'light' && m !== 'dark') m = 'auto';
+      // a tap on the toggle holds only until the next 06:00 / 18:00 change
+      var m = localStorage.getItem('rk-theme'), u = +localStorage.getItem('rk-theme-until');
+      if ((m !== 'light' && m !== 'dark') || !u || Date.now() >= u) m = 'auto';
       var h = new Date().getHours();
       r.setAttribute('data-theme', m === 'auto' ? ((h >= 6 && h < 18) ? 'light' : 'dark') : m);
       r.setAttribute('data-theme-mode', m);
     } catch (e) { r.setAttribute('data-theme', 'dark'); }
   })();
 </script>
-<link rel="stylesheet" href="rk/rk.css?v=22" />
+<link rel="stylesheet" href="rk/rk.css?v=23" />
 <script src="/analytics.js?v=1"></script>
 </head>
 <body>
@@ -420,17 +421,17 @@
     </div>
   </div>
   <div class="pj-rail" id="pjRail" data-cursor="Drag">
-    <a class="pj-card" href="projects/threestory/">
+    <a class="pj-card" href="projects/threestory/" data-on="Ongoing">
       <figure class="contain"><img src="rk/img/p-three.webp" alt="" loading="lazy" decoding="async" /></figure>
       <span lang="si">තෙමහල් ගොඩනැගිල්ල</span><h3>ThreeStory Building</h3>
       <p>A three-storey building with a meditation hall and accommodation, presented as an interactive 3D model.</p>
     </a>
-    <a class="pj-card" href="projects/herbal-plants/">
+    <a class="pj-card" href="projects/herbal-plants/" data-on="Ongoing">
       <figure><img src="rk/img/p-herbal.webp" alt="" loading="lazy" decoding="async" /></figure>
       <span lang="si">ඖෂධ පැළ රෝපණ වැඩසටහන</span><h3>Herbal Plant Planting</h3>
       <p>Replanting Sri Lanka's medicinal trees and herbs across the grounds — choose a plant, bring it, and plant it yourself.</p>
     </a>
-    <a class="pj-card" href="requirements/">
+    <a class="pj-card" href="requirements/" data-on="Ongoing">
       <figure><img src="rk/img/x-projects.webp" alt="" loading="lazy" decoding="async" /></figure>
       <span lang="si">ආරණ්‍ය අවශ්‍යතා</span><h3>Monastery Requirements</h3>
       <p>Items and resources the monastery currently needs — see the list and how you can help provide them.</p>
@@ -525,7 +526,7 @@
 <script src="rk/vendor/SplitText.min.js"></script>
 <script src="rk/vendor/lenis.min.js"></script>
 <script src="rk/sky.js?v=7"></script>
-<script src="rk/rk.js?v=16"></script>
+<script src="rk/rk.js?v=17"></script>
 <script src="rk/dash.js?v=2" data-root="" data-after="0.6" defer></script>
 <script>
   /* Installable app / kiosk: keep the service worker registered from the home

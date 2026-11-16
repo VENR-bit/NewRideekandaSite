@@ -43,7 +43,7 @@ ver = lambda n: one(home, r'%s\?v=(\d+)' % re.escape(n))
 xl = one(home, r'<ul class="x-list" id="xList">(.*?)</ul>')
 rows = re.findall(r'<a href="([^"]*)"[^>]*><i>(\d+)</i><h3>(.*?)</h3><span lang="si">(.*?)</span>', xl)
 pj = one(home, r'<div class="pj-rail"[^>]*>(.*?)</div>\s*</section>')
-pcards = re.findall(r'<a class="pj-card" href="([^"]*)"( data-done="[^"]*")?>\s*<figure( class="contain")?><img src="([^"]*)"[^>]*></figure>\s*<span lang="si">(.*?)</span><h3>(.*?)</h3>', pj)
+pcards = re.findall(r'<a class="pj-card" href="([^"]*)"( data-(?:done|on)="[^"]*")?>\s*<figure( class="contain")?><img src="([^"]*)"[^>]*></figure>\s*<span lang="si">(.*?)</span><h3>(.*?)</h3>', pj)
 assert len(rows) == 15 and len(pcards) == 5, (len(rows), len(pcards))
 
 def tch(b, img):
@@ -367,7 +367,7 @@ out = '''<!DOCTYPE html>
     pcards='\n'.join('''    <a class="pj-card" href="%s"%s>
       <figure%s><img src="../%s" alt="" loading="lazy" decoding="async" /></figure>
       <span lang="en">%s</span><h3>%s</h3>
-    </a>''' % (link(h), ' data-done="නිමයි"' if dn else '', c, img, en, si) for h, dn, c, img, si, en in pcards),
+    </a>''' % (link(h), (' data-done="නිමයි"' if 'done' in dn else ' data-on="ක්‍රියාත්මකයි"' if dn else ''), c, img, en, si) for h, dn, c, img, si, en in pcards),
     mcon_eb=eyebrow(m_con), m_lead=m_lead,
     ft1=''.join(li(byid[i]) for i in ['monastery', 'retreat', 'booking', 'gallery', 'news', 'contact']),
     ft2=''.join(li(x) for x in PROJ[:5]), ft3=''.join(li(x) for x in LIBS),

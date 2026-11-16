@@ -47,11 +47,20 @@
 
   /* ═════════ Theme (same rule + storage key as the rest of the site) ═════════ */
   (function theme() {
-    var KEY = "rk-home-theme", btn = $("#themeBtn");
+    var KEY = "rk-theme", UNTIL = "rk-theme-until", btn = $("#themeBtn");
+    try { localStorage.removeItem("rk-home-theme"); } catch (e) {}   // older versions pinned the choice for good
     var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M3.5 3.5l1.8 1.8M18.7 18.7l1.8 1.8M2 12h2.5M19.5 12H22M3.5 20.5l1.8-1.8M18.7 5.3l1.8-1.8"/></svg>';
     var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.2A8 8 0 1 1 9.8 4 6.4 6.4 0 0 0 20 14.2z"/></svg>';
     function byTime() { var h = new Date().getHours(); return (h >= 6 && h < 18) ? "light" : "dark"; }
-    function mode() { try { var m = localStorage.getItem(KEY); if (m === "light" || m === "dark") return m; } catch (e) {} return "auto"; }
+    // Day and night follow the clock. A tap holds the other one only until the next 06:00 / 18:00 change.
+    function nextFlip() { var d = new Date(), h = d.getHours(); d.setMinutes(0, 0, 0); if (h < 6) d.setHours(6); else if (h < 18) d.setHours(18); else { d.setDate(d.getDate() + 1); d.setHours(6); } return d.getTime(); }
+    function mode() {
+      try {
+        var m = localStorage.getItem(KEY), u = +localStorage.getItem(UNTIL);
+        if (m === "light" || m === "dark") { if (u && Date.now() < u) return m; localStorage.removeItem(KEY); localStorage.removeItem(UNTIL); }
+      } catch (e) {}
+      return "auto";
+    }
     function now() { var m = mode(); return m === "auto" ? byTime() : m; }
     function paint() {
       var t = now();
@@ -64,10 +73,11 @@
     }
     paint();
     if (btn) btn.addEventListener("click", function () {
-      try { localStorage.setItem(KEY, now() === "dark" ? "light" : "dark"); } catch (e) {}
+      try { localStorage.setItem(KEY, now() === "dark" ? "light" : "dark"); localStorage.setItem(UNTIL, String(nextFlip())); } catch (e) {}
       paint();
     });
-    setInterval(function () { if (mode() === "auto" && root.getAttribute("data-theme") !== byTime()) paint(); }, 60000);
+    setInterval(function () { if (root.getAttribute("data-theme") !== now()) paint(); }, 30000);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) paint(); });
   })();
 
   /* ═════════ Content built from the site's shared data ═════════ */

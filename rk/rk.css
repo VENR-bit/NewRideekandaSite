@@ -682,7 +682,10 @@ html[lang="si"] .verse-en { font-family: var(--f-si); font-weight: 400; font-siz
 [aria-pressed="true"] .snd-w.w2 { animation-delay: .25s; }
 @keyframes sndW { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
 /* a finished project */
-.pj-card[data-done] { position: relative; }
-.pj-card[data-done]::before { content: attr(data-done); position: absolute; z-index: 2; top: 12px; left: 12px; padding: .5em .95em; border-radius: 99px;
+.pj-card[data-done], .pj-card[data-on] { position: relative; }
+.pj-card[data-on]::before { content: attr(data-on); }
+.pj-card[data-done]::before { content: attr(data-done); }
+.pj-card[data-done]::before, .pj-card[data-on]::before { position: absolute; z-index: 2; top: 12px; left: 12px; padding: .5em .95em; border-radius: 99px;
   background: rgba(12,18,14,.82); color: #f6f1e4; font-family: var(--f-text); font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-html[lang="si"] .pj-card[data-done]::before { font-family: var(--f-si); letter-spacing: 0; text-transform: none; font-size: .8rem; font-weight: 500; }
+.pj-card[data-on]::before { background: #e39a48; color: #1a1208; }
+html[lang="si"] .pj-card[data-done]::before, html[lang="si"] .pj-card[data-on]::before { font-family: var(--f-si); letter-spacing: 0; text-transform: none; font-size: .8rem; font-weight: 500; }
