@@ -29,7 +29,7 @@
     "precision highp float;",
     "uniform vec2 uRes;uniform float uTime;uniform float uScroll;uniform vec2 uMouse;",
     "uniform vec3 uTop;uniform vec3 uHor;uniform vec3 uFog;uniform vec3 uFar;uniform vec3 uNear;uniform vec3 uSunCol;uniform vec3 uCloud;",
-    "uniform vec2 uSun;uniform float uSunAmt;uniform float uNight;uniform float uMist;",
+    "uniform vec2 uSun;uniform float uSunAmt;uniform float uNight;uniform float uMist;uniform vec3 uMoonL;uniform float uMoonK;",
     "float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}",
     "float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);",
     " return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),f.x),f.y);}",
@@ -52,8 +52,11 @@
     " float disc=smoothstep(.034,.030,sd);",
     " col+=uSunCol*(disc*1.1+exp(-sd*7.)*.55+exp(-sd*2.2)*.28)*uSunAmt;",
     " vec2 mp=vec2(.30*asp*.9,.80+lift*.08);float md=length(p-mp);",
-    " float moon=smoothstep(.030,.027,md)-smoothstep(.030,.027,length(p-mp-vec2(.012,.006)))*.92;",
-    " col+=vec3(.86,.9,1.)*(max(moon,0.)+exp(-md*9.)*.16)*uNight;",
+    // moon — lit to tonight's real phase (uMoonL = sunlight direction on the disc)
+    " vec2 mq=(p-mp)/.030;float mz=sqrt(max(1.-dot(mq,mq),0.));",
+    " float mlit=smoothstep(-.06,.10,dot(vec3(mq,mz),uMoonL));",
+    " float moon=smoothstep(.030,.027,md)*(.045+.955*mlit);",
+    " col+=vec3(.86,.9,1.)*(moon+exp(-md*9.)*.16*(.15+.85*uMoonK))*uNight;",
     // clouds
     " float cl=fbm(vec2(p.x*1.1+uTime*.006,uv.y*4.6+uTime*.002));",
     " float cm=smoothstep(.50,.78,cl)*smoothstep(.44,.72,sy)*(1.-smoothstep(.86,1.,sy));",
@@ -148,6 +151,29 @@
     }
   }
 
+  /* Moon phase for the current Sri Lankan date (0 new · .25 first quarter ·
+     .5 full · .75 last quarter), taken at 8 pm Colombo time so it holds for
+     the whole evening. Full Moon Poya days from calendar-data.js show full. */
+  var SYNODIC = 29.530588853, NEW_MOON_2000 = Date.UTC(2000, 0, 6, 18, 14);
+  function moonPhase() {
+    var c = new Date(Date.now() + 5.5 * 3600000);                 // Colombo clock
+    var y = c.getUTCFullYear(), m = c.getUTCMonth(), d = c.getUTCDate();
+    var iso = y + "-" + ("0" + (m + 1)).slice(-2) + "-" + ("0" + d).slice(-2);
+    var poya = (window.RK_CALENDAR && window.RK_CALENDAR.poya) || [];
+    for (var i = 0; i < poya.length; i++) if (poya[i].date === iso) return 0.5;
+    var eve = Date.UTC(y, m, d, 14, 30);                          // 20:00 in Colombo
+    var ph = ((eve - NEW_MOON_2000) / 86400000 / SYNODIC) % 1;
+    return ph < 0 ? ph + 1 : ph;
+  }
+  var moonOverride = null, moonL = [0, 0, 1], moonK = 1, moonAt = 0;
+  function updateMoon() {
+    var ph = moonOverride == null ? moonPhase() : moonOverride;
+    var th = ph * 2 * Math.PI, sx = Math.sin(th), tilt = (sx >= 0 ? -1 : 1) * 0.87; // lit edge leans to the horizon, as seen from Sri Lanka
+    moonL = [sx * Math.cos(tilt), Math.abs(sx) * Math.sin(-Math.abs(tilt)), -Math.cos(th)];
+    moonK = (1 - Math.cos(th)) / 2;
+    moonAt = Date.now();
+  }
+
   var gl, canvas, U = {}, raf = 0, active = true, started = false;
   var hour = 12, targetHour = 12, scroll = 0, targetScroll = 0;
   var mx = 0, my = 0, tmx = 0, tmy = 0, t0 = 0, reduced = false;
@@ -188,6 +214,8 @@
     gl.uniform3fv(U.uSunCol, s.sun); gl.uniform3fv(U.uCloud, s.cloud);
     gl.uniform2f(U.uSun, s.sunPos[0], s.sunPos[1]);
     gl.uniform1f(U.uSunAmt, s.sunAmt); gl.uniform1f(U.uNight, s.night); gl.uniform1f(U.uMist, s.mist);
+    if (Date.now() - moonAt > 600000) updateMoon();
+    gl.uniform3f(U.uMoonL, moonL[0], moonL[1], moonL[2]); gl.uniform1f(U.uMoonK, moonK);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     // With reduced motion the scene only redraws when something changes.
     var settled = Math.abs(targetHour - hour) < 0.002 && Math.abs(targetScroll - scroll) < 0.0005;
@@ -213,7 +241,7 @@
       var loc = gl.getAttribLocation(prog, "p");
       gl.enableVertexAttribArray(loc);
       gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-      ["uRes", "uTime", "uScroll", "uMouse", "uTop", "uHor", "uFog", "uFar", "uNear", "uSunCol", "uCloud", "uSun", "uSunAmt", "uNight", "uMist"]
+      ["uRes", "uTime", "uScroll", "uMouse", "uTop", "uHor", "uFog", "uFar", "uNear", "uSunCol", "uCloud", "uSun", "uSunAmt", "uNight", "uMist", "uMoonL", "uMoonK"]
         .forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
     } catch (e) {
       if (window.console) console.warn("[sky] WebGL unavailable:", e && e.message);
@@ -237,6 +265,8 @@
     setPointer: function (x, y) { tmx = x; tmy = y; },
     setActive: function (on) { active = !!on; if (active) kick(); },
     colomboHour: colomboHour,
+    moonPhase: moonPhase,
+    setMoon: function (ph) { moonOverride = ph; updateMoon(); kick(); },   // preview a phase; null = tonight's
     state: function () { return { hour: hour, targetHour: targetHour, scroll: scroll, active: active }; },
     sample: sample
   };
