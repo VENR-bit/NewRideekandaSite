@@ -361,7 +361,7 @@ out = '''<!DOCTYPE html>
     life='\n'.join('''      <article class="life-card" data-speed="%s">
         <figure class="clip"><img src="../rk/img/%s.webp" alt="" loading="lazy" decoding="async" /></figure>
         <h3>%s</h3><p>%s</p>
-      </article>''' % (sp, img, a.strip(), b.strip()) for (a, b), img, sp in zip(cards[:3], ['dining', 'accommodation', 'hall'], ['0.06', '-0.06', '0.1'])),
+      </article>''' % (sp, img, a.strip(), b.strip()) for (a, b), img, sp in zip(cards[:3], ['dining-hall', 'room', 'hall'], ['0.06', '-0.06', '0.1'])),
     teachers='\n'.join(tch(b, img) for b, img in zip(teachers, ['ariyajeewa', 'rewatha'])),
     xrows='\n'.join('      <li><a href="%s"><i>%s</i><h3>%s</h3><span lang="en">%s</span><b class="arr"></b></a></li>' % (link(h), n, si, en) for h, n, en, si in rows),
     pcards='\n'.join('''    <a class="pj-card" href="%s"%s>
