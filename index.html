@@ -36,7 +36,7 @@
     } catch (e) { r.setAttribute('data-theme', 'dark'); }
   })();
 </script>
-<link rel="stylesheet" href="rk/rk.css?v=21" />
+<link rel="stylesheet" href="rk/rk.css?v=22" />
 <script src="/analytics.js?v=1"></script>
 </head>
 <body>
@@ -70,11 +70,11 @@
     <a href="monastery/">Monastery</a>
     <a href="retreat-center/">Retreats</a>
     <a href="news-and-events/">News</a>
-    <a href="donate/">Dāna</a>
+    <a href="donate/">Donation</a>
   </nav>
   <div class="hd-tools">
     <button class="ic-btn" id="soundBtn" type="button" aria-pressed="false" aria-label="Forest ambience: off" title="Forest ambience">
-      <span class="bars"><i></i><i></i><i></i><i></i></span>
+      <svg class="snd" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.2L11.5 6v12l-4.3-3.5H4z"/><path class="snd-w w1" d="M15 9.6a3.4 3.4 0 0 1 0 4.8"/><path class="snd-w w2" d="M17.6 7.2a6.8 6.8 0 0 1 0 9.6"/><path class="snd-x" d="M15.5 9.8l4.4 4.4M19.9 9.8l-4.4 4.4"/></svg>
     </button>
     <button class="ic-btn" id="themeBtn" type="button" aria-label="Toggle light / dark theme"></button>
     <a class="ic-btn lang-btn" href="si/" lang="si" hreflang="si" aria-label="සිංහල — Sinhala version" title="සිංහල">සිං</a>
@@ -97,7 +97,7 @@
         <li><a href="book-your-stay/" data-img="rk/img/x-booking.webp"><span>Book Your Stay</span><small lang="si">වෙන් කරවා ගැනීම</small></a></li>
         <li><a href="news-and-events/" data-img="rk/img/x-news.webp"><span>News &amp; Events</span><small lang="si">ප්‍රවෘත්ති සහ සිදුවීම්</small></a></li>
         <li><a href="gallery/" data-img="rk/img/x-gallery.webp"><span>Gallery</span><small lang="si">ඡායාරූප</small></a></li>
-        <li><a href="donate/" data-img="rk/img/x-donate.webp"><span>Dāna · Donation</span><small lang="si">පරිත්‍යාග</small></a></li>
+        <li><a href="donate/" data-img="rk/img/x-donate.webp"><span>Donation</span><small lang="si">පරිත්‍යාග</small></a></li>
         <li><a href="contact/" data-img="rk/img/x-contact.webp"><span>Contact</span><small lang="si">සම්බන්ධ වන්න</small></a></li>
       </ul>
     </div>
@@ -116,11 +116,11 @@
         <p class="label">Projects</p>
         <ul>
           <li><a href="projects/">All Projects</a></li>
-          <li><a href="projects/road-project/">Road Project</a></li>
-          <li><a href="projects/herbal-plants/">Herbal Planting</a></li>
           <li><a href="projects/threestory/">ThreeStory Building</a></li>
-          <li><a href="projects/library-cafe/">Library Café</a></li>
+          <li><a href="projects/herbal-plants/">Herbal Planting</a></li>
           <li><a href="requirements/">Monastery Requirements</a></li>
+          <li><a href="projects/library-cafe/">Library Café</a></li>
+          <li><a href="projects/road-project/">Road Project</a></li>
         </ul>
       </div>
       <div class="menu-col">
@@ -191,7 +191,7 @@
         </div>
       </div>
       <figure class="about-fig-b clip" data-speed="-0.1">
-        <img src="rk/img/steps.webp" width="1280" height="960" alt="Stone steps climbing through the forest at Rideekanda" loading="lazy" decoding="async" />
+        <img src="rk/img/building.jpg" width="608" height="760" alt="The three-storey building at Rideekanda, with its paved terrace among the trees" loading="lazy" decoding="async" />
       </figure>
     </div>
 
@@ -365,7 +365,7 @@
       <li><a href="retreat-docs/"><i>10</i><h3>Retreat Documents</h3><span lang="si">වැඩසටහන් ලේඛන</span><p>Route guidance, daily schedule, chanting texts &amp; the application form.</p><b class="arr"></b></a></li>
       <li><a href="reviews/"><i>11</i><h3>Reviews</h3><span lang="si">ඇගයීම්</span><p>Experiences shared by visiting practitioners.</p><b class="arr"></b></a></li>
       <li><a href="projects/"><i>12</i><h3>Projects</h3><span lang="si">ව්‍යාපෘති</span><p>Ongoing building &amp; design initiatives.</p><b class="arr"></b></a></li>
-      <li><a href="donate/"><i>13</i><h3>Dāna · Donation</h3><span lang="si">පරිත්‍යාග</span><p>Support the monastery and its work — every offering is received with gratitude.</p><b class="arr"></b></a></li>
+      <li><a href="donate/"><i>13</i><h3>Donation</h3><span lang="si">පරිත්‍යාග</span><p>Support the monastery and its work — every offering is received with gratitude.</p><b class="arr"></b></a></li>
       <li><a href="dashboard/"><i>14</i><h3>Dashboard</h3><span lang="si">උපකරණ පුවරුව</span><p>Today at the monastery — the hour, the weather, the routine and every page at a touch.</p><b class="arr"></b></a></li>
       <li><a href="contact/"><i>15</i><h3>Contact</h3><span lang="si">සම්බන්ධ වන්න</span><p>Reach us by phone, email, or WhatsApp.</p><b class="arr"></b></a></li>
     </ul>
@@ -420,33 +420,33 @@
     </div>
   </div>
   <div class="pj-rail" id="pjRail" data-cursor="Drag">
-    <a class="pj-card" href="projects/road-project/">
-      <figure><img src="rk/img/p-road.webp" alt="" loading="lazy" decoding="async" /></figure>
-      <span lang="si">මාර්ග ව්‍යාපෘතිය</span><h3>Road Project</h3>
-      <p>Paving the 2,000 ft concrete road to the monastery — pledge the road by the linear foot.</p>
+    <a class="pj-card" href="projects/threestory/">
+      <figure class="contain"><img src="rk/img/p-three.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="si">තෙමහල් ගොඩනැගිල්ල</span><h3>ThreeStory Building</h3>
+      <p>A three-storey building with a meditation hall and accommodation, presented as an interactive 3D model.</p>
     </a>
     <a class="pj-card" href="projects/herbal-plants/">
       <figure><img src="rk/img/path.webp" alt="" loading="lazy" decoding="async" /></figure>
       <span lang="si">ඖෂධ පැළ රෝපණ වැඩසටහන</span><h3>Herbal Plant Planting</h3>
       <p>Replanting Sri Lanka's medicinal trees and herbs across the grounds — choose a plant, bring it, and plant it yourself.</p>
     </a>
-    <a class="pj-card" href="projects/threestory/">
-      <figure class="contain"><img src="rk/img/p-three.webp" alt="" loading="lazy" decoding="async" /></figure>
-      <span lang="si">තෙමහල් ගොඩනැගිල්ල</span><h3>ThreeStory Building</h3>
-      <p>A three-storey building with a meditation hall and accommodation, presented as an interactive 3D model.</p>
-    </a>
-    <a class="pj-card" href="projects/library-cafe/">
-      <figure class="contain"><img src="rk/img/p-cafe.webp" alt="" loading="lazy" decoding="async" /></figure>
-      <span lang="si">පුස්තකාල කැෆේ</span><h3>Library Café</h3>
-      <p>A contemplative library and café space — furniture, joinery and interior design for the monastery grounds.</p>
-    </a>
     <a class="pj-card" href="requirements/">
       <figure><img src="rk/img/x-projects.webp" alt="" loading="lazy" decoding="async" /></figure>
       <span lang="si">ආරණ්‍ය අවශ්‍යතා</span><h3>Monastery Requirements</h3>
       <p>Items and resources the monastery currently needs — see the list and how you can help provide them.</p>
     </a>
+    <a class="pj-card" href="projects/library-cafe/" data-done="Completed">
+      <figure class="contain"><img src="rk/img/p-cafe.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="si">පුස්තකාල කැෆේ</span><h3>Library Café</h3>
+      <p>A contemplative library and café space — furniture, joinery and interior design for the monastery grounds.</p>
+    </a>
+    <a class="pj-card" href="projects/road-project/" data-done="Completed">
+      <figure><img src="rk/img/p-road.webp" alt="" loading="lazy" decoding="async" /></figure>
+      <span lang="si">මාර්ග ව්‍යාපෘතිය</span><h3>Road Project</h3>
+      <p>Paving the 2,000 ft concrete road to the monastery — pledge the road by the linear foot.</p>
+    </a>
     <a class="pj-card pj-dana" href="donate/">
-      <span lang="si">පරිත්‍යාග</span><h3>Dāna · Donation</h3>
+      <span lang="si">පරිත්‍යාග</span><h3>Donation</h3>
       <p>When you offer Dāna, you join an unbroken chain of generosity stretching back to the time of the Buddha himself.</p>
       <b class="pill pill-line"><span>Give</span><i class="arr"></i></b>
     </a>
@@ -501,7 +501,7 @@
         <li><a href="monastery/">The Monastery</a></li><li><a href="retreat-center/">Retreat Program</a></li><li><a href="gallery/">Gallery</a></li><li><a href="projects/">Projects</a></li><li><a href="news-and-events/">News &amp; Events</a></li>
       </ul></div>
       <div><h4>Visit &amp; Support</h4><ul>
-        <li><a href="book-your-stay/">Book your stay</a></li><li><a href="donate/">Dāna · Donation</a></li><li><a href="contact/">Contact</a></li><li><a href="dashboard/">Dashboard</a></li>
+        <li><a href="book-your-stay/">Book your stay</a></li><li><a href="donate/">Donation</a></li><li><a href="contact/">Contact</a></li><li><a href="dashboard/">Dashboard</a></li>
       </ul></div>
       <div><h4>Follow</h4><ul>
         <li><a href="https://www.facebook.com/rideekandaforest" target="_blank" rel="noopener">Facebook</a></li><li><a href="https://www.instagram.com/rideekanda.monastery/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://youtube.com/c/RideekandaForestMonastery" target="_blank" rel="noopener">YouTube</a></li>
@@ -525,7 +525,7 @@
 <script src="rk/vendor/SplitText.min.js"></script>
 <script src="rk/vendor/lenis.min.js"></script>
 <script src="rk/sky.js?v=7"></script>
-<script src="rk/rk.js?v=15"></script>
+<script src="rk/rk.js?v=16"></script>
 <script src="rk/dash.js?v=2" data-root="" data-after="0.6" defer></script>
 <script>
   /* Installable app / kiosk: keep the service worker registered from the home

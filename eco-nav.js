@@ -106,11 +106,11 @@
   ];
   var PROJECTS = [
     { id: "projects",     href: "projects/",                en: "All Projects",  si: "ව්‍යාපෘති" },
-    { id: "road-project", href: "projects/road-project/",   en: "Road Project",  si: "මාර්ග ව්‍යාපෘතිය" },
-    { id: "herbal-plants", href: "projects/herbal-plants/", en: "Herbal Planting", si: "ඖෂධ පැළ රෝපණය" },
     { id: "threestory",   href: "projects/threestory/",     en: "ThreeStory Building", si: "තෙමහල් ගොඩනැගිල්ල" },
+    { id: "herbal-plants", href: "projects/herbal-plants/", en: "Herbal Planting", si: "ඖෂධ පැළ රෝපණය" },
     { id: "requirements", href: "requirements/",            en: "Monastery Requirements", si: "ආරණ්‍ය අවශ්‍යතා" },
-    { id: "library-cafe", href: "projects/library-cafe/",   en: "Library Café",  si: "පුස්තකාල කැෆේ" }
+    { id: "library-cafe", href: "projects/library-cafe/",   en: "Library Café",  si: "පුස්තකාල කැෆේ" },
+    { id: "road-project", href: "projects/road-project/",   en: "Road Project",  si: "මාර්ග ව්‍යාපෘතිය" }
   ];
   // Libraries — its own labelled section near the bottom.
   var LIBRARIES = [
@@ -258,7 +258,7 @@
     { id: "booking",   href: "book-your-stay/",  en: "Book Your Stay",   si: "වෙන් කරවා ගැනීම",       img: "rk/img/x-booking.webp" },
     { id: "news",      href: "news-and-events/", en: "News & Events",    si: "ප්‍රවෘත්ති සහ සිදුවීම්", img: "rk/img/x-news.webp" },
     { id: "gallery",   href: "gallery/",         en: "Gallery",          si: "ඡායාරූප",              img: "rk/img/x-gallery.webp" },
-    { id: "donate",    href: "donate/",          en: "Dāna · Donation",  si: "පරිත්‍යාග",             img: "rk/img/x-donate.webp" },
+    { id: "donate",    href: "donate/",          en: "Donation",  si: "පරිත්‍යාග",             img: "rk/img/x-donate.webp" },
     { id: "contact",   href: "contact/",         en: "Contact",          si: "සම්බන්ධ වන්න",          img: "rk/img/x-contact.webp" }
   ];
   var MORE = [

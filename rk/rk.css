@@ -673,3 +673,16 @@ html[lang="si"] .now-k, html[lang="si"] .scroll-cue span { display: none; }
 /* the verse on the Sinhala page: Pali in Sinhala letters, then its meaning */
 html[lang="si"] .verse-pali { font-family: var(--f-si) !important; font-style: normal !important; font-weight: 400; font-size: clamp(1.15rem, 2.2vw, 1.9rem); line-height: 1.7; max-width: 34em; margin-inline: auto; }
 html[lang="si"] .verse-en { font-family: var(--f-si); font-weight: 400; font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.9; max-width: 36em; }
+
+/* forest-sound button: a speaker — crossed when silent, with waves when it plays */
+.snd { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.snd-w { opacity: 0; } .snd-x { opacity: .9; transition: opacity .3s; }
+[aria-pressed="true"] .snd-x { opacity: 0; }
+[aria-pressed="true"] .snd-w { animation: sndW 1.6s ease-in-out infinite; }
+[aria-pressed="true"] .snd-w.w2 { animation-delay: .25s; }
+@keyframes sndW { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+/* a finished project */
+.pj-card[data-done] { position: relative; }
+.pj-card[data-done]::before { content: attr(data-done); position: absolute; z-index: 2; top: 12px; left: 12px; padding: .5em .95em; border-radius: 99px;
+  background: rgba(12,18,14,.82); color: #f6f1e4; font-family: var(--f-text); font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+html[lang="si"] .pj-card[data-done]::before { font-family: var(--f-si); letter-spacing: 0; text-transform: none; font-size: .8rem; font-weight: 500; }

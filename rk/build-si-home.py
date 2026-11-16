@@ -43,7 +43,7 @@ ver = lambda n: one(home, r'%s\?v=(\d+)' % re.escape(n))
 xl = one(home, r'<ul class="x-list" id="xList">(.*?)</ul>')
 rows = re.findall(r'<a href="([^"]*)"[^>]*><i>(\d+)</i><h3>(.*?)</h3><span lang="si">(.*?)</span>', xl)
 pj = one(home, r'<div class="pj-rail"[^>]*>(.*?)</div>\s*</section>')
-pcards = re.findall(r'<a class="pj-card" href="([^"]*)">\s*<figure( class="contain")?><img src="([^"]*)"[^>]*></figure>\s*<span lang="si">(.*?)</span><h3>(.*?)</h3>', pj)
+pcards = re.findall(r'<a class="pj-card" href="([^"]*)"( data-done="[^"]*")?>\s*<figure( class="contain")?><img src="([^"]*)"[^>]*></figure>\s*<span lang="si">(.*?)</span><h3>(.*?)</h3>', pj)
 assert len(rows) == 15 and len(pcards) == 5, (len(rows), len(pcards))
 
 def tch(b, img):
@@ -111,7 +111,7 @@ out = '''<!DOCTYPE html>
     <a href="../donate/">%(s_don)s</a>
   </nav>
   <div class="hd-tools">
-    <button class="ic-btn" id="soundBtn" type="button" aria-pressed="false" aria-label="Forest ambience: off" title="Forest ambience"><span class="bars"><i></i><i></i><i></i><i></i></span></button>
+    <button class="ic-btn" id="soundBtn" type="button" aria-pressed="false" aria-label="Forest ambience: off" title="Forest ambience"><svg class="snd" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.2L11.5 6v12l-4.3-3.5H4z"/><path class="snd-w w1" d="M15 9.6a3.4 3.4 0 0 1 0 4.8"/><path class="snd-w w2" d="M17.6 7.2a6.8 6.8 0 0 1 0 9.6"/><path class="snd-x" d="M15.5 9.8l4.4 4.4M19.9 9.8l-4.4 4.4"/></svg></button>
     <button class="ic-btn" id="themeBtn" type="button" aria-label="Toggle light / dark theme"></button>
     <a class="ic-btn lang-btn" href="../" lang="en" hreflang="en" aria-label="English version" title="English">EN</a>
     <a class="pill hd-book" href="../book-your-stay/" data-magnet><span>%(s_book)s</span></a>
@@ -189,7 +189,7 @@ out = '''<!DOCTYPE html>
           <a class="link-arrow" href="../retreat-center/si/"><span>%(s_ret)s</span><i class="arr"></i></a>
         </div>
       </div>
-      <figure class="about-fig-b clip" data-speed="-0.1"><img src="../rk/img/steps.webp" width="1280" height="960" alt="" loading="lazy" decoding="async" /></figure>
+      <figure class="about-fig-b clip" data-speed="-0.1"><img src="../rk/img/building.jpg" width="608" height="760" alt="" loading="lazy" decoding="async" /></figure>
     </div>
   </div>
 </section>
@@ -292,7 +292,7 @@ out = '''<!DOCTYPE html>
   <div class="pj-rail" id="pjRail" data-cursor="Drag">
 %(pcards)s
     <a class="pj-card pj-dana" href="../donate/">
-      <span lang="en">Dāna · Donation</span><h3>%(s_don)s</h3>
+      <span lang="en">Donation</span><h3>%(s_don)s</h3>
       <b class="pill pill-line"><span>%(s_don)s</span><i class="arr"></i></b>
     </a>
   </div>
@@ -364,10 +364,10 @@ out = '''<!DOCTYPE html>
       </article>''' % (sp, img, a.strip(), b.strip()) for (a, b), img, sp in zip(cards[:3], ['dining', 'accommodation', 'hall'], ['0.06', '-0.06', '0.1'])),
     teachers='\n'.join(tch(b, img) for b, img in zip(teachers, ['ariyajeewa', 'rewatha'])),
     xrows='\n'.join('      <li><a href="%s"><i>%s</i><h3>%s</h3><span lang="en">%s</span><b class="arr"></b></a></li>' % (link(h), n, si, en) for h, n, en, si in rows),
-    pcards='\n'.join('''    <a class="pj-card" href="%s">
+    pcards='\n'.join('''    <a class="pj-card" href="%s"%s>
       <figure%s><img src="../%s" alt="" loading="lazy" decoding="async" /></figure>
       <span lang="en">%s</span><h3>%s</h3>
-    </a>''' % (link(h), c, img, en, si) for h, c, img, si, en in pcards),
+    </a>''' % (link(h), ' data-done="නිමයි"' if dn else '', c, img, en, si) for h, dn, c, img, si, en in pcards),
     mcon_eb=eyebrow(m_con), m_lead=m_lead,
     ft1=''.join(li(byid[i]) for i in ['monastery', 'retreat', 'booking', 'gallery', 'news', 'contact']),
     ft2=''.join(li(x) for x in PROJ[:5]), ft3=''.join(li(x) for x in LIBS),

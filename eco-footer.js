@@ -30,7 +30,7 @@
   ];
   var VISIT = [
     { label: "Book your stay",  href: "book-your-stay/" },
-    { label: "Dāna · Donation", href: "donate/" },
+    { label: "Donation", href: "donate/" },
     { label: "Contact",         href: "contact/" },
     { label: "Dashboard",       href: "dashboard/" }
   ];
