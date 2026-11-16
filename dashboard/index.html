@@ -766,6 +766,9 @@
     .d-tag { font-variant-numeric: lining-nums tabular-nums; transition: background-color .3s ease; }
     @media (max-width: 699px) { .d-now-text { padding: 0 15%; } .d-now-text b { line-height: 1.1; } .d-now-text .d-kick { display: none; } }
 
+    /* a drag along the arc must never select the words around it */
+    .d-hero, .d-hero * { -webkit-user-select: none; user-select: none; }
+    .d-arc text { pointer-events: none; }
     /* the arc is only for dragging; the words under it open the routine */
     .d-now-text { display: grid; width: fit-content; max-width: 70%; margin-inline: auto; padding: 0 !important; background: none; border: 0; color: inherit; font: inherit; cursor: pointer; text-shadow: inherit; -webkit-tap-highlight-color: transparent; }
     .d-sun .hit { fill: transparent; stroke: none; }
@@ -1920,6 +1923,8 @@ function viewMobile(V, H) {
         if (!(e.target.closest && e.target.closest(".d-arc")) || e.button) return;
         var kk = fromEvent(e); if (kk == null) return;
         scrubbing = true; moved = 0; k = kk; clearTimeout(backTimer); cancelAnimationFrame(backRaf);
+        if (e.pointerType === "mouse") e.preventDefault();          // no text selection from a mouse drag
+        var sel = window.getSelection && window.getSelection(); if (sel && sel.removeAllRanges) sel.removeAllRanges();
         stage._sx = e.clientX; stage._drag = true;
       });
       window.addEventListener("pointermove", function (e) {
