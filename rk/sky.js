@@ -55,8 +55,39 @@
     // moon — lit to tonight's real phase (uMoonL = sunlight direction on the disc)
     " vec2 mq=(p-mp)/.030;float mz=sqrt(max(1.-dot(mq,mq),0.));",
     " float mlit=smoothstep(-.06,.10,dot(vec3(mq,mz),uMoonL));",
-    " float moon=smoothstep(.030,.027,md)*(.045+.955*mlit);",
-    " col+=vec3(.86,.9,1.)*(moon+exp(-md*9.)*.16*(.15+.85*uMoonK))*uNight;",
+    // surface: the dark maria laid out as on the real near side, soft mottling,
+    // scattered craters and bright Tycho — only worked out inside the disc
+    " float alb=1.;",
+    " if(md<.032){",
+    "  vec2 mw=mq+(vec2(fbm3(mq*3.2+3.),fbm3(mq*3.2+9.))-.5)*.34+(vec2(noise(mq*9.),noise(mq*9.+4.))-.5)*.09;",   // wobble the edges
+    "  float mm=0.;",
+    "  mm=max(mm,smoothstep(.38,.15,length((mw-vec2(-.30,.36))*vec2(1.,1.1))));",   // Imbrium
+    "  mm=max(mm,smoothstep(.22,.09,length(mw-vec2(.17,.40))));",                     // Serenitatis
+    "  mm=max(mm,smoothstep(.29,.10,length((mw-vec2(.33,.14))*vec2(.9,1.1))));\n",
+    "  mm=max(mm,.85*smoothstep(.12,.03,abs((mw.x-.42)*.6+(mw.y+.05)*.8)-.0)*smoothstep(.36,.10,length(mw-vec2(.42,-.04))));",     // Tranquillitatis
+    "  mm=max(mm,smoothstep(.15,.07,length((mw-vec2(.68,.30))*vec2(1.,1.3))));",      // Crisium
+    "  mm=max(mm,smoothstep(.19,.07,length((mw-vec2(.55,-.16))*vec2(1.2,.85))));",    // Fecunditatis
+    "  mm=max(mm,smoothstep(.13,.05,length(mw-vec2(.30,-.27))));",                    // Nectaris
+    "  mm=max(mm,smoothstep(.54,.18,length((mw-vec2(-.60,.06))*vec2(1.2,.70))));",   // Procellarum
+    "  mm=max(mm,smoothstep(.22,.08,length((mw-vec2(-.17,-.33))*vec2(.9,1.2))));",    // Nubium
+    "  mm=max(mm,smoothstep(.13,.05,length(mw-vec2(-.50,-.38))));",                   // Humorum
+    "  mm=max(mm,smoothstep(.10,.03,abs(mw.y-.70+mw.x*mw.x*.3))*smoothstep(.70,.25,abs(mw.x)));", // Frigoris
+    "  mm=clamp(mm,0.,1.)*(.62+.55*fbm(mq*6.+2.));",
+    "  alb=mix(.88,.40,clamp(mm,0.,1.));",
+    "  alb*=.80+.26*fbm(mq*9.+5.)+.10*(noise(mq*24.)-.5);",
+    // craters: one per cell, dark floor with a bright rim
+    "  vec2 cg=mq*7.;vec2 ci=floor(cg);",
+    "  for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){",
+    "   vec2 c=ci+vec2(float(i),float(j));vec2 h=vec2(hash(c),hash(c+17.3));",
+    "   float r=.07+.18*h.y*h.y;float dd=length(cg-c-h)/r;float on=step(.5,hash(c+5.1));",
+    "   alb*=1.-on*(.10*smoothstep(1.,.6,dd)*(1.-mm*.6)-.07*smoothstep(.75,1.,dd)*smoothstep(1.25,1.,dd));",
+    "  }",
+    "  float ty=length(mq-vec2(-.13,-.70));",
+    "  alb+=.22*smoothstep(.05,.0,ty)+.045*smoothstep(.6,.0,ty)*pow(abs(sin(atan(mq.y+.70,mq.x+.13)*6.)),10.)*(1.-mm);",
+    "  alb*=.80+.20*mz;",
+    " }",
+    " float moon=smoothstep(.030,.027,md)*(.05+.95*mlit)*alb;",
+    " col+=vec3(.90,.91,.94)*(moon+exp(-md*9.)*.16*(.15+.85*uMoonK))*uNight;",
     // clouds
     " float cl=fbm(vec2(p.x*1.1+uTime*.006,uv.y*4.6+uTime*.002));",
     " float cm=smoothstep(.50,.78,cl)*smoothstep(.44,.72,sy)*(1.-smoothstep(.86,1.,sy));",
